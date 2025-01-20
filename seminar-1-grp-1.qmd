@@ -1,0 +1,31 @@
+---
+title: "Group 1: Seminar 1"
+format: html
+---
+
+Here is the material from today's seminar. 
+
+## R Script
+
+```{r}
+#| echo: false
+#| warning: false
+#| class-output: "sourceCode r"
+
+cat(readLines("group-material/grp-1/seminar-1.R"), sep = "\n")
+```
+
+## R Markdown
+
+Link to published published markdown: [html](group-material/grp-1/seminar-1.html).
+
+```{r}
+#| echo: false
+#| warning: false
+#| class-output: "sourceCode r"
+
+cat(readLines("group-material/grp-1/seminar-1.Rmd"), sep = "\n")
+```
+
+
+

@@ -1,5 +1,47 @@
 ---
-title: "seminar-1"
+title: "Seminar 1"
 format: html
 ---
+
+## Overview
+
+The goal for this seminar is to:
+
+- ensure everyone has successfully installed R and RStudio;
+- review some R basics;
+- review `tidyverse` packages
+  - `ggplot`
+  - `dplyr`
+- create and publish a RMarkdown file;
+- introduction to GitHub.
+
+## Installing R and RStudio
+
+Follow instructions outlined at <https://posit.co/download/rstudio-desktop/>.
+
+More advanced users may wish to investigate [Positron](https://positron.posit.co/), a new IDE for R from the creators of RStudio. 
+
+## R basics
+
+## 'Tidy' data with `tidyverse`
+
+[`tidyverse`](https://www.tidyverse.org/) is a package designed for data scientists. 
+
+## RMarkdown
+
+[Markdown](https://www.markdownguide.org/) is a markup language. It includes relatively simple formatting that can incorporate more "creative" features through embedded HTML and CSS elements. 
+
+When programming in R using a `.R`-script file, by default, text is treated as code. If you want to leave a comment, you need to comment-out the line using `#`. Markdown files flip this around: by default, any text is treated as plain text. Executable code must be placed within a code block for it to be executed. These blocks are then executed as a sequence of "chunks".
+
+```{r, eval=FALSE}
+x <- c(4,5,7,9)
+```
+
+Markdown files have a number of useful features; including, 
+
+1. intuitive combination of code and text;
+2. straight forward embedding of grpahs;
+3. publication in a number of formats (including, html, pdf, docx);
+4. inclusion of LaTeX. 
+
 

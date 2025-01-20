@@ -12,8 +12,12 @@ website:
         menu: 
         - href: seminar-1.qmd
           text: Seminar 1
-      - href: group-1.qmd
-        text: Group 1
+      - text: Group 1
+        menu:
+        - href: seminar-1-grp-1.qmd
+          text: Seminar 1
+        
+        
 format:
   html:
     theme: cosmo

@@ -1,0 +1,17 @@
+{
+  "hash": "3ba9b200289ebc34be45d36121cbae44",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Seminar 1\"\nformat: html\n---\n\n\n\n\n\n\n\n## Overview\n\nThe goal for this seminar is to:\n\n- ensure everyone has successfully installed R and RStudio;\n- review some R basics;\n- review `tidyverse` packages\n  - `ggplot`\n  - `dplyr`\n- create and publish a RMarkdown file;\n- introduction to GitHub.\n\n## Installing R and RStudio\n\nFollow instructions outlined at <https://posit.co/download/rstudio-desktop/>.\n\nMore advanced users may wish to investigate [Positron](https://positron.posit.co/), a new IDE for R from the creators of RStudio. \n\n## R basics\n\n## Tidy data with `tidyverse`\n\n## RMarkdown\n\n[Markdown](https://www.markdownguide.org/) is a markup language. It includes relatively simple formatting that can incorporate more \"creative\" features through embedded HTML and CSS elements. \n\nWhen programming in R using a `.R`-script file, by default, text is treated as code. If you want to leave a comment, you need to comment-out the line using `#`. Markdown files flip this around: by default, any text is treated as plain text. Executable code must be placed within a code block for it to be executed. These blocks are then executed as a sequence of \"chunks\".\n\n\n\n\n\n\n\n::: {.cell}\n\n```{.r .cell-code}\nx <- c(4,5,7,9)\n```\n:::\n\n\n\n\n\n\n\nMarkdown files have a number of useful features; including, \n\n1. easy inclusion of code and text;\n2. straight forward embedding of grpahs;\n3. publication in a number of formats (including, html, pdf, docx);\n4. inclusion of LaTeX. \n\n\n",
+    "supporting": [
+      "seminar-1_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
