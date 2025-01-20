@@ -18,3 +18,4 @@ Here are a few helpful links:
 - [Quarto](https://quarto.org/)
 - [Tidyverse](https://www.tidyverse.org/)
 - ["R for Data Science"](https://r4ds.hadley.nz/), 2nd Edition, by Hadley Wickham, Mine Çetinkaya-Rundel, and Garrett Grolemund.
+- [Translating Stata to R](https://stata2r.github.io/)

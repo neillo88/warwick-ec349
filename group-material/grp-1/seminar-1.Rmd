@@ -22,6 +22,7 @@ $$
 in line math: $Y= X\beta + u$
 
 ## Adding code
+
 ```{r}
 library(tidyverse)
 car_frame <- mpg
