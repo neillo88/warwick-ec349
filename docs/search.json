@@ -1,0 +1,65 @@
+[
+  {
+    "objectID": "group-material/grp-1/seminar-1.html",
+    "href": "group-material/grp-1/seminar-1.html",
+    "title": "Seminar 1",
+    "section": "",
+    "text": "You may need to install.packages(\"rmarkdown\")."
+  },
+  {
+    "objectID": "group-material/grp-1/seminar-1.html#installation",
+    "href": "group-material/grp-1/seminar-1.html#installation",
+    "title": "Seminar 1",
+    "section": "",
+    "text": "You may need to install.packages(\"rmarkdown\")."
+  },
+  {
+    "objectID": "group-material/grp-1/seminar-1.html#basics-of-markdown",
+    "href": "group-material/grp-1/seminar-1.html#basics-of-markdown",
+    "title": "Seminar 1",
+    "section": "Basics of markdown",
+    "text": "Basics of markdown\nCheck out this link to learn more about the basics of Markdown.\nFor example, you can make lists;\n\nitem 1\nitem 2\n\nNote, be sure to add a line-break before and after the list.\nordered/numbered lists;\n\nnumber 1\nnumber 2\n\nuse LaTeX; \\[\n  Y = X\\beta + u\n\\] even, inline \\(Y = X\\beta + u\\)."
+  },
+  {
+    "objectID": "group-material/grp-1/seminar-1.html#adding-code",
+    "href": "group-material/grp-1/seminar-1.html#adding-code",
+    "title": "Seminar 1",
+    "section": "Adding code",
+    "text": "Adding code\nLoad tidyverse library. Check this link to learn how to hide code-blocks and compress messages/warnings.\nCreate graph\n\ncar_frame &lt;- mpg\nggplot(data = car_frame) +\n  geom_point(mapping=aes(x=displ, y=hwy)) +\n  geom_smooth(mapping=aes(x=displ, y=hwy))\n\n`geom_smooth()` using method = 'loess' and formula = 'y ~ x'\n\n\n\n\n\nMy graph"
+  },
+  {
+    "objectID": "group-material/grp-1/seminar-1.html#quarto",
+    "href": "group-material/grp-1/seminar-1.html#quarto",
+    "title": "Seminar 1",
+    "section": "Quarto",
+    "text": "Quarto\nI would recommend that you investigate the cool things you can do with Quarto."
+  },
+  {
+    "objectID": "group-material/grp-1/seminar-1.html#git-and-github",
+    "href": "group-material/grp-1/seminar-1.html#git-and-github",
+    "title": "Seminar 1",
+    "section": "Git and GitHub",
+    "text": "Git and GitHub\nHere’s a great youtube on Git and GitHub.\nThe basic steps, I used:\n\nCreate a GitHub account.\nInstall Git on your computer. This will include an app called Git Bash. You can also check out Git Desktop. I have found it easier to follow the steps below, which can be executed from Git Bash or the terminal within RStudio.\nI typically follow the following steps laid out on this blog under the heading “Type 2: Work on your project locally then create the repository on GitHub and push it to remote.”"
+  },
+  {
+    "objectID": "group-1.html",
+    "href": "group-1.html",
+    "title": "Group 1",
+    "section": "",
+    "text": "This is the webpage for Group 1’s seminar material."
+  },
+  {
+    "objectID": "group-1.html#week-1",
+    "href": "group-1.html#week-1",
+    "title": "Group 1",
+    "section": "Week 1",
+    "text": "Week 1\nHere are the links to the material we created in class:\n\nR Script: R\nR Markdown: Rmd (code)\nR Markdown: html (published)"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "EC349: Data Science for Economists",
+    "section": "",
+    "text": "This is a Quarto website. To learn more about Quarto websites visit https://quarto.org/docs/websites.\nThe source code for this site can be found at https://github.com/neillo88/warwick-ec349.\nMoodle remains the primary source of material for this module."
+  }
+]

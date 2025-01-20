@@ -1,0 +1,9 @@
+---
+title: "EC349: Data Science for Economists"
+---
+
+This is a Quarto website. To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+
+The source code for this site can be found at <https://github.com/neillo88/warwick-ec349>.
+
+Moodle remains the primary source of material for this module.

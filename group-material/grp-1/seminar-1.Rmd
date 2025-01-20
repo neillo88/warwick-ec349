@@ -1,0 +1,63 @@
+---
+title: "Seminar 1"
+author: Neil Lloyd
+date: 20 January 2025
+output: html_document
+---
+
+## Installation
+
+You may need to `install.packages("rmarkdown")`. 
+
+## Basics of markdown
+
+Check out this link to learn more about the basics of [Markdown](https://www.markdownguide.org/basic-syntax/). 
+
+For example, you can make lists;
+
+- item 1
+- item 2
+
+*Note, be sure to add a line-break before and after the list.*
+
+ordered/numbered lists; 
+
+1. number 1
+2. number 2
+
+use LaTeX;
+$$
+  Y = X\beta + u
+$$
+even, inline $Y = X\beta + u$.
+
+
+## Adding code
+
+Load `tidyverse` library. Check this [link](https://rmarkdown.rstudio.com/lesson-3.html) to learn how to hide code-blocks and compress messages/warnings.
+
+```{r,include=FALSE}
+library(tidyverse)
+```
+
+Create graph 
+```{r, fig.cap = "My graph"}
+car_frame <- mpg
+ggplot(data = car_frame) +
+  geom_point(mapping=aes(x=displ, y=hwy)) +
+  geom_smooth(mapping=aes(x=displ, y=hwy))
+```
+
+## Quarto
+
+I would recommend that you investigate the cool things you can do with [Quarto](https://quarto.org/). 
+
+## Git and GitHub
+
+Here's a great [youtube](https://www.youtube.com/watch?v=RGOj5yH7evk) on Git and GitHub.
+
+The basic steps, *I used*:
+
+1. Create a [GitHub](https://github.com/) account. 
+2. Install [Git](https://git-scm.com/downloads) on your computer. This will include an app called Git Bash. You can also check out [Git Desktop](https://desktop.github.com/download/). I have found it easier to follow the steps below, which can be executed from Git Bash or the terminal within RStudio. 
+3. I typically follow the following steps laid out on this [blog](https://www.freecodecamp.org/news/the-beginners-guide-to-git-github/) under the heading "*Type 2: Work on your project locally then create the repository on GitHub and push it to remote.*"

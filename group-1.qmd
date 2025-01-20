@@ -1,0 +1,14 @@
+---
+title: "Group 1"
+format: html
+---
+
+This is the webpage for Group 1's seminar material. 
+
+## Week 1
+
+Here are the links to the material we created in class:
+
+- R Script: [R](group-material/grp-1/seminar-1.R)
+- R Markdown: [Rmd](group-material/grp-1/seminar-1.Rmd) (code)
+- R Markdown: [html](group-material/grp-1/seminar-1.html) (published)

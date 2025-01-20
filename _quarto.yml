@@ -1,0 +1,26 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "EC349"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - text: Seminars
+        menu: 
+        - href: seminar-1.qmd
+          text: Seminar 1
+      - href: group-1.qmd
+        text: Group 1
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+
+editor: source
+
+execute:
+  freeze: auto   
