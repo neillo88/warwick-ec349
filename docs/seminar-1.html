@@ -167,8 +167,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
   <li><a href="#installing-r-and-rstudio" id="toc-installing-r-and-rstudio" class="nav-link" data-scroll-target="#installing-r-and-rstudio">Installing R and RStudio</a></li>
   <li><a href="#r-basics" id="toc-r-basics" class="nav-link" data-scroll-target="#r-basics">R basics</a></li>
-  <li><a href="#tidy-data-with-tidyverse" id="toc-tidy-data-with-tidyverse" class="nav-link" data-scroll-target="#tidy-data-with-tidyverse">Tidy data with <code>tidyverse</code></a></li>
+  <li><a href="#tidy-data-with-tidyverse" id="toc-tidy-data-with-tidyverse" class="nav-link" data-scroll-target="#tidy-data-with-tidyverse">‘Tidy’ data with <code>tidyverse</code></a></li>
   <li><a href="#rmarkdown" id="toc-rmarkdown" class="nav-link" data-scroll-target="#rmarkdown">RMarkdown</a></li>
+  <li><a href="#quarto" id="toc-quarto" class="nav-link" data-scroll-target="#quarto">Quarto</a></li>
+  <li><a href="#git-and-github" id="toc-git-and-github" class="nav-link" data-scroll-target="#git-and-github">Git and GitHub</a></li>
   </ul>
 </nav>
     </div>
@@ -218,7 +220,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="r-basics">R basics</h2>
 </section>
 <section id="tidy-data-with-tidyverse" class="level2">
-<h2 class="anchored" data-anchor-id="tidy-data-with-tidyverse">Tidy data with <code>tidyverse</code></h2>
+<h2 class="anchored" data-anchor-id="tidy-data-with-tidyverse">‘Tidy’ data with <code>tidyverse</code></h2>
+<p><code>tidyverse</code> is a package designed for data scientists to create and analyse “tidy data” (see <a href="https://tidyr.tidyverse.org/">description</a> from source). If you have analysed cross-sectional, longitudinal, or time-series data in Stata/R, then you are likely used to ‘tidy’ data. However, not all data is ‘tidy’. For example, when you scrape data from a website it has a complex structure with many levels (often using a list structure in R).</p>
+<p>‘Tidy’ data essentially has a matrix structure (sometimes referred to as “rectangular” data) where a row represents a unique observation, a column a unique variable, and a cell a unique value.</p>
 </section>
 <section id="rmarkdown" class="level2">
 <h2 class="anchored" data-anchor-id="rmarkdown">RMarkdown</h2>
@@ -229,11 +233,47 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Markdown files have a number of useful features; including,</p>
 <ol type="1">
-<li>easy inclusion of code and text;</li>
+<li>intuitive combination of code and text;</li>
 <li>straight forward embedding of grpahs;</li>
 <li>publication in a number of formats (including, html, pdf, docx);</li>
 <li>inclusion of LaTeX.</li>
 </ol>
+</section>
+<section id="quarto" class="level2">
+<h2 class="anchored" data-anchor-id="quarto">Quarto</h2>
+<p>I would recommend that you investigate the cool things you can do with <a href="https://quarto.org/">Quarto</a>.</p>
+</section>
+<section id="git-and-github" class="level2">
+<h2 class="anchored" data-anchor-id="git-and-github">Git and GitHub</h2>
+<p>Here’s a great <a href="https://www.youtube.com/watch?v=RGOj5yH7evk">youtube</a> on Git and GitHub. Git is a tool used to manage code, designed to deal with version control. GitHub is an online repository.</p>
+<p>The basic steps, <em>I used</em>:</p>
+<ol type="1">
+<li>Create a <a href="https://github.com/">GitHub</a> account.</li>
+<li>Install <a href="https://git-scm.com/downloads">Git</a> on your computer. This will include an app called Git Bash. You can also check out <a href="https://desktop.github.com/download/">Git Desktop</a>. I have found it easier to follow the steps below, which can be executed from Git Bash or the terminal within RStudio.</li>
+<li>I typically follow the following steps laid out on this <a href="https://www.freecodecamp.org/news/the-beginners-guide-to-git-github/">blog</a> under the heading “<em>Type 2: Work on your project locally then create the repository on GitHub and push it to remote.</em>”</li>
+</ol>
+<p>When using GitHub for a solo project, these are the commands I typically execute in the <strong>RStudio terminal</strong> when I’ve completed working on a section:</p>
+<ul>
+<li><code>git status</code></li>
+<li><code>git add .</code></li>
+<li><code>git commit -m "what I did"</code></li>
+<li><code>git push origin master</code></li>
+</ul>
+<p>When working in a team, you want to ensure that you first “pull” any changes before editing files. This avoids clashes that can be a pain to disentangle. Before editing:</p>
+<ul>
+<li><code>git fetch</code> - this will fetch the data from the online repo</li>
+<li><code>git status</code> - this will show whether you have any local changes</li>
+</ul>
+<p>If you have any changes:</p>
+<ul>
+<li><code>git add .</code></li>
+<li><code>git commit -m "what I did"</code></li>
+</ul>
+<p>If you don’t have any changes:</p>
+<ul>
+<li><code>git pull origin master</code></li>
+</ul>
+<p>After edits are complete, check again for changes. In my experience, using GitHub does NOT AT ALL negate the need to communicate between team members. If you want to avoid issues with merging, you need be clear about who is working on what when.</p>
 
 
 </section>

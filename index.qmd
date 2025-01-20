@@ -6,4 +6,15 @@ This is a Quarto website. To learn more about Quarto websites visit <https://qua
 
 The source code for this site can be found at <https://github.com/neillo88/warwick-ec349>.
 
-Moodle remains the primary source of material for this module.
+[Moodle](https://moodle.warwick.ac.uk/course/view.php?id=64254) remains the primary source of material for this module.
+
+
+## Helpful links:
+
+Here are a few helpful links:
+
+- [RStudio Download](https://posit.co/download/rstudio-desktop/)
+- [Markdown Guide](https://www.markdownguide.org/)
+- [Quarto](https://quarto.org/)
+- [Tidyverse](https://www.tidyverse.org/)
+- ["R for Data Science"](https://r4ds.hadley.nz/), 2nd Edition, by Hadley Wickham, Mine Çetinkaya-Rundel, and Garrett Grolemund.
