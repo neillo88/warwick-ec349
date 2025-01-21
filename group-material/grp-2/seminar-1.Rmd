@@ -1,0 +1,38 @@
+---
+title: "Seminar 1, Group 2"
+output: html_document
+---
+
+## Markdown 
+
+I want a list
+
+- item 1
+- item 2
+  - sub-item 1
+
+numbers
+
+1. number 1
+2. number 2
+
+add math
+
+$$
+ Y = X\beta + u
+$$
+in-line math; $\beta$.
+
+## Add code
+
+code-block:
+```{r}
+library(tidyverse)
+
+car_frame <- mpg
+
+ggplot(data=car_frame) +
+  geom_point(mapping = aes(x=displ,y=hwy))
+```
+
+

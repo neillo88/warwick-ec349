@@ -16,6 +16,10 @@ website:
         menu:
         - href: seminar-1-grp-1.qmd
           text: Seminar 1
+      - text: Group 2
+        menu:
+        - href: seminar-1-grp-2.qmd
+          text: Seminar 1    
         
         
 format:
