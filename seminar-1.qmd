@@ -23,11 +23,278 @@ More advanced users may wish to investigate [Positron](https://positron.posit.co
 
 ## R basics
 
+R is a programming language designed by Statisticians for statistical computation and data visualization. This makes it is distinct from Stata, SPSS, or SAS which are statistical softwares. Base R has a range of built in functions and tools used in Econometrics and Data Science. However, the real strength of R is the wider ecosystem of user-written packages. In this section we will review a few features of base R. In the next section, we will look at the `tidyverse` package, focusing on two of its subsidiary packages `ggplot` and `dplyr`.
+
+### Single values
+
+We begin by assign an object `x` a value using the operator `<-`. 
+
+```{r}
+x <- 3 + sin(pi/2)
+```
+
+If you're working in RStudio, `x` (=4) will appear as a stored value under the "Environment" tab. We can now use `x` in various computations; for example, solving for its square root.
+
+```{r}
+sqrt(x)
+```
+
+Note, doing so does not change the stored value of `x`. We could define a new value `y` as its square root or replace `x` with its square root. 
+```{}
+y <- sqrt(x)
+x <- sqrt(x)
+```
+
+The store value of `x` (and `y`) is now 2. 
+
+Values need not be numerical. They can also stored characters (often referred to as strings in other languages/software). For example, 
+
+```{r}
+z <- "United Kingdom"
+```
+
+### Sequences and Loops
+
+Sequences are used extensively in programming. The most common place is in a loop that iterates through a sequence. We can define a sequence of numbers on in two ways. Consider the sequence $1,\dots,10$. 
+
+```{r}
+u <- seq(1,10)
+v <- 1:10
+```
+
+Both give the same result, but the `seq()`-uence function is more flexible since it allows you adapt the interval. For example, we can we can make the intervals in the sequence $0.5$. 
+
+```{r}
+U <- seq(1,10,0.5)
+```
+
+An immediate application of a sequence is in a loop. Consider a loop over the sequence $1(1)10$ that simply prints the number of the loop. 
+
+```{r}
+for(i in 1:10){
+  print(i)
+}
+```
+
+### Vectors and Matrices
+
+When stored as values, sequences are essentially vectors. A more flexible function for creating a vector is the `c()`-ombine function. We can combine a set of objects, numeric or character. 
+
+```{r}
+w <- c(12,1,2,3)
+W <- c("12","1","2","3")
+```
+Vectors have two important features: length and type. 
+```{r}
+length(w)
+typeof(w)
+typeof(W)
+```
+You can even include a sequence within the combination. 
+
+```{r}
+w <- c(12,1:3)
+w
+```
+
+When you print `w` (as above), it does so as a single row. However, if you use the `t()`-ranspose function, you will see that it displays as a row vector. Taking the transpose of the transpose shows you that the default is in fact to think about `w` as a column vector. 
+
+```{r}
+t(w)
+t(t(w))
+```
+Here are a few fuctions that may be useful:
+```{r}
+# minimum
+min(w)
+# maximum
+max(w)
+# sort
+sort(w)
+```
+Note, `sort(w)` outputs a sorted version of `w`, but does not change the stored order of values in `w`. 
+Multiplication/division by a scalar, is element by element. 
+```{r}
+w*2
+w/2
+```
+We can combine two columns to form a matrix. 
+```{r}
+A <- cbind(w,seq(1,4))
+A
+B <- rbind(w,seq(1,4))
+B
+```
+Interestingly, this shows us that R does not fix the row-column dimension of a vector. Else, `rbind()` would give you a $8\times 1$ vector. We can achieve this result by first fixing `w` as a $4\times 1$ matrix. 
+```{r}
+C <- rbind(matrix(w),matrix(seq(1,4)))
+C
+```
+When working with vectors (and matrices) it is important to know how to index specific values. For example, if you want the third value of `w` you can say,
+```{r}
+w[3]
+```
+We can now consider a loop that prints the elements of `w` and `W'. Here, I use the `length()` function to know the stopping point of the loop. 
+```{r}
+n <- length(w)
+for(i in 1:n){
+  print(w[i])
+  print(W[i])
+}
+```
+Suppose, we wanted to change change the type of `W` from character to numeric and `w` as a character. 
+```{r}
+for(i in 1:n){
+  print(as.character(w[i]))
+  print(as.numeric(W[i]))
+}
+```
+In this instance, `as.integer` would work in place of `as.numeric`. 
+
+
+### Lists
+
+Lists can combine multiple types of data and/or values. The can become relatively complex collections, that employ a hierarchical structure to navigate. When you scrape data from a website it will usually be structured in a `list`. 
+
+```{r}
+site <- list("22 January 2025","United Kingdom",1:10,A)
+typeof(site)
+length(site)
+```
+The above list has length 4 as it includes for items. The third item is a sequence from $1(1)10$. We can index a particular element of the list by indexing. 
+```{r}
+site[3]
+typeof(site[[3]])
+length(site[[3]])
+```
+Lists can be recursive
+```{r}
+page <- list(list("22 January 2025","United Kingdom"),list("URL","download-date"))
+```
+You can then extract a sublist,
+```{r}
+page1 <- page[[1]]
+element11 <- page1[[1]]
+```
+
 ## 'Tidy' data with `tidyverse`
 
 `tidyverse` is a package designed for data scientists to create and analyse "tidy data" (see [description](https://tidyr.tidyverse.org/) from source). If you have analysed cross-sectional, longitudinal, or time-series data in Stata/R, then you are likely used to 'tidy' data. However, not all data is 'tidy'. For example, when you scrape data from a website it has a complex structure with many levels (often using a list structure in R). 
 
 'Tidy' data essentially has a matrix structure (sometimes referred to as "rectangular" data) where a row represents a unique observation, a column a unique variable, and a cell a unique value. 
+
+To use this package we need to first install it and then load its library. 
+
+```{r,}
+#install.package("tidyverse")
+library(tidyverse)
+```
+
+We will two packages within `tidyverse`: `ggplot2` and `dplyr`. By loading `tidyverse` library, these subsidiary libraries will also be loaded. 
+### Graphing with `ggplot2`
+
+`ggplot2` is a very flexible graphing function. You start off by defining the data frame being mapped. Here we will use a small dataset that is included in the `ggplot2` package. 
+
+```{r}
+car_frame <- mpg
+```
+Browsing this data in RStudio, you will see that it contains city and highway gas mileage (i.e. fuel economy) figures for various vehicles as well as the characteristics of these figures. 
+
+We begin by picking the data frame we wish to plot.
+
+```{r}
+ggplot(data = car_frame)
+```
+
+This will plot a blank screen as we have not assigned any "geoms" to be graphed. We begin with a simple scatter plot of `hwy` (highway mileage) and `displ` (displacement). To do this, we must add a mapping which is paired to an `aes()`-thetic. 
+
+```{r}
+ggplot(data = car_frame) + 
+  geom_point(mapping=aes(x=displ,y=hwy))
+```
+We can now modify the aesthetics of the graph. For example, by setting the colours of the points to vary with class of vehicle. You could also change the size and/or shape of the points by class: `size=class` or `shape=class`. 
+```{r}
+ggplot(data = car_frame) + 
+  geom_point(mapping=aes(x=displ,y=hwy,color=class))
+```
+The color variable need not be categorical. For example, we could use a color gradient based on `cty` (city) mileage. 
+```{r}
+ggplot(data = car_frame) + 
+  geom_point(mapping=aes(x=displ,y=hwy,color=cty))
+```
+We could make subplots by drive train class using facets. 
+```{r}
+ggplot(data = car_frame) + 
+  geom_point(mapping=aes(x=displ,y=hwy,color=cty)) +
+  facet_wrap(~ drv,nrow=1)
+```
+We can also overlay a second geom. For example, a loess smoothing. 
+```{r}
+ggplot(data = car_frame) + 
+  geom_point(mapping=aes(x=displ,y=hwy)) +
+  geom_smooth(mapping=aes(x=displ,y=hwy,color="red"))
+```
+As the aesthetic is shared across both geoms, we can make it common. 
+```{r,eval=FALSE}
+ggplot(data = car_frame,mapping=aes(x=displ,y=hwy)) + 
+  geom_point() +
+  geom_smooth(color="red")
+```
+Alternatively, you can edit the data used for one geom.
+```{r}
+ggplot(data = car_frame, mapping=aes(x=displ, y=hwy)) +
+  geom_smooth(
+    se = FALSE
+  ) +
+  geom_smooth(
+    data = filter(car_frame, class == "subcompact"),
+    color="red",
+    se = FALSE
+  )
+```
+
+### Cleaning data with `dplyr`
+
+The `dplyr` has a number of useful functions used to create and modify 'tidy' data. These include: `mutate`,`select`,`filter`,`summarize`, and `arrange`. 
+
+We begin by making a new dataset that includes only SUV vehicles. We can do this using the `filter` function. 
+
+```{r}
+suv_frame <- filter(car_frame,class=="suv")
+```
+
+Note, the use of "==" to select a specific value. Next, we will select a subset of the variables. 
+
+```{r}
+suv_frame <- select(suv_frame,hwy,cty,displ,drv)
+```
+
+Suppose we wanted to create new variables based on the existing set, we can do this using `mutate`. See also, `transmute` to keep only new variables.
+```{r}
+suv_frame <- mutate(suv_frame,ratio = cty/hwy,hwy_d = hwy/displ,cty_d = cty/displ)
+```
+
+`summarize` allows you to compute statistics of the existing variables. For example, the average city mileage. 
+```{r}
+summarize(suv_frame, avg_cty=mean(cty, na.rm = TRUE))
+```
+But, suppose you wanted statistics by drive-train type. We can do this by first grouping the data frame. 
+```{r}
+suv_frame <- group_by(suv_frame, drv)
+summarize(suv_frame, avg_cty=mean(cty_d, na.rm = TRUE))
+```
+Notice, in each of these steps we transformed the same data frame. That is, the data argument remained the same in each step. We can code this more efficiently using a "pipe" operator. 
+```{r}
+drv_stats <- car_frame %>% 
+  filter(class=="suv") %>%
+  mutate(ratio = cty/hwy,hwy_d = hwy/displ,cty_d = cty/displ) %>%
+  group_by(drv) %>%
+  summarize( 
+            count=n(),
+            cty_d=mean(cty_d, na.rm = TRUE),
+            hwy_d=mean(hwy_d, na.rm = TRUE)
+  ) 
+```
 
 ## RMarkdown
 
@@ -42,7 +309,7 @@ x <- c(4,5,7,9)
 Markdown files have a number of useful features; including, 
 
 1. intuitive combination of code and text;
-2. straight forward embedding of grpahs;
+2. straight forward embedding of graphs;
 3. publication in a number of formats (including, html, pdf, docx);
 4. inclusion of LaTeX. 
 
