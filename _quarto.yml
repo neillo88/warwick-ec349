@@ -20,7 +20,10 @@ website:
         menu:
         - href: seminar-1-grp-2.qmd
           text: Seminar 1    
-        
+      - text: Group 3
+        menu:
+        - href: seminar-1-grp-3.qmd
+          text: Seminar 1  
         
 format:
   html:
