@@ -1,0 +1,39 @@
+---
+title: "Seminar 1, Group 4"
+output: html_document
+---
+
+## Markup
+
+make a list
+
+- item 1
+- item 2
+  - sub-item 2.1
+  
+numbered list
+
+1. number 1
+2. number 2
+
+Add math
+
+$$
+Y = X\beta + u
+$$
+in line $\beta$. 
+
+## Adding code
+
+Code block
+
+```{r}
+library(tidyverse)
+ 
+car_frame <- mpg
+
+ggplot(data = car_frame) + 
+  geom_point(mapping = aes(x=displ,y=hwy, color=class))
+```
+
+

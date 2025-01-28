@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Seminar 1, Group 2 – EC349</title>
+<title>Seminar 1, Group 4 – EC349</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -226,8 +226,8 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#markdown" id="toc-markdown" class="nav-link active" data-scroll-target="#markdown">Markdown</a></li>
-  <li><a href="#add-code" id="toc-add-code" class="nav-link" data-scroll-target="#add-code">Add code</a></li>
+  <li><a href="#markup" id="toc-markup" class="nav-link active" data-scroll-target="#markup">Markup</a></li>
+  <li><a href="#adding-code" id="toc-adding-code" class="nav-link" data-scroll-target="#adding-code">Adding code</a></li>
   </ul>
 </nav>
     </div>
@@ -236,7 +236,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Seminar 1, Group 2</h1>
+<h1 class="title">Seminar 1, Group 4</h1>
 </div>
 
 
@@ -253,29 +253,29 @@ window.Quarto = {
 </header>
 
 
-<section id="markdown" class="level2">
-<h2 class="anchored" data-anchor-id="markdown">Markdown</h2>
-<p>I want a list</p>
+<section id="markup" class="level2">
+<h2 class="anchored" data-anchor-id="markup">Markup</h2>
+<p>make a list</p>
 <ul>
 <li>item 1</li>
 <li>item 2
 <ul>
-<li>sub-item 1</li>
+<li>sub-item 2.1</li>
 </ul></li>
 </ul>
-<p>numbers</p>
+<p>numbered list</p>
 <ol type="1">
 <li>number 1</li>
 <li>number 2</li>
 </ol>
-<p>add math</p>
+<p>Add math</p>
 <p><span class="math display">\[
 Y = X\beta + u
-\]</span> in-line math; <span class="math inline">\(\beta\)</span>.</p>
+\]</span> in line <span class="math inline">\(\beta\)</span>.</p>
 </section>
-<section id="add-code" class="level2">
-<h2 class="anchored" data-anchor-id="add-code">Add code</h2>
-<p>code-block:</p>
+<section id="adding-code" class="level2">
+<h2 class="anchored" data-anchor-id="adding-code">Adding code</h2>
+<p>Code block</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -292,8 +292,8 @@ Y = X\beta + u
 </div>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>car_frame <span class="ot">&lt;-</span> mpg</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>car_frame) <span class="sc">+</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x=</span>displ,<span class="at">y=</span>hwy))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> car_frame) <span class="sc">+</span> </span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x=</span>displ,<span class="at">y=</span>hwy, <span class="at">color=</span>class))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
