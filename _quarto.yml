@@ -27,6 +27,10 @@ website:
       - text: Group 4
         menu:
         - href: seminar-1-grp-4.qmd
+          text: Seminar 1  
+      - text: Group 5
+        menu:
+        - href: seminar-1-grp-5.qmd
           text: Seminar 1      
         
 format:

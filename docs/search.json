@@ -1,115 +1,164 @@
 [
   {
-    "objectID": "seminar-1.html",
-    "href": "seminar-1.html",
-    "title": "Seminar 1",
+    "objectID": "seminar-2.html",
+    "href": "seminar-2.html",
+    "title": "Seminar 2",
     "section": "",
-    "text": "The goal for this seminar is to:\n\nensure everyone has successfully installed R and RStudio;\nreview some R basics;\nreview tidyverse packages\n\nggplot\ndplyr\n\ncreate and publish a RMarkdown file;\nintroduction to GitHub."
+    "text": "The goal of seminar 2 is to review the questions in Problem Set 1. Many of these questions do no require R and will be discussed in person during class. For this reason, I have decided to include just some material related to:\nQuestion 11: Try repeating exercises with another dataset available here: https://www.statlearning.com/resources-second-edition.\nI have chosen to use the file Credit.csv, which includes the debt levels of 400 individuals."
   },
   {
-    "objectID": "seminar-1.html#overview",
-    "href": "seminar-1.html#overview",
-    "title": "Seminar 1",
+    "objectID": "seminar-2.html#overview",
+    "href": "seminar-2.html#overview",
+    "title": "Seminar 2",
     "section": "",
-    "text": "The goal for this seminar is to:\n\nensure everyone has successfully installed R and RStudio;\nreview some R basics;\nreview tidyverse packages\n\nggplot\ndplyr\n\ncreate and publish a RMarkdown file;\nintroduction to GitHub."
+    "text": "The goal of seminar 2 is to review the questions in Problem Set 1. Many of these questions do no require R and will be discussed in person during class. For this reason, I have decided to include just some material related to:\nQuestion 11: Try repeating exercises with another dataset available here: https://www.statlearning.com/resources-second-edition.\nI have chosen to use the file Credit.csv, which includes the debt levels of 400 individuals."
   },
   {
-    "objectID": "seminar-1.html#installing-r-and-rstudio",
-    "href": "seminar-1.html#installing-r-and-rstudio",
-    "title": "Seminar 1",
-    "section": "Installing R and RStudio",
-    "text": "Installing R and RStudio\nFollow instructions outlined at https://posit.co/download/rstudio-desktop/.\nMore advanced users may wish to investigate Positron, a new IDE for R from the creators of RStudio."
+    "objectID": "seminar-2.html#load-packages-and-data",
+    "href": "seminar-2.html#load-packages-and-data",
+    "title": "Seminar 2",
+    "section": "Load packages and data",
+    "text": "Load packages and data\n\nlibrary(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.1     ✔ tibble    3.2.1\n✔ lubridate 1.9.3     ✔ tidyr     1.3.1\n✔ purrr     1.0.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\nlibrary(glmnet)\n\nWarning: package 'glmnet' was built under R version 4.4.2\n\n\nLoading required package: Matrix\n\nAttaching package: 'Matrix'\n\nThe following objects are masked from 'package:tidyr':\n\n    expand, pack, unpack\n\nLoaded glmnet 4.1-8\n\nlibrary(tree)\n\nWarning: package 'tree' was built under R version 4.4.2\n\nlibrary(randomForest)\n\nrandomForest 4.7-1.1\nType rfNews() to see new features/changes/bug fixes.\n\nAttaching package: 'randomForest'\n\nThe following object is masked from 'package:dplyr':\n\n    combine\n\nThe following object is masked from 'package:ggplot2':\n\n    margin\n\ncredit.base &lt;- read.csv(\"seminar-material/Credit.csv\",header=TRUE, stringsAsFactors=TRUE)"
   },
   {
-    "objectID": "seminar-1.html#r-basics",
-    "href": "seminar-1.html#r-basics",
-    "title": "Seminar 1",
-    "section": "R basics",
-    "text": "R basics\nR is a programming language designed by Statisticians for statistical computation and data visualization. This makes it is distinct from Stata, SPSS, or SAS which are statistical softwares. Base R has a range of built in functions and tools used in Econometrics and Data Science. However, the real strength of R is the wider ecosystem of user-written packages. In this section we will review a few features of base R. In the next section, we will look at the tidyverse package, focusing on two of its subsidiary packages ggplot and dplyr.\n\nSingle values\nWe begin by assign an object x a value using the operator &lt;-.\n\nx &lt;- 3 + sin(pi/2)\n\nIf you’re working in RStudio, x (=4) will appear as a stored value under the “Environment” tab. We can now use x in various computations; for example, solving for its square root.\n\nsqrt(x)\n\n[1] 2\n\n\nNote, doing so does not change the stored value of x. We could define a new value y as its square root or replace x with its square root.\ny &lt;- sqrt(x)\nx &lt;- sqrt(x)\nThe store value of x (and y) is now 2.\nValues need not be numerical. They can also stored characters (often referred to as strings in other languages/software). For example,\n\nz &lt;- \"United Kingdom\"\n\n\n\nSequences and Loops\nSequences are used extensively in programming. The most common place is in a loop that iterates through a sequence. We can define a sequence of numbers on in two ways. Consider the sequence \\(1,\\dots,10\\).\n\nu &lt;- seq(1,10)\nv &lt;- 1:10\n\nBoth give the same result, but the seq()-uence function is more flexible since it allows you adapt the interval. For example, we can we can make the intervals in the sequence \\(0.5\\).\n\nU &lt;- seq(1,10,0.5)\n\nAn immediate application of a sequence is in a loop. Consider a loop over the sequence \\(1(1)10\\) that simply prints the number of the loop.\n\nfor(i in 1:10){\n  print(i)\n}\n\n[1] 1\n[1] 2\n[1] 3\n[1] 4\n[1] 5\n[1] 6\n[1] 7\n[1] 8\n[1] 9\n[1] 10\n\n\n\n\nVectors and Matrices\nWhen stored as values, sequences are essentially vectors. A more flexible function for creating a vector is the c()-ombine function. We can combine a set of objects, numeric or character.\n\nw &lt;- c(12,1,2,3)\nW &lt;- c(\"12\",\"1\",\"2\",\"3\")\n\nVectors have two important features: length and type.\n\nlength(w)\n\n[1] 4\n\ntypeof(w)\n\n[1] \"double\"\n\ntypeof(W)\n\n[1] \"character\"\n\n\nYou can even include a sequence within the combination.\n\nw &lt;- c(12,1:3)\nw\n\n[1] 12  1  2  3\n\n\nWhen you print w (as above), it does so as a single row. However, if you use the t()-ranspose function, you will see that it displays as a row vector. Taking the transpose of the transpose shows you that the default is in fact to think about w as a column vector.\n\nt(w)\n\n     [,1] [,2] [,3] [,4]\n[1,]   12    1    2    3\n\nt(t(w))\n\n     [,1]\n[1,]   12\n[2,]    1\n[3,]    2\n[4,]    3\n\n\nHere are a few fuctions that may be useful:\n\n# minimum\nmin(w)\n\n[1] 1\n\n# maximum\nmax(w)\n\n[1] 12\n\n# sort\nsort(w)\n\n[1]  1  2  3 12\n\n\nNote, sort(w) outputs a sorted version of w, but does not change the stored order of values in w. Multiplication/division by a scalar, is element by element.\n\nw*2\n\n[1] 24  2  4  6\n\nw/2\n\n[1] 6.0 0.5 1.0 1.5\n\n\nWe can combine two columns to form a matrix.\n\nA &lt;- cbind(w,seq(1,4))\nA\n\n      w  \n[1,] 12 1\n[2,]  1 2\n[3,]  2 3\n[4,]  3 4\n\nB &lt;- rbind(w,seq(1,4))\nB\n\n  [,1] [,2] [,3] [,4]\nw   12    1    2    3\n     1    2    3    4\n\n\nInterestingly, this shows us that R does not fix the row-column dimension of a vector. Else, rbind() would give you a \\(8\\times 1\\) vector. We can achieve this result by first fixing w as a \\(4\\times 1\\) matrix.\n\nC &lt;- rbind(matrix(w),matrix(seq(1,4)))\nC\n\n     [,1]\n[1,]   12\n[2,]    1\n[3,]    2\n[4,]    3\n[5,]    1\n[6,]    2\n[7,]    3\n[8,]    4\n\n\nWhen working with vectors (and matrices) it is important to know how to index specific values. For example, if you want the third value of w you can say,\n\nw[3]\n\n[1] 2\n\n\nWe can now consider a loop that prints the elements of w and W'. Here, I use thelength()` function to know the stopping point of the loop.\n\nn &lt;- length(w)\nfor(i in 1:n){\n  print(w[i])\n  print(W[i])\n}\n\n[1] 12\n[1] \"12\"\n[1] 1\n[1] \"1\"\n[1] 2\n[1] \"2\"\n[1] 3\n[1] \"3\"\n\n\nSuppose, we wanted to change change the type of W from character to numeric and w as a character.\n\nfor(i in 1:n){\n  print(as.character(w[i]))\n  print(as.numeric(W[i]))\n}\n\n[1] \"12\"\n[1] 12\n[1] \"1\"\n[1] 1\n[1] \"2\"\n[1] 2\n[1] \"3\"\n[1] 3\n\n\nIn this instance, as.integer would work in place of as.numeric.\n\n\nLists\nLists can combine multiple types of data and/or values. The can become relatively complex collections, that employ a hierarchical structure to navigate. When you scrape data from a website it will usually be structured in a list.\n\nsite &lt;- list(\"22 January 2025\",\"United Kingdom\",1:10,A)\ntypeof(site)\n\n[1] \"list\"\n\nlength(site)\n\n[1] 4\n\n\nThe above list has length 4 as it includes for items. The third item is a sequence from \\(1(1)10\\). We can index a particular element of the list by indexing.\n\nsite[3]\n\n[[1]]\n [1]  1  2  3  4  5  6  7  8  9 10\n\ntypeof(site[[3]])\n\n[1] \"integer\"\n\nlength(site[[3]])\n\n[1] 10\n\n\nLists can be recursive\n\npage &lt;- list(list(\"22 January 2025\",\"United Kingdom\"),list(\"URL\",\"download-date\"))\n\nYou can then extract a sublist,\n\npage1 &lt;- page[[1]]\nelement11 &lt;- page1[[1]]"
+    "objectID": "seminar-2.html#create-training-and-testing-database",
+    "href": "seminar-2.html#create-training-and-testing-database",
+    "title": "Seminar 2",
+    "section": "Create training and testing database",
+    "text": "Create training and testing database\n\nset.seed(1)\ntrain &lt;- sample(1:nrow(credit.base), 3*nrow(credit.base)/4)\n\n# Create training data\ncredit.train &lt;- credit.base[train,]\ncredit.trainX &lt;- credit.train[,-ncol(credit.train)]\ncredit.trainY &lt;- credit.train[,ncol(credit.train)]\n\n# Create testing data\ncredit.test &lt;- credit.base[-train,]\ncredit.testX &lt;- credit.test[,-ncol(credit.train)]\ncredit.testY &lt;- credit.test[,ncol(credit.train)]"
   },
   {
-    "objectID": "seminar-1.html#tidy-data-with-tidyverse",
-    "href": "seminar-1.html#tidy-data-with-tidyverse",
-    "title": "Seminar 1",
-    "section": "‘Tidy’ data with tidyverse",
-    "text": "‘Tidy’ data with tidyverse\ntidyverse is a package designed for data scientists to create and analyse “tidy data” (see description from source). If you have analysed cross-sectional, longitudinal, or time-series data in Stata/R, then you are likely used to ‘tidy’ data. However, not all data is ‘tidy’. For example, when you scrape data from a website it has a complex structure with many levels (often using a list structure in R).\n‘Tidy’ data essentially has a matrix structure (sometimes referred to as “rectangular” data) where a row represents a unique observation, a column a unique variable, and a cell a unique value.\nTo use this package we need to first install it and then load its library.\n\n#install.package(\"tidyverse\")\nlibrary(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.1     ✔ tibble    3.2.1\n✔ lubridate 1.9.3     ✔ tidyr     1.3.1\n✔ purrr     1.0.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\n\nWe will two packages within tidyverse: ggplot2 and dplyr. By loading tidyverse library, these subsidiary libraries will also be loaded. ### Graphing with ggplot2\nggplot2 is a very flexible graphing function. You start off by defining the data frame being mapped. Here we will use a small dataset that is included in the ggplot2 package.\n\ncar_frame &lt;- mpg\n\nBrowsing this data in RStudio, you will see that it contains city and highway gas mileage (i.e. fuel economy) figures for various vehicles as well as the characteristics of these figures.\nWe begin by picking the data frame we wish to plot.\n\nggplot(data = car_frame)\n\n\n\n\n\n\n\n\nThis will plot a blank screen as we have not assigned any “geoms” to be graphed. We begin with a simple scatter plot of hwy (highway mileage) and displ (displacement). To do this, we must add a mapping which is paired to an aes()-thetic.\n\nggplot(data = car_frame) + \n  geom_point(mapping=aes(x=displ,y=hwy))\n\n\n\n\n\n\n\n\nWe can now modify the aesthetics of the graph. For example, by setting the colours of the points to vary with class of vehicle. You could also change the size and/or shape of the points by class: size=class or shape=class.\n\nggplot(data = car_frame) + \n  geom_point(mapping=aes(x=displ,y=hwy,color=class))\n\n\n\n\n\n\n\n\nThe color variable need not be categorical. For example, we could use a color gradient based on cty (city) mileage.\n\nggplot(data = car_frame) + \n  geom_point(mapping=aes(x=displ,y=hwy,color=cty))\n\n\n\n\n\n\n\n\nWe could make subplots by drive train class using facets.\n\nggplot(data = car_frame) + \n  geom_point(mapping=aes(x=displ,y=hwy,color=cty)) +\n  facet_wrap(~ drv,nrow=1)\n\n\n\n\n\n\n\n\nWe can also overlay a second geom. For example, a loess smoothing.\n\nggplot(data = car_frame) + \n  geom_point(mapping=aes(x=displ,y=hwy)) +\n  geom_smooth(mapping=aes(x=displ,y=hwy,color=\"red\"))\n\n`geom_smooth()` using method = 'loess' and formula = 'y ~ x'\n\n\n\n\n\n\n\n\n\nAs the aesthetic is shared across both geoms, we can make it common.\n\nggplot(data = car_frame,mapping=aes(x=displ,y=hwy)) + \n  geom_point() +\n  geom_smooth(color=\"red\")\n\nAlternatively, you can edit the data used for one geom.\n\nggplot(data = car_frame, mapping=aes(x=displ, y=hwy)) +\n  geom_smooth(\n    se = FALSE\n  ) +\n  geom_smooth(\n    data = filter(car_frame, class == \"subcompact\"),\n    color=\"red\",\n    se = FALSE\n  )\n\n`geom_smooth()` using method = 'loess' and formula = 'y ~ x'\n`geom_smooth()` using method = 'loess' and formula = 'y ~ x'\n\n\n\n\n\n\n\n\n\n\nCleaning data with dplyr\nThe dplyr has a number of useful functions used to create and modify ‘tidy’ data. These include: mutate,select,filter,summarize, and arrange.\nWe begin by making a new dataset that includes only SUV vehicles. We can do this using the filter function.\n\nsuv_frame &lt;- filter(car_frame,class==\"suv\")\n\nNote, the use of “==” to select a specific value. Next, we will select a subset of the variables.\n\nsuv_frame &lt;- select(suv_frame,hwy,cty,displ,drv)\n\nSuppose we wanted to create new variables based on the existing set, we can do this using mutate. See also, transmute to keep only new variables.\n\nsuv_frame &lt;- mutate(suv_frame,ratio = cty/hwy,hwy_d = hwy/displ,cty_d = cty/displ)\n\nsummarize allows you to compute statistics of the existing variables. For example, the average city mileage.\n\nsummarize(suv_frame, avg_cty=mean(cty, na.rm = TRUE))\n\n# A tibble: 1 × 1\n  avg_cty\n    &lt;dbl&gt;\n1    13.5\n\n\nBut, suppose you wanted statistics by drive-train type. We can do this by first grouping the data frame.\n\nsuv_frame &lt;- group_by(suv_frame, drv)\nsummarize(suv_frame, avg_cty=mean(cty_d, na.rm = TRUE))\n\n# A tibble: 2 × 2\n  drv   avg_cty\n  &lt;chr&gt;   &lt;dbl&gt;\n1 4        3.63\n2 r        2.24\n\n\nNotice, in each of these steps we transformed the same data frame. That is, the data argument remained the same in each step. We can code this more efficiently using a “pipe” operator.\n\ndrv_stats &lt;- car_frame %&gt;% \n  filter(class==\"suv\") %&gt;%\n  mutate(ratio = cty/hwy,hwy_d = hwy/displ,cty_d = cty/displ) %&gt;%\n  group_by(drv) %&gt;%\n  summarize( \n            count=n(),\n            cty_d=mean(cty_d, na.rm = TRUE),\n            hwy_d=mean(hwy_d, na.rm = TRUE)\n  )"
+    "objectID": "seminar-2.html#linear-regression",
+    "href": "seminar-2.html#linear-regression",
+    "title": "Seminar 2",
+    "section": "Linear regression",
+    "text": "Linear regression\n\nlm.credit &lt;- lm(Balance ~ ., data = credit.train)\nsummary(lm.credit)\n\n\nCall:\nlm(formula = Balance ~ ., data = credit.train)\n\nResiduals:\n    Min      1Q  Median      3Q     Max \n-142.12  -72.93  -15.53   49.04  328.78 \n\nCoefficients:\n             Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept) -484.8236    39.9566 -12.134  &lt; 2e-16 ***\nIncome        -7.7615     0.2725 -28.484  &lt; 2e-16 ***\nLimit          0.2426     0.0364   6.664 1.36e-10 ***\nRating         0.4109     0.5474   0.751   0.4534    \nCards         22.4444     4.8474   4.630 5.53e-06 ***\nAge           -0.7274     0.3317  -2.193   0.0291 *  \nEducation      0.0567     1.7870   0.032   0.9747    \nOwnYes       -19.3752    11.0876  -1.747   0.0816 .  \nStudentYes   417.2180    17.9747  23.211  &lt; 2e-16 ***\nMarriedYes    -4.2692    11.7505  -0.363   0.7166    \nRegionSouth   -0.8237    13.7553  -0.060   0.9523    \nRegionWest    15.5498    16.2218   0.959   0.3386    \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 95.65 on 288 degrees of freedom\nMultiple R-squared:  0.9589,    Adjusted R-squared:  0.9574 \nF-statistic: 611.2 on 11 and 288 DF,  p-value: &lt; 2.2e-16\n\n\nNow we can compute the MSE\n\nlm.pred &lt;- predict(lm.credit, newdata = credit.testX)\nMSE.lm &lt;- mean((lm.pred - credit.testY)^2)"
   },
   {
-    "objectID": "seminar-1.html#rmarkdown",
-    "href": "seminar-1.html#rmarkdown",
-    "title": "Seminar 1",
-    "section": "RMarkdown",
-    "text": "RMarkdown\nMarkdown is a markup language. It includes relatively simple formatting that can incorporate more “creative” features through embedded HTML and CSS elements.\nWhen programming in R using a .R-script file, by default, text is treated as code. If you want to leave a comment, you need to comment-out the line using #. Markdown files flip this around: by default, any text is treated as plain text. Executable code must be placed within a code block for it to be executed. These blocks are then executed as a sequence of “chunks”.\n\nx &lt;- c(4,5,7,9)\n\nMarkdown files have a number of useful features; including,\n\nintuitive combination of code and text;\nstraight forward embedding of graphs;\npublication in a number of formats (including, html, pdf, docx);\ninclusion of LaTeX."
+    "objectID": "seminar-2.html#ridge-regression",
+    "href": "seminar-2.html#ridge-regression",
+    "title": "Seminar 2",
+    "section": "Ridge regression",
+    "text": "Ridge regression\n\nridge.credit &lt;- glmnet(credit.trainX, credit.trainY, alpha=0, lamnda=3, thresh = 1e-12)\n#coef(ridge.credit)\n\nAdding cross-validation\n\ncv.out &lt;- cv.glmnet(as.matrix(credit.trainX),as.matrix(credit.trainY), alpha=0, nfold=3)\n\nWarning in storage.mode(xd) &lt;- \"double\": NAs introduced by coercion\nWarning in storage.mode(xd) &lt;- \"double\": NAs introduced by coercion\nWarning in storage.mode(xd) &lt;- \"double\": NAs introduced by coercion\nWarning in storage.mode(xd) &lt;- \"double\": NAs introduced by coercion\n\n\nWarning in cbind2(1, newx) %*% nbeta: NAs introduced by coercion\nWarning in cbind2(1, newx) %*% nbeta: NAs introduced by coercion\nWarning in cbind2(1, newx) %*% nbeta: NAs introduced by coercion\n\nplot(cv.out)\n\n\n\n\n\n\n\nlambda.ridge.cv &lt;- cv.out$lambda.min\n\nRe-estimate using cross-validated lambda\n\nridge.credit &lt;- glmnet(credit.trainX, credit.trainY, alpha=0, lamnda=lambda.ridge.cv, thresh = 1e-12)\n\nFit the model in the test data\n\nridge.pred &lt;- predict(ridge.credit, s = lambda.ridge.cv, newx = as.matrix(credit.testX))\n\nWarning in cbind2(1, newx) %*% nbeta: NAs introduced by coercion\n\nMSE.ridge &lt;- mean((ridge.pred - credit.testY)^2)"
   },
   {
-    "objectID": "seminar-1.html#quarto",
-    "href": "seminar-1.html#quarto",
-    "title": "Seminar 1",
-    "section": "Quarto",
-    "text": "Quarto\nI would recommend that you investigate the cool things you can do with Quarto."
+    "objectID": "seminar-2.html#lasso",
+    "href": "seminar-2.html#lasso",
+    "title": "Seminar 2",
+    "section": "LASSO",
+    "text": "LASSO\nRepeat the above steps with cross-validation, but setting alpha=1.\n\ncv.out &lt;- cv.glmnet(as.matrix(credit.trainX),as.matrix(credit.trainY), alpha=1, nfold=3)\n\nWarning in storage.mode(xd) &lt;- \"double\": NAs introduced by coercion\nWarning in storage.mode(xd) &lt;- \"double\": NAs introduced by coercion\nWarning in storage.mode(xd) &lt;- \"double\": NAs introduced by coercion\nWarning in storage.mode(xd) &lt;- \"double\": NAs introduced by coercion\n\n\nWarning in cbind2(1, newx) %*% nbeta: NAs introduced by coercion\nWarning in cbind2(1, newx) %*% nbeta: NAs introduced by coercion\nWarning in cbind2(1, newx) %*% nbeta: NAs introduced by coercion\n\nplot(cv.out)\n\n\n\n\n\n\n\nlambda.LASSO.cv &lt;- cv.out$lambda.min\n\nRe-estimate using cross-validated lambda\n\nLASSO.credit &lt;- glmnet(credit.trainX, credit.trainY, alpha=0, lamnda=lambda.LASSO.cv, thresh = 1e-12)\n\nFit the model in the test data\n\nLASSO.pred &lt;- predict(LASSO.credit, s = lambda.LASSO.cv, newx = as.matrix(credit.testX))\n\nWarning in cbind2(1, newx) %*% nbeta: NAs introduced by coercion\n\nMSE.LASSO &lt;- mean((LASSO.pred - credit.testY)^2)"
   },
   {
-    "objectID": "seminar-1.html#git-and-github",
-    "href": "seminar-1.html#git-and-github",
-    "title": "Seminar 1",
-    "section": "Git and GitHub",
-    "text": "Git and GitHub\nHere’s a great youtube on Git and GitHub. Git is a tool used to manage code, designed to deal with version control. GitHub is an online repository.\nThe basic steps, I used:\n\nCreate a GitHub account.\nInstall Git on your computer. This will include an app called Git Bash. You can also check out Git Desktop. I have found it easier to follow the steps below, which can be executed from Git Bash or the terminal within RStudio.\nI typically follow the following steps laid out on this blog under the heading “Type 2: Work on your project locally then create the repository on GitHub and push it to remote.”\n\nWhen using GitHub for a solo project, these are the commands I typically execute in the RStudio terminal when I’ve completed working on a section:\n\ngit status\ngit add .\ngit commit -m \"what I did\"\ngit push origin master\n\nWhen working in a team, you want to ensure that you first “pull” any changes before editing files. This avoids clashes that can be a pain to disentangle. Before editing:\n\ngit fetch - this will fetch the data from the online repo\ngit status - this will show whether you have any local changes\n\nIf you have any changes:\n\ngit add .\ngit commit -m \"what I did\"\n\nIf you don’t have any changes:\n\ngit pull origin master\n\nAfter edits are complete, check again for changes. In my experience, using GitHub does NOT AT ALL negate the need to communicate between team members. If you want to avoid issues with merging, you need be clear about who is working on what when."
+    "objectID": "seminar-2.html#regression-trees",
+    "href": "seminar-2.html#regression-trees",
+    "title": "Seminar 2",
+    "section": "Regression Trees",
+    "text": "Regression Trees\n\ntree.credit &lt;- tree(Balance ~ ., data = credit.train)\nsummary(tree.credit)\n\n\nRegression tree:\ntree(formula = Balance ~ ., data = credit.train)\nVariables actually used in tree construction:\n[1] \"Rating\"  \"Income\"  \"Student\" \"Limit\"  \nNumber of terminal nodes:  9 \nResidual mean deviance:  29060 = 8457000 / 291 \nDistribution of residuals:\n   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. \n-672.40  -70.32  -18.64    0.00  107.60  484.60 \n\ntree.credit\n\nnode), split, n, deviance, yval\n      * denotes terminal node\n\n 1) root 300 64150000  528.70  \n   2) Rating &lt; 353.5 163  8879000  199.10  \n     4) Rating &lt; 278.5 99  1377000   70.32 *\n     5) Rating &gt; 278.5 64  3320000  398.30  \n      10) Income &lt; 45.049 51  1828000  473.70  \n        20) Student: No 45   902100  427.10 *\n        21) Student: Yes 6    93940  823.50 *\n      11) Income &gt; 45.049 13    63310  102.30 *\n   3) Rating &gt; 353.5 137 16500000  920.80  \n     6) Rating &lt; 717.5 126 10880000  863.90  \n      12) Limit &lt; 5353 39  1253000  618.90  \n        24) Income &lt; 48.3975 27   424300  708.00 *\n        25) Income &gt; 48.3975 12   132600  418.50 *\n      13) Limit &gt; 5353 87  6239000  973.80  \n        26) Student: No 74  4220000  922.40 *\n        27) Student: Yes 13   709200 1266.00 *\n     7) Rating &gt; 717.5 11   534000 1573.00 *\n\n\nWe can plot the tree as follows:\n\ntree.pred &lt;- predict(tree.credit, newdata = credit.test)\nMSE.tree &lt;- mean((tree.pred - credit.testY)^2)\nplot(tree.credit)\n  text(tree.credit , pretty = 1)\n\n\n\n\n\n\n\n\nA simpler tree with only two variables\n\ntree.credit &lt;- tree(Balance ~ Age + Limit, data = credit.train)\npartition.tree(tree.credit)\npoints(credit.train[, c(\"Age\", \"Limit\")], cex = .4)\n\n\n\n\n\n\n\nplot(tree.credit)\n text(tree.credit, pretty = 1)\n title(main = \"Unpruned Regression Tree\")\n\n\n\n\n\n\n\n\nPruned tree (following example on P.355):\n\nset.seed(789)\ncvtree.credit &lt;- cv.tree(tree.credit, FUN = prune.tree)\nnames(cvtree.credit)\n\n[1] \"size\"   \"dev\"    \"k\"      \"method\"\n\ncvtree.credit\n\n$size\n[1] 5 4 3 2 1\n\n$dev\n[1] 15926768 18008409 20028897 25157250 64799501\n\n$k\n[1]     -Inf  2564445  3322485  7162302 38604569\n\n$method\n[1] \"deviance\"\n\nattr(,\"class\")\n[1] \"prune\"         \"tree.sequence\"\n\npar(mfrow = c(1, 2))\nplot(cvtree.credit$size , cvtree.credit$dev, type = \"b\")\nplot(cvtree.credit$k, cvtree.credit$dev, type = \"b\")\n\n\n\n\n\n\n\n\nPrune the tree, predict and compute MSE, and plot new tree\n\nprune.credit &lt;- prune.tree(tree.credit , best = 9)\n\nWarning in prune.tree(tree.credit, best = 9): best is bigger than tree size\n\nprune.pred &lt;- predict(prune.credit, newdata = credit.test)\nMSE.prune &lt;- mean((prune.pred - credit.testY)^2)\nplot(prune.credit)\n text(prune.credit , pretty = 1)"
   },
   {
-    "objectID": "seminar-1-grp-4.html",
-    "href": "seminar-1-grp-4.html",
+    "objectID": "seminar-2.html#bagging",
+    "href": "seminar-2.html#bagging",
+    "title": "Seminar 2",
+    "section": "Bagging",
+    "text": "Bagging\n\nset.seed(8)\nbag.credit &lt;- randomForest(Balance ~ . , data= credit.train,mtry = 10, importance = TRUE)\nbag.credit\n\n\nCall:\n randomForest(formula = Balance ~ ., data = credit.train, mtry = 10,      importance = TRUE) \n               Type of random forest: regression\n                     Number of trees: 500\nNo. of variables tried at each split: 10\n\n          Mean of squared residuals: 14245.24\n                    % Var explained: 93.34\n\nbag.pred &lt;- predict(bag.credit , newdata = credit.test)\nplot(bag.pred , credit.testY)\n abline(0, 1)\n\n\n\n\n\n\n\nMSE.bag &lt;- mean((bag.pred - credit.testY)^2)"
+  },
+  {
+    "objectID": "seminar-2.html#random-forest",
+    "href": "seminar-2.html#random-forest",
+    "title": "Seminar 2",
+    "section": "Random Forest",
+    "text": "Random Forest\n\nset.seed(9)\nforest.credit &lt;- randomForest(Balance ~ . , data= credit.train,mtry = 10, importance = TRUE)\nforest.pred &lt;- predict(forest.credit, newdata = credit.test)\nMSE.forest &lt;- mean((forest.pred - credit.testY)^2)\n\nWe can view the importance of each variable:\n\nimportance(forest.credit)\n\n             %IncMSE IncNodePurity\nIncome    65.6344496    4435353.87\nLimit     44.5100467   34575258.49\nRating    26.2543973   20230908.15\nCards      1.7636025     178265.35\nAge        6.1622703     429923.12\nEducation  4.1044398     378287.40\nOwn       -1.8976022      57244.49\nStudent   55.5654832    2778949.90\nMarried   -0.2942654      99967.08\nRegion    -2.1374350     134736.65\n\nvarImpPlot(forest.credit)"
+  },
+  {
+    "objectID": "seminar-2.html#comparison",
+    "href": "seminar-2.html#comparison",
+    "title": "Seminar 2",
+    "section": "Comparison",
+    "text": "Comparison\n\nMSE &lt;- c(LM = MSE.lm, Ridge = MSE.ridge, LASSO = MSE.LASSO, PrunedTree = MSE.prune, Bag = MSE.bag, Forest = MSE.forest)\nt(t(MSE))\n\n               [,1]\nLM         12361.96\nRidge            NA\nLASSO            NA\nPrunedTree 69499.81\nBag        12386.55\nForest     12738.86"
+  },
+  {
+    "objectID": "seminar-1-grp-5.html",
+    "href": "seminar-1-grp-5.html",
+    "title": "Group 5: Seminar 1",
+    "section": "",
+    "text": "Here is the material from today’s seminar."
+  },
+  {
+    "objectID": "seminar-1-grp-5.html#r-script",
+    "href": "seminar-1-grp-5.html#r-script",
+    "title": "Group 5: Seminar 1",
+    "section": "R Script",
+    "text": "R Script\n\n\n# Seminar 1, Group 5\n\nx &lt;- 3 + sin(pi/2)\nsqrt(x)\ny &lt;- sqrt(x)\nw &lt;- \"2\"\ntypeof(w)\nv &lt;- as.numeric(w)\n\n# sequences\n\nm &lt;- seq(1,10)\nn &lt;- seq(0,10,2)\no &lt;- 1:10\n\nfor(i in 1:10) {\n  print(i)\n}\n\n# vectors\nA &lt;- c(\"1\", \"2\", \"5\", \"9\")\ntypeof(A)\nlength(A)\nn &lt;- length(A)\nfor(i in 1:n) {\n  print(as.numeric(A[i]))\n}\n\n## Packages\n#install.packages(\"tidyverse\")\nlibrary(tidyverse)\n\ncar_frame &lt;- mpg\nggplot(data = car_frame) + \n  geom_point(mapping = aes(x=displ,y=hwy))\n\nggplot(data = car_frame) + \n  geom_point(mapping = aes(x=displ,y=hwy, color=class))\n\nggplot(data = car_frame) + \n  geom_point(mapping = aes(x=displ,y=hwy)) +\n  geom_smooth(mapping = aes(x=displ,y=hwy))\n\nggplot(data = car_frame, mapping = aes(x=displ,y=hwy)) + \n  geom_point() +\n  geom_smooth()"
+  },
+  {
+    "objectID": "seminar-1-grp-5.html#r-markdown",
+    "href": "seminar-1-grp-5.html#r-markdown",
+    "title": "Group 5: Seminar 1",
+    "section": "R Markdown",
+    "text": "R Markdown\nLink to published published markdown: html.\n\n\n---\ntitle: \"seminar-1\"\noutput: html_document\n---\n\n## Markup basics\n\nlist of items\n\n- item 1\n- item 2\n  - sub-item 2.1\n  \nnumbered list\n\n1. number 1\n2. number 2\n\n**bold** *italics*\n\nmath\n\n$$\nY = X\\beta + u\n$$\n\ninline: $\\beta$\n\n## embedding code\n\ncode block\n\n```{r}\nlibrary(tidyverse)\n\ncar_frame &lt;- mpg\nggplot(data = car_frame) + \n  geom_point(mapping = aes(x=displ,y=hwy))\n```"
+  },
+  {
+    "objectID": "seminar-1-grp-3.html",
+    "href": "seminar-1-grp-3.html",
     "title": "Group 1: Seminar 1",
     "section": "",
     "text": "Here is the material from today’s seminar."
   },
   {
-    "objectID": "seminar-1-grp-4.html#r-script",
-    "href": "seminar-1-grp-4.html#r-script",
+    "objectID": "seminar-1-grp-3.html#r-script",
+    "href": "seminar-1-grp-3.html#r-script",
     "title": "Group 1: Seminar 1",
     "section": "R Script",
-    "text": "R Script\n\n\n# Seminar 1, group 4\n\n# defining values\n\nx &lt;- 3 + sin(pi/2)\nsqrt(x)\nx &lt;- sqrt(x)\n\nw &lt;- \"2\"\nv &lt;- \"word of the day\"\n\nw &lt;- as.numeric(w)\n# also see as.character as.integer\n\n# sequences\ng &lt;- seq(1,10)\nh &lt;- 1:10\n\nfor(i in 1:10) {\n  print(i)\n}\n\n# vectors\na &lt;- c(12,1,2,3) \na[3]\nsort(a)\nb &lt;- sort(a)  \nb[3]  \n\ntypeof(a)\nlength(a)\n\nn &lt;- length(a)\nfor(i in 1:n){\n  print(a[i])\n}\n\n## Working with packages\n# install.packages(\"tidyverse\")\nlibrary(tidyverse)\n \ncar_frame &lt;- mpg\n\nggplot(data = car_frame) + \n  geom_point(mapping = aes(x=displ,y=hwy))\n\nggplot(data = car_frame) + \n  geom_point(mapping = aes(x=displ,y=hwy, color=class))\n  \nggplot(data = car_frame) + \n  geom_point(mapping = aes(x=displ,y=hwy)) +\n  geom_smooth(mapping = aes(x=displ,y=hwy))\n\nggplot(data = car_frame, mapping = aes(x=displ,y=hwy)) + \n  geom_point() +\n  geom_smooth()"
+    "text": "R Script\n\n\n# Seminar 1, Group 3\n\n# values\nx &lt;- 3 + sin(pi/2)\nx\nsqrt(x)\nx &lt;- sqrt(x)\n\ny &lt;- \"word\"\nz &lt;- \"2\"\n\n## Sequence\n\nv &lt;- seq(1,10)\nv2 &lt;- 1:10\n\nfor(i in 1:10) {\n  print(i)\n}\n\nv3 &lt;- seq(0,100,10)\n\n## vectors\n\nw &lt;- c(12,1,2,3)\nsort(w)\nlength(w)\ntypeof(w)\n\n## indexing\nw[3]\n\nn &lt;- length(w)\nfor(i in 1:n) {\n  print(w[i])\n}\n\n## coercion: changing type\n\nn &lt;- length(w)\nfor(i in 1:n) {\n  print(as.character(w[i]))\n}\n## likewise, as.numeric() as.integer() \n\n## packages\n\n## tidyverse\n#install.package(\"tidyverse\")\nlibrary(tidyverse)\n\ncar_frame &lt;- mpg\n\nggplot(data=car_frame) +\n  geom_point(mapping=aes(x=displ,y=hwy, color=class)) \n\nggplot(data=car_frame) +\n  geom_point(mapping=aes(x=displ,y=hwy)) + \n  geom_smooth(mapping=aes(x=displ,y=hwy))"
   },
   {
-    "objectID": "seminar-1-grp-4.html#r-markdown",
-    "href": "seminar-1-grp-4.html#r-markdown",
+    "objectID": "seminar-1-grp-3.html#r-markdown",
+    "href": "seminar-1-grp-3.html#r-markdown",
     "title": "Group 1: Seminar 1",
     "section": "R Markdown",
-    "text": "R Markdown\nLink to published published markdown: html.\n\n\n---\ntitle: \"Seminar 1, Group 4\"\noutput: html_document\n---\n\n## Markup\n\nmake a list\n\n- item 1\n- item 2\n  - sub-item 2.1\n  \nnumbered list\n\n1. number 1\n2. number 2\n\nAdd math\n\n$$\nY = X\\beta + u\n$$\nin line $\\beta$. \n\n## Adding code\n\nCode block\n\n```{r}\nlibrary(tidyverse)\n \ncar_frame &lt;- mpg\n\nggplot(data = car_frame) + \n  geom_point(mapping = aes(x=displ,y=hwy, color=class))\n```"
+    "text": "R Markdown\nLink to published published markdown: html.\n\n\n---\ntitle: \"seminar-1\"\noutput: html_document\n---\n\n## markup\n\nmake a list\n\n- item 1\n- item 2\n  - sub-item 1\n  \nnumbers\n\n1. number 1\n2. number 2\n\nmath\n\n$$\nY = X\\beta + u\n$$\ninline math: $\\beta$\n\n## code\n\n```{r}\nlibrary(tidyverse)\n\ncar_frame &lt;- mpg\n\nggplot(data=car_frame) +\n  geom_point(mapping=aes(x=displ,y=hwy, color=class)) \n```"
   },
   {
-    "objectID": "seminar-1-grp-2.html",
-    "href": "seminar-1-grp-2.html",
+    "objectID": "seminar-1-grp-1.html",
+    "href": "seminar-1-grp-1.html",
     "title": "Group 1: Seminar 1",
     "section": "",
     "text": "Here is the material from today’s seminar."
   },
   {
-    "objectID": "seminar-1-grp-2.html#r-script",
-    "href": "seminar-1-grp-2.html#r-script",
+    "objectID": "seminar-1-grp-1.html#r-script",
+    "href": "seminar-1-grp-1.html#r-script",
     "title": "Group 1: Seminar 1",
     "section": "R Script",
-    "text": "R Script\n\n\n# Seminar 1, Group 2\n\n# Basics of R\n\n## Define values\n\nx &lt;- 3 + sin(pi/2)\nx\nsqrt(x)\ny &lt;- sqrt(x)\nz &lt;- \"word\"\n\n## sequence\nv &lt;- seq(1,10)\nv2 &lt;- 1:10\n\n## vectors/collections\nw &lt;- c(12,1,2,3)\ntypeof(w)\nlength(w)\n\n## Loop\nA &lt;- c(\"1\",\"2\",\"5\",\"8\")\ntypeof(A)\nn &lt;- length(A)\nfor(i in 1:n){\n  print(A[i])\n}\n\n## coercion\nfor(i in 1:n){\n  print(as.numeric(A[i]))\n}\n## also see as.integer or as.character\nA &lt;- as.numeric(A)\n\n## Part 2: packages\n#install.package(\"tidyverse\")\nlibrary(tidyverse)\n\ncar_frame &lt;- mpg\n\nggplot(data=car_frame) +\n  geom_point(mapping = aes(x=displ,y=hwy))\n\nggplot(data=car_frame) +\n  geom_point(mapping = aes(x=displ,y=hwy,color=class))"
+    "text": "R Script\n\n\n# Seminar 1 for Group 1\n\n# define values\nx &lt;- 3 + sin(pi/2) \nx \nsqrt(x)\ny &lt;- sqrt(x)\nz &lt;- \"word\"\n\n# define sequence:\nv&lt;- seq(1,10)\nv2 &lt;- 1:10\n\n# define vectors\nw &lt;- c(12,1,2,3)\nw\nw&lt;-sort(w)\nmin(w)\n\n# use an index to learn about the particular value of w\nw[2]\n\n# multiply all values\nw*2\nw/2\n\n# learn about the type and length of a vector\nA &lt;- c(\"1\",\"2\",\"5\",\"9\")\ntypeof(A)\nn &lt;- length(A)\n\n# use these elements in a loop\nfor(i in 1:n){\n  print(A[i])\n}\n\n# coercion: change the type of value stored\nfor(i in 1:n){\n  print(as.numeric(A[i]))\n}\n\n# Use packages\n\n#install.package(\"tidyverse\")\nlibrary(tidyverse)\n\ncar_frame &lt;- mpg\n\n# basic scatter plot\nggplot(data = car_frame) +\n  geom_point(mapping = aes(x=displ,y=hwy))\n\n# let the color of the dots change by class of vehicle\nggplot(data = car_frame) +\n  geom_point(mapping = aes(x=displ,y=hwy, color=class))\n\n# add multiple plots\nggplot(data = car_frame) +\n  geom_point(mapping = aes(x=displ,y=hwy)) + \n  geom_smooth(mapping = aes(x=displ,y=hwy))"
   },
   {
-    "objectID": "seminar-1-grp-2.html#r-markdown",
-    "href": "seminar-1-grp-2.html#r-markdown",
+    "objectID": "seminar-1-grp-1.html#r-markdown",
+    "href": "seminar-1-grp-1.html#r-markdown",
     "title": "Group 1: Seminar 1",
     "section": "R Markdown",
-    "text": "R Markdown\nLink to published published markdown: html.\n\n\n---\ntitle: \"Seminar 1, Group 2\"\noutput: html_document\n---\n\n## Markdown \n\nI want a list\n\n- item 1\n- item 2\n  - sub-item 1\n\nnumbers\n\n1. number 1\n2. number 2\n\nadd math\n\n$$\n Y = X\\beta + u\n$$\nin-line math; $\\beta$.\n\n## Add code\n\ncode-block:\n```{r}\nlibrary(tidyverse)\n\ncar_frame &lt;- mpg\n\nggplot(data=car_frame) +\n  geom_point(mapping = aes(x=displ,y=hwy))\n```"
+    "text": "R Markdown\nLink to published published markdown: html.\n\n\n---\ntitle: \"seminar-1\"\noutput: html_document\n---\n\n## Markdown\n\nFor example, a list\n\n- item 1\n- item 2\n\nnumbers\n\n1. number 1\n2. number 2\n\nMath\n$$\nY = X\\beta + u\n$$\nin line math: $Y= X\\beta + u$\n\n## Adding code\n\n```{r}\nlibrary(tidyverse)\ncar_frame &lt;- mpg\nggplot(data = car_frame) +\n  geom_point(mapping = aes(x=displ,y=hwy))\n```"
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "EC349: Data Science for Economists",
+    "objectID": "group-material/grp-5/seminar-1.html",
+    "href": "group-material/grp-5/seminar-1.html",
+    "title": "seminar-1",
     "section": "",
-    "text": "This is a Quarto website. To learn more about Quarto websites visit https://quarto.org/docs/websites.\nThe source code for this site can be found at https://github.com/neillo88/warwick-ec349.\nMoodle remains the primary source of material for this module."
+    "text": "list of items\n\nitem 1\nitem 2\n\nsub-item 2.1\n\n\nnumbered list\n\nnumber 1\nnumber 2\n\nbold italics\nmath\n\\[\nY = X\\beta + u\n\\]\ninline: \\(\\beta\\)"
   },
   {
-    "objectID": "index.html#helpful-links",
-    "href": "index.html#helpful-links",
-    "title": "EC349: Data Science for Economists",
-    "section": "Helpful links:",
-    "text": "Helpful links:\nHere are a few helpful links:\n\nRStudio Download\nMarkdown Guide\nQuarto\nTidyverse\n“R for Data Science”, 2nd Edition, by Hadley Wickham, Mine Çetinkaya-Rundel, and Garrett Grolemund.\nTranslating Stata to R"
+    "objectID": "group-material/grp-5/seminar-1.html#markup-basics",
+    "href": "group-material/grp-5/seminar-1.html#markup-basics",
+    "title": "seminar-1",
+    "section": "",
+    "text": "list of items\n\nitem 1\nitem 2\n\nsub-item 2.1\n\n\nnumbered list\n\nnumber 1\nnumber 2\n\nbold italics\nmath\n\\[\nY = X\\beta + u\n\\]\ninline: \\(\\beta\\)"
+  },
+  {
+    "objectID": "group-material/grp-5/seminar-1.html#embedding-code",
+    "href": "group-material/grp-5/seminar-1.html#embedding-code",
+    "title": "seminar-1",
+    "section": "embedding code",
+    "text": "embedding code\ncode block\n\nlibrary(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.1     ✔ tibble    3.2.1\n✔ lubridate 1.9.3     ✔ tidyr     1.3.1\n✔ purrr     1.0.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\ncar_frame &lt;- mpg\nggplot(data = car_frame) + \n  geom_point(mapping = aes(x=displ,y=hwy))"
   },
   {
     "objectID": "group-material/grp-3/seminar-1.html",
@@ -196,66 +245,115 @@
     "text": "Adding code\nCode block\n\nlibrary(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.1     ✔ tibble    3.2.1\n✔ lubridate 1.9.3     ✔ tidyr     1.3.1\n✔ purrr     1.0.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\ncar_frame &lt;- mpg\n\nggplot(data = car_frame) + \n  geom_point(mapping = aes(x=displ,y=hwy, color=class))"
   },
   {
-    "objectID": "seminar-1-grp-1.html",
-    "href": "seminar-1-grp-1.html",
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "EC349: Data Science for Economists",
+    "section": "",
+    "text": "This is a Quarto website. To learn more about Quarto websites visit https://quarto.org/docs/websites.\nThe source code for this site can be found at https://github.com/neillo88/warwick-ec349.\nMoodle remains the primary source of material for this module."
+  },
+  {
+    "objectID": "index.html#helpful-links",
+    "href": "index.html#helpful-links",
+    "title": "EC349: Data Science for Economists",
+    "section": "Helpful links:",
+    "text": "Helpful links:\nHere are a few helpful links:\n\nRStudio Download\nMarkdown Guide\nQuarto\nTidyverse\n“R for Data Science”, 2nd Edition, by Hadley Wickham, Mine Çetinkaya-Rundel, and Garrett Grolemund.\nTranslating Stata to R"
+  },
+  {
+    "objectID": "seminar-1-grp-2.html",
+    "href": "seminar-1-grp-2.html",
     "title": "Group 1: Seminar 1",
     "section": "",
     "text": "Here is the material from today’s seminar."
   },
   {
-    "objectID": "seminar-1-grp-1.html#r-script",
-    "href": "seminar-1-grp-1.html#r-script",
+    "objectID": "seminar-1-grp-2.html#r-script",
+    "href": "seminar-1-grp-2.html#r-script",
     "title": "Group 1: Seminar 1",
     "section": "R Script",
-    "text": "R Script\n\n\n# Seminar 1 for Group 1\n\n# define values\nx &lt;- 3 + sin(pi/2) \nx \nsqrt(x)\ny &lt;- sqrt(x)\nz &lt;- \"word\"\n\n# define sequence:\nv&lt;- seq(1,10)\nv2 &lt;- 1:10\n\n# define vectors\nw &lt;- c(12,1,2,3)\nw\nw&lt;-sort(w)\nmin(w)\n\n# use an index to learn about the particular value of w\nw[2]\n\n# multiply all values\nw*2\nw/2\n\n# learn about the type and length of a vector\nA &lt;- c(\"1\",\"2\",\"5\",\"9\")\ntypeof(A)\nn &lt;- length(A)\n\n# use these elements in a loop\nfor(i in 1:n){\n  print(A[i])\n}\n\n# coercion: change the type of value stored\nfor(i in 1:n){\n  print(as.numeric(A[i]))\n}\n\n# Use packages\n\n#install.package(\"tidyverse\")\nlibrary(tidyverse)\n\ncar_frame &lt;- mpg\n\n# basic scatter plot\nggplot(data = car_frame) +\n  geom_point(mapping = aes(x=displ,y=hwy))\n\n# let the color of the dots change by class of vehicle\nggplot(data = car_frame) +\n  geom_point(mapping = aes(x=displ,y=hwy, color=class))\n\n# add multiple plots\nggplot(data = car_frame) +\n  geom_point(mapping = aes(x=displ,y=hwy)) + \n  geom_smooth(mapping = aes(x=displ,y=hwy))"
+    "text": "R Script\n\n\n# Seminar 1, Group 2\n\n# Basics of R\n\n## Define values\n\nx &lt;- 3 + sin(pi/2)\nx\nsqrt(x)\ny &lt;- sqrt(x)\nz &lt;- \"word\"\n\n## sequence\nv &lt;- seq(1,10)\nv2 &lt;- 1:10\n\n## vectors/collections\nw &lt;- c(12,1,2,3)\ntypeof(w)\nlength(w)\n\n## Loop\nA &lt;- c(\"1\",\"2\",\"5\",\"8\")\ntypeof(A)\nn &lt;- length(A)\nfor(i in 1:n){\n  print(A[i])\n}\n\n## coercion\nfor(i in 1:n){\n  print(as.numeric(A[i]))\n}\n## also see as.integer or as.character\nA &lt;- as.numeric(A)\n\n## Part 2: packages\n#install.package(\"tidyverse\")\nlibrary(tidyverse)\n\ncar_frame &lt;- mpg\n\nggplot(data=car_frame) +\n  geom_point(mapping = aes(x=displ,y=hwy))\n\nggplot(data=car_frame) +\n  geom_point(mapping = aes(x=displ,y=hwy,color=class))"
   },
   {
-    "objectID": "seminar-1-grp-1.html#r-markdown",
-    "href": "seminar-1-grp-1.html#r-markdown",
+    "objectID": "seminar-1-grp-2.html#r-markdown",
+    "href": "seminar-1-grp-2.html#r-markdown",
     "title": "Group 1: Seminar 1",
     "section": "R Markdown",
-    "text": "R Markdown\nLink to published published markdown: html.\n\n\n---\ntitle: \"seminar-1\"\noutput: html_document\n---\n\n## Markdown\n\nFor example, a list\n\n- item 1\n- item 2\n\nnumbers\n\n1. number 1\n2. number 2\n\nMath\n$$\nY = X\\beta + u\n$$\nin line math: $Y= X\\beta + u$\n\n## Adding code\n\n```{r}\nlibrary(tidyverse)\ncar_frame &lt;- mpg\nggplot(data = car_frame) +\n  geom_point(mapping = aes(x=displ,y=hwy))\n```"
+    "text": "R Markdown\nLink to published published markdown: html.\n\n\n---\ntitle: \"Seminar 1, Group 2\"\noutput: html_document\n---\n\n## Markdown \n\nI want a list\n\n- item 1\n- item 2\n  - sub-item 1\n\nnumbers\n\n1. number 1\n2. number 2\n\nadd math\n\n$$\n Y = X\\beta + u\n$$\nin-line math; $\\beta$.\n\n## Add code\n\ncode-block:\n```{r}\nlibrary(tidyverse)\n\ncar_frame &lt;- mpg\n\nggplot(data=car_frame) +\n  geom_point(mapping = aes(x=displ,y=hwy))\n```"
   },
   {
-    "objectID": "seminar-1-grp-3.html",
-    "href": "seminar-1-grp-3.html",
+    "objectID": "seminar-1-grp-4.html",
+    "href": "seminar-1-grp-4.html",
     "title": "Group 1: Seminar 1",
     "section": "",
     "text": "Here is the material from today’s seminar."
   },
   {
-    "objectID": "seminar-1-grp-3.html#r-script",
-    "href": "seminar-1-grp-3.html#r-script",
+    "objectID": "seminar-1-grp-4.html#r-script",
+    "href": "seminar-1-grp-4.html#r-script",
     "title": "Group 1: Seminar 1",
     "section": "R Script",
-    "text": "R Script\n\n\n# Seminar 1, Group 3\n\n# values\nx &lt;- 3 + sin(pi/2)\nx\nsqrt(x)\nx &lt;- sqrt(x)\n\ny &lt;- \"word\"\nz &lt;- \"2\"\n\n## Sequence\n\nv &lt;- seq(1,10)\nv2 &lt;- 1:10\n\nfor(i in 1:10) {\n  print(i)\n}\n\nv3 &lt;- seq(0,100,10)\n\n## vectors\n\nw &lt;- c(12,1,2,3)\nsort(w)\nlength(w)\ntypeof(w)\n\n## indexing\nw[3]\n\nn &lt;- length(w)\nfor(i in 1:n) {\n  print(w[i])\n}\n\n## coercion: changing type\n\nn &lt;- length(w)\nfor(i in 1:n) {\n  print(as.character(w[i]))\n}\n## likewise, as.numeric() as.integer() \n\n## packages\n\n## tidyverse\n#install.package(\"tidyverse\")\nlibrary(tidyverse)\n\ncar_frame &lt;- mpg\n\nggplot(data=car_frame) +\n  geom_point(mapping=aes(x=displ,y=hwy, color=class)) \n\nggplot(data=car_frame) +\n  geom_point(mapping=aes(x=displ,y=hwy)) + \n  geom_smooth(mapping=aes(x=displ,y=hwy))"
+    "text": "R Script\n\n\n# Seminar 1, group 4\n\n# defining values\n\nx &lt;- 3 + sin(pi/2)\nsqrt(x)\nx &lt;- sqrt(x)\n\nw &lt;- \"2\"\nv &lt;- \"word of the day\"\n\nw &lt;- as.numeric(w)\n# also see as.character as.integer\n\n# sequences\ng &lt;- seq(1,10)\nh &lt;- 1:10\n\nfor(i in 1:10) {\n  print(i)\n}\n\n# vectors\na &lt;- c(12,1,2,3) \na[3]\nsort(a)\nb &lt;- sort(a)  \nb[3]  \n\ntypeof(a)\nlength(a)\n\nn &lt;- length(a)\nfor(i in 1:n){\n  print(a[i])\n}\n\n## Working with packages\n# install.packages(\"tidyverse\")\nlibrary(tidyverse)\n \ncar_frame &lt;- mpg\n\nggplot(data = car_frame) + \n  geom_point(mapping = aes(x=displ,y=hwy))\n\nggplot(data = car_frame) + \n  geom_point(mapping = aes(x=displ,y=hwy, color=class))\n  \nggplot(data = car_frame) + \n  geom_point(mapping = aes(x=displ,y=hwy)) +\n  geom_smooth(mapping = aes(x=displ,y=hwy))\n\nggplot(data = car_frame, mapping = aes(x=displ,y=hwy)) + \n  geom_point() +\n  geom_smooth()"
   },
   {
-    "objectID": "seminar-1-grp-3.html#r-markdown",
-    "href": "seminar-1-grp-3.html#r-markdown",
+    "objectID": "seminar-1-grp-4.html#r-markdown",
+    "href": "seminar-1-grp-4.html#r-markdown",
     "title": "Group 1: Seminar 1",
     "section": "R Markdown",
-    "text": "R Markdown\nLink to published published markdown: html.\n\n\n---\ntitle: \"seminar-1\"\noutput: html_document\n---\n\n## markup\n\nmake a list\n\n- item 1\n- item 2\n  - sub-item 1\n  \nnumbers\n\n1. number 1\n2. number 2\n\nmath\n\n$$\nY = X\\beta + u\n$$\ninline math: $\\beta$\n\n## code\n\n```{r}\nlibrary(tidyverse)\n\ncar_frame &lt;- mpg\n\nggplot(data=car_frame) +\n  geom_point(mapping=aes(x=displ,y=hwy, color=class)) \n```"
+    "text": "R Markdown\nLink to published published markdown: html.\n\n\n---\ntitle: \"Seminar 1, Group 4\"\noutput: html_document\n---\n\n## Markup\n\nmake a list\n\n- item 1\n- item 2\n  - sub-item 2.1\n  \nnumbered list\n\n1. number 1\n2. number 2\n\nAdd math\n\n$$\nY = X\\beta + u\n$$\nin line $\\beta$. \n\n## Adding code\n\nCode block\n\n```{r}\nlibrary(tidyverse)\n \ncar_frame &lt;- mpg\n\nggplot(data = car_frame) + \n  geom_point(mapping = aes(x=displ,y=hwy, color=class))\n```"
   },
   {
-    "objectID": "seminar-1-grp-5.html",
-    "href": "seminar-1-grp-5.html",
-    "title": "Group 1: Seminar 1",
+    "objectID": "seminar-1.html",
+    "href": "seminar-1.html",
+    "title": "Seminar 1",
     "section": "",
-    "text": "Here is the material from today’s seminar."
+    "text": "The goal for this seminar is to:\n\nensure everyone has successfully installed R and RStudio;\nreview some R basics;\nreview tidyverse packages\n\nggplot\ndplyr\n\ncreate and publish a RMarkdown file;\nintroduction to GitHub."
   },
   {
-    "objectID": "seminar-1-grp-5.html#r-script",
-    "href": "seminar-1-grp-5.html#r-script",
-    "title": "Group 1: Seminar 1",
-    "section": "R Script",
-    "text": "R Script\n\n\n# Delete everything\nrm(list = ls())\n\n################################################################################\n# R-Basics\n################################################################################\n\n## Define a single value:\n\nx &lt;- 3 + sin(pi/2)\nx\nsqrt(x) #Note, this does NOT create a new stored value\ny &lt;- sqrt(x) #This DOES create a new stored value\n\npishort &lt;- round(pi, 4)\n\nz &lt;- \"word\"\nz\n\n## Define sequences, vectors, and matrices:\n\n### Sequences\nv &lt;- seq(1,10)\nv\nv2 &lt;- 1:10\nt(v)\nt(t(v))\n\n### Combine (in vector or list)\nw &lt;- c(12,1,2,3) #i.e., winter-months\nsort(w)\nw # Main object has not changed\nmin(w)\nt(w)\nt(t(w))\n\n### Apply operation to all elements\nw2 &lt;- c(-1,0,2,3) *2\nw2\n\nw2 / 0\n\n### Matrices: appears as data, not value\nW &lt;- matrix(w) \nprint(W)\nt(W)\n\nW2 &lt;- cbind(w,w2) \nW2\nrbind(w,w2)\n\n### vectors have two properites: length and type\n\ntypeof(1:10)\ntypeof(seq(1,10))\ntypeof(v)\nlength(v)\n\n### coercion: converting from one type to another\nnums &lt;- c(\"1\", \"2\", \"3\")\ntypeof(nums)\nnums\nnums1 &lt;- as.integer(nums) #note: you can use similar functions such as as.numeric, as.character\ntypeof(nums1)\nnums1\nnums2 &lt;- as.numeric(nums)\ntypeof(nums2)\nnums2\n\n### named vectors\nnamed &lt;- c(x=1, y=2, z=4)\nnamed\n\n### specific position within a vector\nx &lt;- c(\"one\", \"two\", \"three\", \"four\", \"five\")\nx[c(3, 2, 5)]\nx[c(-3, -4)]\n\n### proportion of non-missing values\nx&lt;-c(10, 3, NA, 5, 8, 1, NA)\nmean(!is.na(x))\n\n\n## Lists\n\nx &lt;- list(\"a\", \"b\", 1:10)\nlength(x)\ntypeof(x)\nx[[1]]\nx[[3]]\ntypeof(x[[1]])\ntypeof(x[[3]])\n\n### lists can be recursive\nz &lt;- list(list(1,2), list(3,4))\n\n### subsetting a list\ncheck &lt;- list(a=1:3, b=\"a string\", c=pi, d=list(-1,5))\n\ncheck[1:2]\n\n### [[]] removes hierarchy from a list\nanother_list &lt;- check[[4]]\nanother_list[1] \nanother_list[[1]] \n\n################################################################################\n# Packages\n################################################################################\n\n## Install packages\n#install.package(tidyverse) # designed for \"tidy\" data\n\n## Load library\nlibrary(tidyverse) # includes ggplot\n\n#Do cars with big engines use more fuel than cars with small engines?\n\n#loading mpg data frame\ncar_frame &lt;- mpg\n\n#hwy measures fuel efficiency on a highway (miles per gallon) and displ measures engine displacement (in litres)\n\nggplot(data = car_frame) + \n  geom_point(mapping=aes(x=displ, y=hwy))\n\n#ggplot alone gives us an empty graph, just indicating the dataset to be used\n\nggplot(data = car_frame)\n\n#we add layers on top, geom_point adds a layer of points\n\n#mapping is always paired with an aesthetic  \n\n#aesthetic is a visual property of plotted objects (axis, size, color, symbol)\n\n#ggplot(data=&lt;DATA&gt;) + &lt;GEOM FUNCTION&gt;(mapping=aes(&lt;MAPPINGS&gt;))\n\nggplot(data = car_frame) + \n  geom_point(mapping=aes(x=displ, y=hwy))\n\n#aesthetics of different points can be conditional on values of variables in the dataset\n\n#plot different classes of cars using different colors\n\nggplot(data = mpg) + \n  geom_point(mapping=aes(x=displ, y=hwy, color=class))\n\n#we can match class to size of the points, though it doesn't look pretty\n\nggplot(data = mpg) + \n  geom_point(mapping=aes(x=displ, y=hwy, size=class))\n\n#alpha for transparency, shape (careful, MAX 6 shapes at a time by default)\n\nggplot(data = mpg) + \n  geom_point(mapping=aes(x=displ, y=hwy, shape=class))\n\n#note x and y are aesthetics too (related to location) \n\n#you can set aesthetics manually, let's make all points blue -&gt; IT GOES OUTSIDE AES\n\nggplot(data = car_frame) + \n  geom_point(mapping=aes(x=displ, y=hwy), color=\"blue\")\n\n#color and continuous variables\n\nggplot(data = mpg) + \n  geom_point(mapping=aes(x=displ, y=hwy, color=cty))\n\n#conditional aesthetic\n\nggplot(data = mpg) + \n  geom_point(mapping=aes(x=displ, y=hwy, color=displ&lt;5))\n\n#facets (separate plots for different categories of data)\n\nggplot(data = mpg) + \n  geom_point(mapping=aes(x=displ, y=hwy)) +\n  facet_wrap(~ class, nrow=2)\n\n#facets with multiple variables\n\nggplot(data = mpg) + \n  geom_point(mapping=aes(x=displ, y=hwy)) +\n  facet_grid(drv ~ cyl)\n\n#geoms are geometrical objects that a plot uses to represent data\n\n#all geoms take a mapping argument, but not every aesthetic works with every geom\n\n#geom smooth adds a regression line to the plot\n\nggplot(data = car_frame) +\n  geom_smooth(mapping = aes(x=displ, y=hwy))\n\n#we can very linetype by drivetrain\n#note on drivetrains: f = front-wheel drive, r = rear wheel drive, 4 = 4wd\n\nggplot(data = car_frame) +\n  geom_smooth(mapping = aes(x=displ, y=hwy, linetype=drv))\n\n#for geoms where data is summarized by one object (such as a line) you can create subplots by grouping on a variable (it does not add a legend)\n\nggplot(data = car_frame) +\n  geom_smooth(mapping = aes(x=displ, y=hwy, group=drv))\n\n#we can display two geoms in the same plot\n\nggplot(data = car_frame) +\n  geom_point(mapping=aes(x=displ, y=hwy)) +\n  geom_smooth(mapping=aes(x=displ, y=hwy))\n\n#global mappings vs local mappings\n\nggplot(data = car_frame, mapping=aes(x=displ, y=hwy)) +\n  geom_point() +\n  geom_smooth(color=\"red\")\n\n# you can use different data for each layer (also LOCAL overrides GLOBAL)\n\nggplot(data = car_frame, mapping=aes(x=displ, y=hwy)) +\n  geom_smooth(\n    se = FALSE\n  ) +\n  geom_smooth(\n    data = filter(car_frame, class == \"subcompact\"),\n    color=\"red\",\n    se = FALSE\n  )\n\n#Basic bar graph\n\nggplot(data = car_frame) +\n  geom_bar(mapping = aes(x=drv))\n\n\n## Load library\nlibrary(dplyr) \n# https://dplyr.tidyverse.org/\n# comes installed in tidyverse\n# otherwise install.package(dplyr) \n\n### Main functions: mutate, select, filter, summarize, arrange\n\n### Filter\nsuv &lt;- filter(car_frame,class==\"suv\")\n\n### Select - specific variables\nsuv &lt;- select(suv,hwy,cty,displ,drv)\n\n### Mutate - transform/add existing variables\nsuv &lt;- mutate(suv,ratio = cty/hwy,hwy_d = hwy/displ,cty_d = cty/displ)\n\n  # see also, transmute() to keep only new variables\n\nsummarize(suv, avg_cty=mean(cty, na.rm = TRUE))\n\nsuv_bydrv &lt;- group_by(suv, drv)\n\nsummarize(suv_bydrv, cat_m=mean(cty_d, na.rm = TRUE))\n\ndrv_stats &lt;- summarize(suv_bydrv, \n                       count=n(),\n                       cty_d=mean(cty_d, na.rm = TRUE),\n                       hwy_d=mean(hwy_d, na.rm = TRUE)\n                       ) \n\nggplot(data=drv_stats, mapping=aes(x=cty_d, y=hwy_d)) +\n  geom_point(aes(size=count)) \n\n\n\n#it is more efficient to perform the same using pipe %&gt;% \n\ndrv_stats2 &lt;- car_frame %&gt;% \n  filter(class==\"suv\") %&gt;%\n  mutate(ratio = cty/hwy,hwy_d = hwy/displ,cty_d = cty/displ) %&gt;%\n  group_by(drv) %&gt;%\n  summarize( \n            count=n(),\n            cty_d=mean(cty_d, na.rm = TRUE),\n            hwy_d=mean(hwy_d, na.rm = TRUE)\n  )"
+    "objectID": "seminar-1.html#overview",
+    "href": "seminar-1.html#overview",
+    "title": "Seminar 1",
+    "section": "",
+    "text": "The goal for this seminar is to:\n\nensure everyone has successfully installed R and RStudio;\nreview some R basics;\nreview tidyverse packages\n\nggplot\ndplyr\n\ncreate and publish a RMarkdown file;\nintroduction to GitHub."
   },
   {
-    "objectID": "seminar-1-grp-5.html#r-markdown",
-    "href": "seminar-1-grp-5.html#r-markdown",
-    "title": "Group 1: Seminar 1",
-    "section": "R Markdown",
-    "text": "R Markdown\nLink to published published markdown: html.\n\n\n---\ntitle: \"Seminar 1\"\nauthor: Neil Lloyd\ndate: 20 January 2025\noutput: html_document\n---\n\n## Installation\n\nYou may need to `install.packages(\"rmarkdown\")`. \n\n## Basics of markdown\n\nCheck out this link to learn more about the basics of [Markdown](https://www.markdownguide.org/basic-syntax/). \n\nFor example, you can make lists;\n\n- item 1\n- item 2\n\n*Note, be sure to add a line-break before and after the list.*\n\nordered/numbered lists; \n\n1. number 1\n2. number 2\n\nuse LaTeX;\n$$\n  Y = X\\beta + u\n$$\neven, inline $Y = X\\beta + u$.\n\n\n## Adding code\n\nLoad `tidyverse` library. Check this [link](https://rmarkdown.rstudio.com/lesson-3.html) to learn how to hide code-blocks and compress messages/warnings.\n\n```{r,include=FALSE}\nlibrary(tidyverse)\n```\n\nCreate graph \n```{r, fig.cap = \"My graph\"}\ncar_frame &lt;- mpg\nggplot(data = car_frame) +\n  geom_point(mapping=aes(x=displ, y=hwy)) +\n  geom_smooth(mapping=aes(x=displ, y=hwy))\n```\n\n## Quarto\n\nI would recommend that you investigate the cool things you can do with [Quarto](https://quarto.org/). \n\n## Git and GitHub\n\nHere's a great [youtube](https://www.youtube.com/watch?v=RGOj5yH7evk) on Git and GitHub.\n\nThe basic steps, *I used*:\n\n1. Create a [GitHub](https://github.com/) account. \n2. Install [Git](https://git-scm.com/downloads) on your computer. This will include an app called Git Bash. You can also check out [Git Desktop](https://desktop.github.com/download/). I have found it easier to follow the steps below, which can be executed from Git Bash or the terminal within RStudio. \n3. I typically follow the following steps laid out on this [blog](https://www.freecodecamp.org/news/the-beginners-guide-to-git-github/) under the heading \"*Type 2: Work on your project locally then create the repository on GitHub and push it to remote.*\""
+    "objectID": "seminar-1.html#installing-r-and-rstudio",
+    "href": "seminar-1.html#installing-r-and-rstudio",
+    "title": "Seminar 1",
+    "section": "Installing R and RStudio",
+    "text": "Installing R and RStudio\nFollow instructions outlined at https://posit.co/download/rstudio-desktop/.\nMore advanced users may wish to investigate Positron, a new IDE for R from the creators of RStudio."
+  },
+  {
+    "objectID": "seminar-1.html#r-basics",
+    "href": "seminar-1.html#r-basics",
+    "title": "Seminar 1",
+    "section": "R basics",
+    "text": "R basics\nR is a programming language designed by Statisticians for statistical computation and data visualization. This makes it is distinct from Stata, SPSS, or SAS which are statistical softwares. Base R has a range of built in functions and tools used in Econometrics and Data Science. However, the real strength of R is the wider ecosystem of user-written packages. In this section we will review a few features of base R. In the next section, we will look at the tidyverse package, focusing on two of its subsidiary packages ggplot and dplyr.\n\nSingle values\nWe begin by assign an object x a value using the operator &lt;-.\n\nx &lt;- 3 + sin(pi/2)\n\nIf you’re working in RStudio, x (=4) will appear as a stored value under the “Environment” tab. We can now use x in various computations; for example, solving for its square root.\n\nsqrt(x)\n\n[1] 2\n\n\nNote, doing so does not change the stored value of x. We could define a new value y as its square root or replace x with its square root.\ny &lt;- sqrt(x)\nx &lt;- sqrt(x)\nThe store value of x (and y) is now 2.\nValues need not be numerical. They can also stored characters (often referred to as strings in other languages/software). For example,\n\nz &lt;- \"United Kingdom\"\n\n\n\nSequences and Loops\nSequences are used extensively in programming. The most common place is in a loop that iterates through a sequence. We can define a sequence of numbers on in two ways. Consider the sequence \\(1,\\dots,10\\).\n\nu &lt;- seq(1,10)\nv &lt;- 1:10\n\nBoth give the same result, but the seq()-uence function is more flexible since it allows you adapt the interval. For example, we can we can make the intervals in the sequence \\(0.5\\).\n\nU &lt;- seq(1,10,0.5)\n\nAn immediate application of a sequence is in a loop. Consider a loop over the sequence \\(1(1)10\\) that simply prints the number of the loop.\n\nfor(i in 1:10){\n  print(i)\n}\n\n[1] 1\n[1] 2\n[1] 3\n[1] 4\n[1] 5\n[1] 6\n[1] 7\n[1] 8\n[1] 9\n[1] 10\n\n\n\n\nVectors and Matrices\nWhen stored as values, sequences are essentially vectors. A more flexible function for creating a vector is the c()-ombine function. We can combine a set of objects, numeric or character.\n\nw &lt;- c(12,1,2,3)\nW &lt;- c(\"12\",\"1\",\"2\",\"3\")\n\nVectors have two important features: length and type.\n\nlength(w)\n\n[1] 4\n\ntypeof(w)\n\n[1] \"double\"\n\ntypeof(W)\n\n[1] \"character\"\n\n\nYou can even include a sequence within the combination.\n\nw &lt;- c(12,1:3)\nw\n\n[1] 12  1  2  3\n\n\nWhen you print w (as above), it does so as a single row. However, if you use the t()-ranspose function, you will see that it displays as a row vector. Taking the transpose of the transpose shows you that the default is in fact to think about w as a column vector.\n\nt(w)\n\n     [,1] [,2] [,3] [,4]\n[1,]   12    1    2    3\n\nt(t(w))\n\n     [,1]\n[1,]   12\n[2,]    1\n[3,]    2\n[4,]    3\n\n\nHere are a few fuctions that may be useful:\n\n# minimum\nmin(w)\n\n[1] 1\n\n# maximum\nmax(w)\n\n[1] 12\n\n# sort\nsort(w)\n\n[1]  1  2  3 12\n\n\nNote, sort(w) outputs a sorted version of w, but does not change the stored order of values in w. Multiplication/division by a scalar, is element by element.\n\nw*2\n\n[1] 24  2  4  6\n\nw/2\n\n[1] 6.0 0.5 1.0 1.5\n\n\nWe can combine two columns to form a matrix.\n\nA &lt;- cbind(w,seq(1,4))\nA\n\n      w  \n[1,] 12 1\n[2,]  1 2\n[3,]  2 3\n[4,]  3 4\n\nB &lt;- rbind(w,seq(1,4))\nB\n\n  [,1] [,2] [,3] [,4]\nw   12    1    2    3\n     1    2    3    4\n\n\nInterestingly, this shows us that R does not fix the row-column dimension of a vector. Else, rbind() would give you a \\(8\\times 1\\) vector. We can achieve this result by first fixing w as a \\(4\\times 1\\) matrix.\n\nC &lt;- rbind(matrix(w),matrix(seq(1,4)))\nC\n\n     [,1]\n[1,]   12\n[2,]    1\n[3,]    2\n[4,]    3\n[5,]    1\n[6,]    2\n[7,]    3\n[8,]    4\n\n\nWhen working with vectors (and matrices) it is important to know how to index specific values. For example, if you want the third value of w you can say,\n\nw[3]\n\n[1] 2\n\n\nWe can now consider a loop that prints the elements of w and W'. Here, I use thelength()` function to know the stopping point of the loop.\n\nn &lt;- length(w)\nfor(i in 1:n){\n  print(w[i])\n  print(W[i])\n}\n\n[1] 12\n[1] \"12\"\n[1] 1\n[1] \"1\"\n[1] 2\n[1] \"2\"\n[1] 3\n[1] \"3\"\n\n\nSuppose, we wanted to change change the type of W from character to numeric and w as a character.\n\nfor(i in 1:n){\n  print(as.character(w[i]))\n  print(as.numeric(W[i]))\n}\n\n[1] \"12\"\n[1] 12\n[1] \"1\"\n[1] 1\n[1] \"2\"\n[1] 2\n[1] \"3\"\n[1] 3\n\n\nIn this instance, as.integer would work in place of as.numeric.\n\n\nLists\nLists can combine multiple types of data and/or values. The can become relatively complex collections, that employ a hierarchical structure to navigate. When you scrape data from a website it will usually be structured in a list.\n\nsite &lt;- list(\"22 January 2025\",\"United Kingdom\",1:10,A)\ntypeof(site)\n\n[1] \"list\"\n\nlength(site)\n\n[1] 4\n\n\nThe above list has length 4 as it includes for items. The third item is a sequence from \\(1(1)10\\). We can index a particular element of the list by indexing.\n\nsite[3]\n\n[[1]]\n [1]  1  2  3  4  5  6  7  8  9 10\n\ntypeof(site[[3]])\n\n[1] \"integer\"\n\nlength(site[[3]])\n\n[1] 10\n\n\nLists can be recursive\n\npage &lt;- list(list(\"22 January 2025\",\"United Kingdom\"),list(\"URL\",\"download-date\"))\n\nYou can then extract a sublist,\n\npage1 &lt;- page[[1]]\nelement11 &lt;- page1[[1]]"
+  },
+  {
+    "objectID": "seminar-1.html#tidy-data-with-tidyverse",
+    "href": "seminar-1.html#tidy-data-with-tidyverse",
+    "title": "Seminar 1",
+    "section": "‘Tidy’ data with tidyverse",
+    "text": "‘Tidy’ data with tidyverse\ntidyverse is a package designed for data scientists to create and analyse “tidy data” (see description from source). If you have analysed cross-sectional, longitudinal, or time-series data in Stata/R, then you are likely used to ‘tidy’ data. However, not all data is ‘tidy’. For example, when you scrape data from a website it has a complex structure with many levels (often using a list structure in R).\n‘Tidy’ data essentially has a matrix structure (sometimes referred to as “rectangular” data) where a row represents a unique observation, a column a unique variable, and a cell a unique value.\nTo use this package we need to first install it and then load its library.\n\n#install.package(\"tidyverse\")\nlibrary(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.1     ✔ tibble    3.2.1\n✔ lubridate 1.9.3     ✔ tidyr     1.3.1\n✔ purrr     1.0.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\n\nWe will two packages within tidyverse: ggplot2 and dplyr. By loading tidyverse library, these subsidiary libraries will also be loaded. ### Graphing with ggplot2\nggplot2 is a very flexible graphing function. You start off by defining the data frame being mapped. Here we will use a small dataset that is included in the ggplot2 package.\n\ncar_frame &lt;- mpg\n\nBrowsing this data in RStudio, you will see that it contains city and highway gas mileage (i.e. fuel economy) figures for various vehicles as well as the characteristics of these figures.\nWe begin by picking the data frame we wish to plot.\n\nggplot(data = car_frame)\n\n\n\n\n\n\n\n\nThis will plot a blank screen as we have not assigned any “geoms” to be graphed. We begin with a simple scatter plot of hwy (highway mileage) and displ (displacement). To do this, we must add a mapping which is paired to an aes()-thetic.\n\nggplot(data = car_frame) + \n  geom_point(mapping=aes(x=displ,y=hwy))\n\n\n\n\n\n\n\n\nWe can now modify the aesthetics of the graph. For example, by setting the colours of the points to vary with class of vehicle. You could also change the size and/or shape of the points by class: size=class or shape=class.\n\nggplot(data = car_frame) + \n  geom_point(mapping=aes(x=displ,y=hwy,color=class))\n\n\n\n\n\n\n\n\nThe color variable need not be categorical. For example, we could use a color gradient based on cty (city) mileage.\n\nggplot(data = car_frame) + \n  geom_point(mapping=aes(x=displ,y=hwy,color=cty))\n\n\n\n\n\n\n\n\nWe could make subplots by drive train class using facets.\n\nggplot(data = car_frame) + \n  geom_point(mapping=aes(x=displ,y=hwy,color=cty)) +\n  facet_wrap(~ drv,nrow=1)\n\n\n\n\n\n\n\n\nWe can also overlay a second geom. For example, a loess smoothing.\n\nggplot(data = car_frame) + \n  geom_point(mapping=aes(x=displ,y=hwy)) +\n  geom_smooth(mapping=aes(x=displ,y=hwy,color=\"red\"))\n\n`geom_smooth()` using method = 'loess' and formula = 'y ~ x'\n\n\n\n\n\n\n\n\n\nAs the aesthetic is shared across both geoms, we can make it common.\n\nggplot(data = car_frame,mapping=aes(x=displ,y=hwy)) + \n  geom_point() +\n  geom_smooth(color=\"red\")\n\nAlternatively, you can edit the data used for one geom.\n\nggplot(data = car_frame, mapping=aes(x=displ, y=hwy)) +\n  geom_smooth(\n    se = FALSE\n  ) +\n  geom_smooth(\n    data = filter(car_frame, class == \"subcompact\"),\n    color=\"red\",\n    se = FALSE\n  )\n\n`geom_smooth()` using method = 'loess' and formula = 'y ~ x'\n`geom_smooth()` using method = 'loess' and formula = 'y ~ x'\n\n\n\n\n\n\n\n\n\n\nCleaning data with dplyr\nThe dplyr has a number of useful functions used to create and modify ‘tidy’ data. These include: mutate,select,filter,summarize, and arrange.\nWe begin by making a new dataset that includes only SUV vehicles. We can do this using the filter function.\n\nsuv_frame &lt;- filter(car_frame,class==\"suv\")\n\nNote, the use of “==” to select a specific value. Next, we will select a subset of the variables.\n\nsuv_frame &lt;- select(suv_frame,hwy,cty,displ,drv)\n\nSuppose we wanted to create new variables based on the existing set, we can do this using mutate. See also, transmute to keep only new variables.\n\nsuv_frame &lt;- mutate(suv_frame,ratio = cty/hwy,hwy_d = hwy/displ,cty_d = cty/displ)\n\nsummarize allows you to compute statistics of the existing variables. For example, the average city mileage.\n\nsummarize(suv_frame, avg_cty=mean(cty, na.rm = TRUE))\n\n# A tibble: 1 × 1\n  avg_cty\n    &lt;dbl&gt;\n1    13.5\n\n\nBut, suppose you wanted statistics by drive-train type. We can do this by first grouping the data frame.\n\nsuv_frame &lt;- group_by(suv_frame, drv)\nsummarize(suv_frame, avg_cty=mean(cty_d, na.rm = TRUE))\n\n# A tibble: 2 × 2\n  drv   avg_cty\n  &lt;chr&gt;   &lt;dbl&gt;\n1 4        3.63\n2 r        2.24\n\n\nNotice, in each of these steps we transformed the same data frame. That is, the data argument remained the same in each step. We can code this more efficiently using a “pipe” operator.\n\ndrv_stats &lt;- car_frame %&gt;% \n  filter(class==\"suv\") %&gt;%\n  mutate(ratio = cty/hwy,hwy_d = hwy/displ,cty_d = cty/displ) %&gt;%\n  group_by(drv) %&gt;%\n  summarize( \n            count=n(),\n            cty_d=mean(cty_d, na.rm = TRUE),\n            hwy_d=mean(hwy_d, na.rm = TRUE)\n  )"
+  },
+  {
+    "objectID": "seminar-1.html#rmarkdown",
+    "href": "seminar-1.html#rmarkdown",
+    "title": "Seminar 1",
+    "section": "RMarkdown",
+    "text": "RMarkdown\nMarkdown is a markup language. It includes relatively simple formatting that can incorporate more “creative” features through embedded HTML and CSS elements.\nWhen programming in R using a .R-script file, by default, text is treated as code. If you want to leave a comment, you need to comment-out the line using #. Markdown files flip this around: by default, any text is treated as plain text. Executable code must be placed within a code block for it to be executed. These blocks are then executed as a sequence of “chunks”.\n\nx &lt;- c(4,5,7,9)\n\nMarkdown files have a number of useful features; including,\n\nintuitive combination of code and text;\nstraight forward embedding of graphs;\npublication in a number of formats (including, html, pdf, docx);\ninclusion of LaTeX."
+  },
+  {
+    "objectID": "seminar-1.html#quarto",
+    "href": "seminar-1.html#quarto",
+    "title": "Seminar 1",
+    "section": "Quarto",
+    "text": "Quarto\nI would recommend that you investigate the cool things you can do with Quarto."
+  },
+  {
+    "objectID": "seminar-1.html#git-and-github",
+    "href": "seminar-1.html#git-and-github",
+    "title": "Seminar 1",
+    "section": "Git and GitHub",
+    "text": "Git and GitHub\nHere’s a great youtube on Git and GitHub. Git is a tool used to manage code, designed to deal with version control. GitHub is an online repository.\nThe basic steps, I used:\n\nCreate a GitHub account.\nInstall Git on your computer. This will include an app called Git Bash. You can also check out Git Desktop. I have found it easier to follow the steps below, which can be executed from Git Bash or the terminal within RStudio.\nI typically follow the following steps laid out on this blog under the heading “Type 2: Work on your project locally then create the repository on GitHub and push it to remote.”\n\nWhen using GitHub for a solo project, these are the commands I typically execute in the RStudio terminal when I’ve completed working on a section:\n\ngit status\ngit add .\ngit commit -m \"what I did\"\ngit push origin master\n\nWhen working in a team, you want to ensure that you first “pull” any changes before editing files. This avoids clashes that can be a pain to disentangle. Before editing:\n\ngit fetch - this will fetch the data from the online repo\ngit status - this will show whether you have any local changes\n\nIf you have any changes:\n\ngit add .\ngit commit -m \"what I did\"\n\nIf you don’t have any changes:\n\ngit pull origin master\n\nAfter edits are complete, check again for changes. In my experience, using GitHub does NOT AT ALL negate the need to communicate between team members. If you want to avoid issues with merging, you need be clear about who is working on what when."
   }
 ]
