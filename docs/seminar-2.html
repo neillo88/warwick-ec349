@@ -867,6 +867,7 @@ node), split, n, deviance, yval
 </section>
 <section id="bagging" class="level2">
 <h2 class="anchored" data-anchor-id="bagging">Bagging</h2>
+<p>You can implement Bagging using the <code>randomForest</code> code (see p.&nbsp;357). The function <code>ipred</code> is also suggested in the notes. All you need to do is ensure that you always predict on all regressors. In this example, there are 10 regressors.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">8</span>)</span>
 <span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>bag.credit <span class="ot">&lt;-</span> <span class="fu">randomForest</span>(Balance <span class="sc">~</span> . , <span class="at">data=</span> credit.train,<span class="at">mtry =</span> <span class="dv">10</span>, <span class="at">importance =</span> <span class="cn">TRUE</span>)</span>
@@ -897,9 +898,10 @@ No. of variables tried at each split: 10
 </section>
 <section id="random-forest" class="level2">
 <h2 class="anchored" data-anchor-id="random-forest">Random Forest</h2>
+<p>You can implement Random Forest using the same code. All you need to do is ensure that you reduce the number of regressors selected each time.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">9</span>)</span>
-<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>forest.credit <span class="ot">&lt;-</span> <span class="fu">randomForest</span>(Balance <span class="sc">~</span> . , <span class="at">data=</span> credit.train,<span class="at">mtry =</span> <span class="dv">10</span>, <span class="at">importance =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>forest.credit <span class="ot">&lt;-</span> <span class="fu">randomForest</span>(Balance <span class="sc">~</span> . , <span class="at">data=</span> credit.train,<span class="at">mtry =</span> <span class="dv">5</span>, <span class="at">importance =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>forest.pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(forest.credit, <span class="at">newdata =</span> credit.test)</span>
 <span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(forest.pred , credit.testY)</span>
 <span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a> <span class="fu">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -912,21 +914,21 @@ No. of variables tried at each split: 10
 </div>
 <div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>MSE.forest <span class="ot">&lt;-</span> <span class="fu">mean</span>((forest.pred <span class="sc">-</span> credit.testY)<span class="sc">^</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>We can view the importance of each variable:</p>
+<p>We can view the importance of each variable (see p.359):</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">importance</span>(forest.credit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>             %IncMSE IncNodePurity
-Income    65.6344496    4435353.87
-Limit     44.5100467   34575258.49
-Rating    26.2543973   20230908.15
-Cards      1.7636025     178265.35
-Age        6.1622703     429923.12
-Education  4.1044398     378287.40
-Own       -1.8976022      57244.49
-Student   55.5654832    2778949.90
-Married   -0.2942654      99967.08
-Region    -2.1374350     134736.65</code></pre>
+Income    42.3912507     6330962.3
+Limit     34.6335482    27443953.1
+Rating    30.0028867    24137311.4
+Cards      1.5694270      416814.6
+Age        3.5262315     1269395.6
+Education  2.5241391      713138.2
+Own       -0.4445780      112842.9
+Student   43.3139207     2529273.1
+Married   -0.4083316      152515.5
+Region     0.4913264      297770.1</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">varImpPlot</span>(forest.credit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -953,7 +955,7 @@ PrunedTree  49255.46
 Tree2       34343.51
 PrunedTree2 34343.51
 Bag         12386.55
-Forest      12738.86</code></pre>
+Forest      17411.44</code></pre>
 </div>
 </div>
 

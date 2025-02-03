@@ -250,6 +250,8 @@ MSE.prune2 <- mean((prune.pred2 - credit.testY)^2)
 
 ## Bagging
 
+You can implement Bagging using the `randomForest` code (see p. 357). The function `ipred` is also suggested in the notes. All you need to do is ensure that you always predict on all regressors. In this example, there are 10 regressors. 
+
 ```{r}
 set.seed(8)
 bag.credit <- randomForest(Balance ~ . , data= credit.train,mtry = 10, importance = TRUE)
@@ -264,16 +266,18 @@ MSE.bag <- mean((bag.pred - credit.testY)^2)
 
 ## Random Forest
 
+You can implement Random Forest using the same code. All you need to do is ensure that you reduce the number of regressors selected each time. 
+
 ```{r}
 set.seed(9)
-forest.credit <- randomForest(Balance ~ . , data= credit.train,mtry = 10, importance = TRUE)
+forest.credit <- randomForest(Balance ~ . , data= credit.train,mtry = 5, importance = TRUE)
 forest.pred <- predict(forest.credit, newdata = credit.test)
 plot(forest.pred , credit.testY)
  abline(0, 1)
 MSE.forest <- mean((forest.pred - credit.testY)^2)
 ```
 
-We can view the importance of each variable:
+We can view the importance of each variable (see p.359):
 
 ```{r}
 importance(forest.credit)

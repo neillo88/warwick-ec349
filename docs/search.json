@@ -60,21 +60,21 @@
     "href": "seminar-2.html#bagging",
     "title": "Seminar 2",
     "section": "Bagging",
-    "text": "Bagging\n\nset.seed(8)\nbag.credit &lt;- randomForest(Balance ~ . , data= credit.train,mtry = 10, importance = TRUE)\nbag.credit\n\n\nCall:\n randomForest(formula = Balance ~ ., data = credit.train, mtry = 10,      importance = TRUE) \n               Type of random forest: regression\n                     Number of trees: 500\nNo. of variables tried at each split: 10\n\n          Mean of squared residuals: 14245.24\n                    % Var explained: 93.34\n\nbag.pred &lt;- predict(bag.credit , newdata = credit.test)\nplot(bag.pred , credit.testY)\n abline(0, 1)\n\n\n\n\n\n\n\nMSE.bag &lt;- mean((bag.pred - credit.testY)^2)"
+    "text": "Bagging\nYou can implement Bagging using the randomForest code (see p. 357). The function ipred is also suggested in the notes. All you need to do is ensure that you always predict on all regressors. In this example, there are 10 regressors.\n\nset.seed(8)\nbag.credit &lt;- randomForest(Balance ~ . , data= credit.train,mtry = 10, importance = TRUE)\nbag.credit\n\n\nCall:\n randomForest(formula = Balance ~ ., data = credit.train, mtry = 10,      importance = TRUE) \n               Type of random forest: regression\n                     Number of trees: 500\nNo. of variables tried at each split: 10\n\n          Mean of squared residuals: 14245.24\n                    % Var explained: 93.34\n\nbag.pred &lt;- predict(bag.credit , newdata = credit.test)\nplot(bag.pred , credit.testY)\n abline(0, 1)\n\n\n\n\n\n\n\nMSE.bag &lt;- mean((bag.pred - credit.testY)^2)"
   },
   {
     "objectID": "seminar-2.html#random-forest",
     "href": "seminar-2.html#random-forest",
     "title": "Seminar 2",
     "section": "Random Forest",
-    "text": "Random Forest\n\nset.seed(9)\nforest.credit &lt;- randomForest(Balance ~ . , data= credit.train,mtry = 10, importance = TRUE)\nforest.pred &lt;- predict(forest.credit, newdata = credit.test)\nplot(forest.pred , credit.testY)\n abline(0, 1)\n\n\n\n\n\n\n\nMSE.forest &lt;- mean((forest.pred - credit.testY)^2)\n\nWe can view the importance of each variable:\n\nimportance(forest.credit)\n\n             %IncMSE IncNodePurity\nIncome    65.6344496    4435353.87\nLimit     44.5100467   34575258.49\nRating    26.2543973   20230908.15\nCards      1.7636025     178265.35\nAge        6.1622703     429923.12\nEducation  4.1044398     378287.40\nOwn       -1.8976022      57244.49\nStudent   55.5654832    2778949.90\nMarried   -0.2942654      99967.08\nRegion    -2.1374350     134736.65\n\nvarImpPlot(forest.credit)"
+    "text": "Random Forest\nYou can implement Random Forest using the same code. All you need to do is ensure that you reduce the number of regressors selected each time.\n\nset.seed(9)\nforest.credit &lt;- randomForest(Balance ~ . , data= credit.train,mtry = 5, importance = TRUE)\nforest.pred &lt;- predict(forest.credit, newdata = credit.test)\nplot(forest.pred , credit.testY)\n abline(0, 1)\n\n\n\n\n\n\n\nMSE.forest &lt;- mean((forest.pred - credit.testY)^2)\n\nWe can view the importance of each variable (see p.359):\n\nimportance(forest.credit)\n\n             %IncMSE IncNodePurity\nIncome    42.3912507     6330962.3\nLimit     34.6335482    27443953.1\nRating    30.0028867    24137311.4\nCards      1.5694270      416814.6\nAge        3.5262315     1269395.6\nEducation  2.5241391      713138.2\nOwn       -0.4445780      112842.9\nStudent   43.3139207     2529273.1\nMarried   -0.4083316      152515.5\nRegion     0.4913264      297770.1\n\nvarImpPlot(forest.credit)"
   },
   {
     "objectID": "seminar-2.html#comparison",
     "href": "seminar-2.html#comparison",
     "title": "Seminar 2",
     "section": "Comparison",
-    "text": "Comparison\n\nMSE &lt;- c(LM = MSE.lm, Ridge = MSE.ridge, LASSO = MSE.LASSO, Tree = MSE.tree, PrunedTree = MSE.prune, Tree2 = MSE.tree2, PrunedTree2 = MSE.prune2, Bag = MSE.bag, Forest = MSE.forest)\nt(t(MSE))\n\n                [,1]\nLM          12361.96\nRidge       15751.42\nLASSO       15751.42\nTree        39324.74\nPrunedTree  49255.46\nTree2       34343.51\nPrunedTree2 34343.51\nBag         12386.55\nForest      12738.86"
+    "text": "Comparison\n\nMSE &lt;- c(LM = MSE.lm, Ridge = MSE.ridge, LASSO = MSE.LASSO, Tree = MSE.tree, PrunedTree = MSE.prune, Tree2 = MSE.tree2, PrunedTree2 = MSE.prune2, Bag = MSE.bag, Forest = MSE.forest)\nt(t(MSE))\n\n                [,1]\nLM          12361.96\nRidge       15751.42\nLASSO       15751.42\nTree        39324.74\nPrunedTree  49255.46\nTree2       34343.51\nPrunedTree2 34343.51\nBag         12386.55\nForest      17411.44"
   },
   {
     "objectID": "seminar-1-grp-5.html",
