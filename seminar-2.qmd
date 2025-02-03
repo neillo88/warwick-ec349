@@ -5,25 +5,36 @@ format: html
 
 ## Overview
 
-The goal of seminar 2 is to review the questions in Problem Set 1. Many of these questions do no require R and will be discussed in person during class. For this reason, I have decided to include just some material related to:
+The goal of seminar 2 is to review the questions in Problem Set 1. Many of these questions do no require R and a selection will be discussed in person during class. Here, you will find an initial attempt at Q11.
 
-**Question 11:** Try repeating exercises with another dataset available here: <https://www.statlearning.com/resources-second-edition>. 
+**Question 11:** Try repeating exercises with another dataset available here: <https://www.statlearning.com/resources-second-edition>.
 
-I have chosen to use the file Credit.csv, which includes the debt levels of 400 individuals. 
+For this exercise, I have chosen to use the file Credit.csv, which includes the debt levels of 400 individuals. The exercise will be predict the credit-balance of card holders using the other information in the file.
+
+::: {#exr-q11}
+Download one of the datasets and apply each of the models below. In addition, try to improve on my code by using functions in `tidyverse` package. For example, look at this [example](https://www.geeksforgeeks.org/logistic-regression-in-r-programming/?ref=header_outind) that uses `dplyr` package to create the training and testing data. 
+:::
 
 ## Load packages and data
 
 ```{r}
+#| output: false
+#| warning: false
+
 library(tidyverse)
 library(glmnet)
 library(tree)
+library(rpart)
+library(rpart.plot)
 library(randomForest)
 
+# read in csv
 credit.base <- read.csv("seminar-material/Credit.csv",header=TRUE, stringsAsFactors=TRUE)
-
 ```
 
 ## Create training and testing database
+
+The outcome of interest is "Balance", which appears as the last variable in the data.
 
 ```{r}
 set.seed(1)
@@ -46,82 +57,118 @@ credit.testY <- credit.test[,ncol(credit.train)]
 lm.credit <- lm(Balance ~ ., data = credit.train)
 summary(lm.credit)
 ```
-Now we can compute the MSE
+
+Compute the predicted values and MSE
+
 ```{r}
 lm.pred <- predict(lm.credit, newdata = credit.testX)
+plot(lm.pred , credit.testY)
+ abline(0, 1)
 MSE.lm <- mean((lm.pred - credit.testY)^2)
 ```
-
+::: {.callout-note title="Non-linear models"}
+For discrete outcomes, see probit/logit models: <https://www.geeksforgeeks.org/logistic-regression-in-r-programming/?ref=header_outind>. And for categorical variables, see multinomial logit models: <https://www.geeksforgeeks.org/multinomial-logistic-regression-in-r/>. This resource uses the `vglm` function.
+:::
 ## Ridge regression
 
+The dataset contains factor variables: these have numerical values with labels attached (e.g. "Yes","No"). When using a function like `lm()` it will convert this two a set of dummy variables.
+
+::: {.callout-warning title="Matrices with factor variables"}
+The `glmnet` function wants you to input a Y and X matrix. I had trouble using the `as.matrix()` function with the factor variables. As a solution (courtesy of ChatGPT), I first convert the X's into a matrix where the factor variable appear as dummy variables.
+:::
+
 ```{r}
-ridge.credit <- glmnet(credit.trainX, credit.trainY, alpha=0, lamnda=3, thresh = 1e-12)
+credit.trainX.mat <- model.matrix(~ ., data = credit.trainX)[, -1]
+credit.testX.mat <- model.matrix(~ ., data = credit.testX)[, -1]
+```
+
+The `as.matrix` function works fine for the outcome variable. We can now estimate the model.
+
+```{r}
+ridge.credit <- glmnet(credit.trainX.mat, as.matrix(credit.trainY), alpha=0, lamnda=3, thresh = 1e-12)
 #coef(ridge.credit)
 ```
 
 Adding cross-validation
+
 ```{r}
-cv.out <- cv.glmnet(as.matrix(credit.trainX),as.matrix(credit.trainY), alpha=0, nfold=3)
+cv.out <- cv.glmnet(credit.trainX.mat,as.matrix(credit.trainY), alpha=0, nfold=3)
 plot(cv.out)
 lambda.ridge.cv <- cv.out$lambda.min
 ```
 
 Re-estimate using cross-validated lambda
+
 ```{r}
-ridge.credit <- glmnet(credit.trainX, credit.trainY, alpha=0, lamnda=lambda.ridge.cv, thresh = 1e-12)
+ridge.credit <- glmnet(credit.trainX.mat, as.matrix(credit.trainY), alpha=0, lamnda=lambda.ridge.cv, thresh = 1e-12)
 ```
 
 Fit the model in the test data
+
 ```{r}
-ridge.pred <- predict(ridge.credit, s = lambda.ridge.cv, newx = as.matrix(credit.testX))
+ridge.pred <- predict(ridge.credit, s = lambda.ridge.cv, newx = credit.testX.mat)
+plot(ridge.pred , credit.testY)
+ abline(0, 1)
 MSE.ridge <- mean((ridge.pred - credit.testY)^2)
 ```
 
 ## LASSO
+
 Repeat the above steps with cross-validation, but setting `alpha=1`.
+
 ```{r}
-cv.out <- cv.glmnet(as.matrix(credit.trainX),as.matrix(credit.trainY), alpha=1, nfold=3)
+cv.out <- cv.glmnet(credit.trainX.mat,as.matrix(credit.trainY), alpha=1, nfold=3)
 plot(cv.out)
 lambda.LASSO.cv <- cv.out$lambda.min
 ```
 
 Re-estimate using cross-validated lambda
+
 ```{r}
-LASSO.credit <- glmnet(credit.trainX, credit.trainY, alpha=0, lamnda=lambda.LASSO.cv, thresh = 1e-12)
+LASSO.credit <- glmnet(credit.trainX.mat, as.matrix(credit.trainY), alpha=0, lamnda=lambda.LASSO.cv, thresh = 1e-12)
 ```
 
 Fit the model in the test data
+
 ```{r}
-LASSO.pred <- predict(LASSO.credit, s = lambda.LASSO.cv, newx = as.matrix(credit.testX))
+LASSO.pred <- predict(LASSO.credit, s = lambda.LASSO.cv, newx = credit.testX.mat)
+plot(LASSO.pred , credit.testY)
+ abline(0, 1)
 MSE.LASSO <- mean((LASSO.pred - credit.testY)^2)
 ```
 
 ## Regression Trees
+
+I first tried following the coded examples in James *et al.* (2023) Chapter 8. However, the pruning process was not clear. Next, I followed the advice of <https://www.geeksforgeeks.org/how-to-prune-a-tree-in-r/> using the `rpart` package.
+
+### Version 1
+
+Here is the first version using the `tree` package.
 
 ```{r}
 tree.credit <- tree(Balance ~ ., data = credit.train)
 summary(tree.credit)
 tree.credit
 ```
-We can plot the tree as follows:
+
+Plot the tree
+
 ```{r}
-tree.pred <- predict(tree.credit, newdata = credit.test)
-MSE.tree <- mean((tree.pred - credit.testY)^2)
 plot(tree.credit)
   text(tree.credit , pretty = 1)
 ```
 
-A simpler tree with only two variables
+Compute the predicted values and MSE:
+
 ```{r}
-tree.credit <- tree(Balance ~ Age + Limit, data = credit.train)
-partition.tree(tree.credit)
-points(credit.train[, c("Age", "Limit")], cex = .4)
-plot(tree.credit)
- text(tree.credit, pretty = 1)
- title(main = "Unpruned Regression Tree")
+tree.pred <- predict(tree.credit, newdata = credit.test)
+plot(tree.pred , credit.testY)
+ abline(0, 1)
+MSE.tree <- mean((tree.pred - credit.testY)^2)
 ```
 
 Pruned tree (following example on P.355):
+
 ```{r}
 set.seed(789)
 cvtree.credit <- cv.tree(tree.credit, FUN = prune.tree)
@@ -133,12 +180,72 @@ plot(cvtree.credit$k, cvtree.credit$dev, type = "b")
 ```
 
 Prune the tree, predict and compute MSE, and plot new tree
+
 ```{r}
-prune.credit <- prune.tree(tree.credit , best = 9)
-prune.pred <- predict(prune.credit, newdata = credit.test)
-MSE.prune <- mean((prune.pred - credit.testY)^2)
+prune.credit <- prune.tree(tree.credit , best = 8)
 plot(prune.credit)
  text(prune.credit , pretty = 1)
+```
+
+Compute predicted values
+
+```{r}
+prune.pred <- predict(prune.credit, newdata = credit.test)
+plot(prune.pred , credit.testY)
+ abline(0, 1)
+MSE.prune <- mean((prune.pred - credit.testY)^2)
+```
+
+### Version 2
+Next, using the `rpart` package. I get the following:
+
+```{r}
+tree.credit2 <- rpart(Balance ~ ., data = credit.train, method = "anova")
+summary(tree.credit2)
+tree.credit2
+```
+
+This package makes nicer plots:
+
+```{r}
+rpart.plot(tree.credit2)
+```
+
+Compute predicted values and MSE:
+
+```{r}
+tree.pred2 <- predict(tree.credit2, newdata = credit.test)
+plot(tree.pred2 , credit.testY)
+ abline(0, 1)
+MSE.tree2 <- mean((tree.pred2 - credit.testY)^2)
+```
+
+Plot the cost-complexity parameter of the tree
+
+```{r}
+plotcp(tree.credit2)
+```
+
+Use cross-validation to pick the optimal cp parameter:
+
+```{r}
+# Get the optimal cp value
+optimal.cp <- tree.credit2$cptable[which.min(tree.credit2$cptable[,"xerror"]), "CP"]
+
+# Prune the tree
+prune.credit2 <- prune(tree.credit2, cp = optimal.cp)
+
+# Plot the pruned tree
+rpart.plot(prune.credit2)
+```
+
+Compute predicted values and MSE for pruned tree:
+
+```{r}
+prune.pred2 <- predict(prune.credit2, newdata = credit.test)
+plot(prune.pred2 , credit.testY)
+ abline(0, 1)
+MSE.prune2 <- mean((prune.pred2 - credit.testY)^2)
 ```
 
 ## Bagging
@@ -161,10 +268,13 @@ MSE.bag <- mean((bag.pred - credit.testY)^2)
 set.seed(9)
 forest.credit <- randomForest(Balance ~ . , data= credit.train,mtry = 10, importance = TRUE)
 forest.pred <- predict(forest.credit, newdata = credit.test)
+plot(forest.pred , credit.testY)
+ abline(0, 1)
 MSE.forest <- mean((forest.pred - credit.testY)^2)
 ```
 
 We can view the importance of each variable:
+
 ```{r}
 importance(forest.credit)
 varImpPlot(forest.credit)
@@ -173,6 +283,6 @@ varImpPlot(forest.credit)
 ## Comparison
 
 ```{r}
-MSE <- c(LM = MSE.lm, Ridge = MSE.ridge, LASSO = MSE.LASSO, PrunedTree = MSE.prune, Bag = MSE.bag, Forest = MSE.forest)
+MSE <- c(LM = MSE.lm, Ridge = MSE.ridge, LASSO = MSE.LASSO, Tree = MSE.tree, PrunedTree = MSE.prune, Tree2 = MSE.tree2, PrunedTree2 = MSE.prune2, Bag = MSE.bag, Forest = MSE.forest)
 t(t(MSE))
 ```
