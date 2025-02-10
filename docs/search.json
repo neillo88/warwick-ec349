@@ -77,230 +77,6 @@
     "text": "Comparison\n\nMSE &lt;- c(LM = MSE.lm, Ridge = MSE.ridge, LASSO = MSE.LASSO, Tree = MSE.tree, PrunedTree = MSE.prune, Tree2 = MSE.tree2, PrunedTree2 = MSE.prune2, Bag = MSE.bag, Forest = MSE.forest)\nt(t(MSE))\n\n                [,1]\nLM          12361.96\nRidge       15751.42\nLASSO       15751.42\nTree        39324.74\nPrunedTree  49255.46\nTree2       34343.51\nPrunedTree2 34343.51\nBag         12386.55\nForest      17411.44"
   },
   {
-    "objectID": "seminar-1-grp-5.html",
-    "href": "seminar-1-grp-5.html",
-    "title": "Group 5: Seminar 1",
-    "section": "",
-    "text": "Here is the material from today’s seminar."
-  },
-  {
-    "objectID": "seminar-1-grp-5.html#r-script",
-    "href": "seminar-1-grp-5.html#r-script",
-    "title": "Group 5: Seminar 1",
-    "section": "R Script",
-    "text": "R Script\n\n\n# Seminar 1, Group 5\n\nx &lt;- 3 + sin(pi/2)\nsqrt(x)\ny &lt;- sqrt(x)\nw &lt;- \"2\"\ntypeof(w)\nv &lt;- as.numeric(w)\n\n# sequences\n\nm &lt;- seq(1,10)\nn &lt;- seq(0,10,2)\no &lt;- 1:10\n\nfor(i in 1:10) {\n  print(i)\n}\n\n# vectors\nA &lt;- c(\"1\", \"2\", \"5\", \"9\")\ntypeof(A)\nlength(A)\nn &lt;- length(A)\nfor(i in 1:n) {\n  print(as.numeric(A[i]))\n}\n\n## Packages\n#install.packages(\"tidyverse\")\nlibrary(tidyverse)\n\ncar_frame &lt;- mpg\nggplot(data = car_frame) + \n  geom_point(mapping = aes(x=displ,y=hwy))\n\nggplot(data = car_frame) + \n  geom_point(mapping = aes(x=displ,y=hwy, color=class))\n\nggplot(data = car_frame) + \n  geom_point(mapping = aes(x=displ,y=hwy)) +\n  geom_smooth(mapping = aes(x=displ,y=hwy))\n\nggplot(data = car_frame, mapping = aes(x=displ,y=hwy)) + \n  geom_point() +\n  geom_smooth()"
-  },
-  {
-    "objectID": "seminar-1-grp-5.html#r-markdown",
-    "href": "seminar-1-grp-5.html#r-markdown",
-    "title": "Group 5: Seminar 1",
-    "section": "R Markdown",
-    "text": "R Markdown\nLink to published published markdown: html.\n\n\n---\ntitle: \"seminar-1\"\noutput: html_document\n---\n\n## Markup basics\n\nlist of items\n\n- item 1\n- item 2\n  - sub-item 2.1\n  \nnumbered list\n\n1. number 1\n2. number 2\n\n**bold** *italics*\n\nmath\n\n$$\nY = X\\beta + u\n$$\n\ninline: $\\beta$\n\n## embedding code\n\ncode block\n\n```{r}\nlibrary(tidyverse)\n\ncar_frame &lt;- mpg\nggplot(data = car_frame) + \n  geom_point(mapping = aes(x=displ,y=hwy))\n```"
-  },
-  {
-    "objectID": "seminar-1-grp-3.html",
-    "href": "seminar-1-grp-3.html",
-    "title": "Group 1: Seminar 1",
-    "section": "",
-    "text": "Here is the material from today’s seminar."
-  },
-  {
-    "objectID": "seminar-1-grp-3.html#r-script",
-    "href": "seminar-1-grp-3.html#r-script",
-    "title": "Group 1: Seminar 1",
-    "section": "R Script",
-    "text": "R Script\n\n\n# Seminar 1, Group 3\n\n# values\nx &lt;- 3 + sin(pi/2)\nx\nsqrt(x)\nx &lt;- sqrt(x)\n\ny &lt;- \"word\"\nz &lt;- \"2\"\n\n## Sequence\n\nv &lt;- seq(1,10)\nv2 &lt;- 1:10\n\nfor(i in 1:10) {\n  print(i)\n}\n\nv3 &lt;- seq(0,100,10)\n\n## vectors\n\nw &lt;- c(12,1,2,3)\nsort(w)\nlength(w)\ntypeof(w)\n\n## indexing\nw[3]\n\nn &lt;- length(w)\nfor(i in 1:n) {\n  print(w[i])\n}\n\n## coercion: changing type\n\nn &lt;- length(w)\nfor(i in 1:n) {\n  print(as.character(w[i]))\n}\n## likewise, as.numeric() as.integer() \n\n## packages\n\n## tidyverse\n#install.package(\"tidyverse\")\nlibrary(tidyverse)\n\ncar_frame &lt;- mpg\n\nggplot(data=car_frame) +\n  geom_point(mapping=aes(x=displ,y=hwy, color=class)) \n\nggplot(data=car_frame) +\n  geom_point(mapping=aes(x=displ,y=hwy)) + \n  geom_smooth(mapping=aes(x=displ,y=hwy))"
-  },
-  {
-    "objectID": "seminar-1-grp-3.html#r-markdown",
-    "href": "seminar-1-grp-3.html#r-markdown",
-    "title": "Group 1: Seminar 1",
-    "section": "R Markdown",
-    "text": "R Markdown\nLink to published published markdown: html.\n\n\n---\ntitle: \"seminar-1\"\noutput: html_document\n---\n\n## markup\n\nmake a list\n\n- item 1\n- item 2\n  - sub-item 1\n  \nnumbers\n\n1. number 1\n2. number 2\n\nmath\n\n$$\nY = X\\beta + u\n$$\ninline math: $\\beta$\n\n## code\n\n```{r}\nlibrary(tidyverse)\n\ncar_frame &lt;- mpg\n\nggplot(data=car_frame) +\n  geom_point(mapping=aes(x=displ,y=hwy, color=class)) \n```"
-  },
-  {
-    "objectID": "seminar-1-grp-1.html",
-    "href": "seminar-1-grp-1.html",
-    "title": "Group 1: Seminar 1",
-    "section": "",
-    "text": "Here is the material from today’s seminar."
-  },
-  {
-    "objectID": "seminar-1-grp-1.html#r-script",
-    "href": "seminar-1-grp-1.html#r-script",
-    "title": "Group 1: Seminar 1",
-    "section": "R Script",
-    "text": "R Script\n\n\n# Seminar 1 for Group 1\n\n# define values\nx &lt;- 3 + sin(pi/2) \nx \nsqrt(x)\ny &lt;- sqrt(x)\nz &lt;- \"word\"\n\n# define sequence:\nv&lt;- seq(1,10)\nv2 &lt;- 1:10\n\n# define vectors\nw &lt;- c(12,1,2,3)\nw\nw&lt;-sort(w)\nmin(w)\n\n# use an index to learn about the particular value of w\nw[2]\n\n# multiply all values\nw*2\nw/2\n\n# learn about the type and length of a vector\nA &lt;- c(\"1\",\"2\",\"5\",\"9\")\ntypeof(A)\nn &lt;- length(A)\n\n# use these elements in a loop\nfor(i in 1:n){\n  print(A[i])\n}\n\n# coercion: change the type of value stored\nfor(i in 1:n){\n  print(as.numeric(A[i]))\n}\n\n# Use packages\n\n#install.package(\"tidyverse\")\nlibrary(tidyverse)\n\ncar_frame &lt;- mpg\n\n# basic scatter plot\nggplot(data = car_frame) +\n  geom_point(mapping = aes(x=displ,y=hwy))\n\n# let the color of the dots change by class of vehicle\nggplot(data = car_frame) +\n  geom_point(mapping = aes(x=displ,y=hwy, color=class))\n\n# add multiple plots\nggplot(data = car_frame) +\n  geom_point(mapping = aes(x=displ,y=hwy)) + \n  geom_smooth(mapping = aes(x=displ,y=hwy))"
-  },
-  {
-    "objectID": "seminar-1-grp-1.html#r-markdown",
-    "href": "seminar-1-grp-1.html#r-markdown",
-    "title": "Group 1: Seminar 1",
-    "section": "R Markdown",
-    "text": "R Markdown\nLink to published published markdown: html.\n\n\n---\ntitle: \"seminar-1\"\noutput: html_document\n---\n\n## Markdown\n\nFor example, a list\n\n- item 1\n- item 2\n\nnumbers\n\n1. number 1\n2. number 2\n\nMath\n$$\nY = X\\beta + u\n$$\nin line math: $Y= X\\beta + u$\n\n## Adding code\n\n```{r}\nlibrary(tidyverse)\ncar_frame &lt;- mpg\nggplot(data = car_frame) +\n  geom_point(mapping = aes(x=displ,y=hwy))\n```"
-  },
-  {
-    "objectID": "group-material/grp-5/seminar-1.html",
-    "href": "group-material/grp-5/seminar-1.html",
-    "title": "seminar-1",
-    "section": "",
-    "text": "list of items\n\nitem 1\nitem 2\n\nsub-item 2.1\n\n\nnumbered list\n\nnumber 1\nnumber 2\n\nbold italics\nmath\n\\[\nY = X\\beta + u\n\\]\ninline: \\(\\beta\\)"
-  },
-  {
-    "objectID": "group-material/grp-5/seminar-1.html#markup-basics",
-    "href": "group-material/grp-5/seminar-1.html#markup-basics",
-    "title": "seminar-1",
-    "section": "",
-    "text": "list of items\n\nitem 1\nitem 2\n\nsub-item 2.1\n\n\nnumbered list\n\nnumber 1\nnumber 2\n\nbold italics\nmath\n\\[\nY = X\\beta + u\n\\]\ninline: \\(\\beta\\)"
-  },
-  {
-    "objectID": "group-material/grp-5/seminar-1.html#embedding-code",
-    "href": "group-material/grp-5/seminar-1.html#embedding-code",
-    "title": "seminar-1",
-    "section": "embedding code",
-    "text": "embedding code\ncode block\n\nlibrary(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.1     ✔ tibble    3.2.1\n✔ lubridate 1.9.3     ✔ tidyr     1.3.1\n✔ purrr     1.0.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\ncar_frame &lt;- mpg\nggplot(data = car_frame) + \n  geom_point(mapping = aes(x=displ,y=hwy))"
-  },
-  {
-    "objectID": "group-material/grp-3/seminar-1.html",
-    "href": "group-material/grp-3/seminar-1.html",
-    "title": "seminar-1",
-    "section": "",
-    "text": "make a list\n\nitem 1\nitem 2\n\nsub-item 1\n\n\nnumbers\n\nnumber 1\nnumber 2\n\nmath\n\\[\nY = X\\beta + u\n\\] inline math: \\(\\beta\\)"
-  },
-  {
-    "objectID": "group-material/grp-3/seminar-1.html#markup",
-    "href": "group-material/grp-3/seminar-1.html#markup",
-    "title": "seminar-1",
-    "section": "",
-    "text": "make a list\n\nitem 1\nitem 2\n\nsub-item 1\n\n\nnumbers\n\nnumber 1\nnumber 2\n\nmath\n\\[\nY = X\\beta + u\n\\] inline math: \\(\\beta\\)"
-  },
-  {
-    "objectID": "group-material/grp-3/seminar-1.html#code",
-    "href": "group-material/grp-3/seminar-1.html#code",
-    "title": "seminar-1",
-    "section": "code",
-    "text": "code\n\nlibrary(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.1     ✔ tibble    3.2.1\n✔ lubridate 1.9.3     ✔ tidyr     1.3.1\n✔ purrr     1.0.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\ncar_frame &lt;- mpg\n\nggplot(data=car_frame) +\n  geom_point(mapping=aes(x=displ,y=hwy, color=class))"
-  },
-  {
-    "objectID": "group-material/grp-1/seminar-1.html",
-    "href": "group-material/grp-1/seminar-1.html",
-    "title": "seminar-1",
-    "section": "",
-    "text": "For example, a list\n\nitem 1\nitem 2\n\nnumbers\n\nnumber 1\nnumber 2\n\nMath \\[\nY = X\\beta + u\n\\] in line math: \\(Y= X\\beta + u\\)"
-  },
-  {
-    "objectID": "group-material/grp-1/seminar-1.html#markdown",
-    "href": "group-material/grp-1/seminar-1.html#markdown",
-    "title": "seminar-1",
-    "section": "",
-    "text": "For example, a list\n\nitem 1\nitem 2\n\nnumbers\n\nnumber 1\nnumber 2\n\nMath \\[\nY = X\\beta + u\n\\] in line math: \\(Y= X\\beta + u\\)"
-  },
-  {
-    "objectID": "group-material/grp-1/seminar-1.html#adding-code",
-    "href": "group-material/grp-1/seminar-1.html#adding-code",
-    "title": "seminar-1",
-    "section": "Adding code",
-    "text": "Adding code\n\nlibrary(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.1     ✔ tibble    3.2.1\n✔ lubridate 1.9.3     ✔ tidyr     1.3.1\n✔ purrr     1.0.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\ncar_frame &lt;- mpg\nggplot(data = car_frame) +\n  geom_point(mapping = aes(x=displ,y=hwy))"
-  },
-  {
-    "objectID": "group-material/grp-2/seminar-1.html",
-    "href": "group-material/grp-2/seminar-1.html",
-    "title": "Seminar 1, Group 2",
-    "section": "",
-    "text": "I want a list\n\nitem 1\nitem 2\n\nsub-item 1\n\n\nnumbers\n\nnumber 1\nnumber 2\n\nadd math\n\\[\nY = X\\beta + u\n\\] in-line math; \\(\\beta\\)."
-  },
-  {
-    "objectID": "group-material/grp-2/seminar-1.html#markdown",
-    "href": "group-material/grp-2/seminar-1.html#markdown",
-    "title": "Seminar 1, Group 2",
-    "section": "",
-    "text": "I want a list\n\nitem 1\nitem 2\n\nsub-item 1\n\n\nnumbers\n\nnumber 1\nnumber 2\n\nadd math\n\\[\nY = X\\beta + u\n\\] in-line math; \\(\\beta\\)."
-  },
-  {
-    "objectID": "group-material/grp-2/seminar-1.html#add-code",
-    "href": "group-material/grp-2/seminar-1.html#add-code",
-    "title": "Seminar 1, Group 2",
-    "section": "Add code",
-    "text": "Add code\ncode-block:\n\nlibrary(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.1     ✔ tibble    3.2.1\n✔ lubridate 1.9.3     ✔ tidyr     1.3.1\n✔ purrr     1.0.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\ncar_frame &lt;- mpg\n\nggplot(data=car_frame) +\n  geom_point(mapping = aes(x=displ,y=hwy))"
-  },
-  {
-    "objectID": "group-material/grp-4/seminar-1.html",
-    "href": "group-material/grp-4/seminar-1.html",
-    "title": "Seminar 1, Group 4",
-    "section": "",
-    "text": "make a list\n\nitem 1\nitem 2\n\nsub-item 2.1\n\n\nnumbered list\n\nnumber 1\nnumber 2\n\nAdd math\n\\[\nY = X\\beta + u\n\\] in line \\(\\beta\\)."
-  },
-  {
-    "objectID": "group-material/grp-4/seminar-1.html#markup",
-    "href": "group-material/grp-4/seminar-1.html#markup",
-    "title": "Seminar 1, Group 4",
-    "section": "",
-    "text": "make a list\n\nitem 1\nitem 2\n\nsub-item 2.1\n\n\nnumbered list\n\nnumber 1\nnumber 2\n\nAdd math\n\\[\nY = X\\beta + u\n\\] in line \\(\\beta\\)."
-  },
-  {
-    "objectID": "group-material/grp-4/seminar-1.html#adding-code",
-    "href": "group-material/grp-4/seminar-1.html#adding-code",
-    "title": "Seminar 1, Group 4",
-    "section": "Adding code",
-    "text": "Adding code\nCode block\n\nlibrary(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.1     ✔ tibble    3.2.1\n✔ lubridate 1.9.3     ✔ tidyr     1.3.1\n✔ purrr     1.0.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\ncar_frame &lt;- mpg\n\nggplot(data = car_frame) + \n  geom_point(mapping = aes(x=displ,y=hwy, color=class))"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "EC349: Data Science for Economists",
-    "section": "",
-    "text": "This is a Quarto website. To learn more about Quarto websites visit https://quarto.org/docs/websites.\nThe source code for this site can be found at https://github.com/neillo88/warwick-ec349.\nMoodle remains the primary source of material for this module."
-  },
-  {
-    "objectID": "index.html#helpful-links",
-    "href": "index.html#helpful-links",
-    "title": "EC349: Data Science for Economists",
-    "section": "Helpful links:",
-    "text": "Helpful links:\nHere are a few helpful links:\n\nRStudio Download\nMarkdown Guide\nQuarto\nTidyverse\n“R for Data Science”, 2nd Edition, by Hadley Wickham, Mine Çetinkaya-Rundel, and Garrett Grolemund.\nTranslating Stata to R"
-  },
-  {
-    "objectID": "seminar-1-grp-2.html",
-    "href": "seminar-1-grp-2.html",
-    "title": "Group 1: Seminar 1",
-    "section": "",
-    "text": "Here is the material from today’s seminar."
-  },
-  {
-    "objectID": "seminar-1-grp-2.html#r-script",
-    "href": "seminar-1-grp-2.html#r-script",
-    "title": "Group 1: Seminar 1",
-    "section": "R Script",
-    "text": "R Script\n\n\n# Seminar 1, Group 2\n\n# Basics of R\n\n## Define values\n\nx &lt;- 3 + sin(pi/2)\nx\nsqrt(x)\ny &lt;- sqrt(x)\nz &lt;- \"word\"\n\n## sequence\nv &lt;- seq(1,10)\nv2 &lt;- 1:10\n\n## vectors/collections\nw &lt;- c(12,1,2,3)\ntypeof(w)\nlength(w)\n\n## Loop\nA &lt;- c(\"1\",\"2\",\"5\",\"8\")\ntypeof(A)\nn &lt;- length(A)\nfor(i in 1:n){\n  print(A[i])\n}\n\n## coercion\nfor(i in 1:n){\n  print(as.numeric(A[i]))\n}\n## also see as.integer or as.character\nA &lt;- as.numeric(A)\n\n## Part 2: packages\n#install.package(\"tidyverse\")\nlibrary(tidyverse)\n\ncar_frame &lt;- mpg\n\nggplot(data=car_frame) +\n  geom_point(mapping = aes(x=displ,y=hwy))\n\nggplot(data=car_frame) +\n  geom_point(mapping = aes(x=displ,y=hwy,color=class))"
-  },
-  {
-    "objectID": "seminar-1-grp-2.html#r-markdown",
-    "href": "seminar-1-grp-2.html#r-markdown",
-    "title": "Group 1: Seminar 1",
-    "section": "R Markdown",
-    "text": "R Markdown\nLink to published published markdown: html.\n\n\n---\ntitle: \"Seminar 1, Group 2\"\noutput: html_document\n---\n\n## Markdown \n\nI want a list\n\n- item 1\n- item 2\n  - sub-item 1\n\nnumbers\n\n1. number 1\n2. number 2\n\nadd math\n\n$$\n Y = X\\beta + u\n$$\nin-line math; $\\beta$.\n\n## Add code\n\ncode-block:\n```{r}\nlibrary(tidyverse)\n\ncar_frame &lt;- mpg\n\nggplot(data=car_frame) +\n  geom_point(mapping = aes(x=displ,y=hwy))\n```"
-  },
-  {
-    "objectID": "seminar-1-grp-4.html",
-    "href": "seminar-1-grp-4.html",
-    "title": "Group 1: Seminar 1",
-    "section": "",
-    "text": "Here is the material from today’s seminar."
-  },
-  {
-    "objectID": "seminar-1-grp-4.html#r-script",
-    "href": "seminar-1-grp-4.html#r-script",
-    "title": "Group 1: Seminar 1",
-    "section": "R Script",
-    "text": "R Script\n\n\n# Seminar 1, group 4\n\n# defining values\n\nx &lt;- 3 + sin(pi/2)\nsqrt(x)\nx &lt;- sqrt(x)\n\nw &lt;- \"2\"\nv &lt;- \"word of the day\"\n\nw &lt;- as.numeric(w)\n# also see as.character as.integer\n\n# sequences\ng &lt;- seq(1,10)\nh &lt;- 1:10\n\nfor(i in 1:10) {\n  print(i)\n}\n\n# vectors\na &lt;- c(12,1,2,3) \na[3]\nsort(a)\nb &lt;- sort(a)  \nb[3]  \n\ntypeof(a)\nlength(a)\n\nn &lt;- length(a)\nfor(i in 1:n){\n  print(a[i])\n}\n\n## Working with packages\n# install.packages(\"tidyverse\")\nlibrary(tidyverse)\n \ncar_frame &lt;- mpg\n\nggplot(data = car_frame) + \n  geom_point(mapping = aes(x=displ,y=hwy))\n\nggplot(data = car_frame) + \n  geom_point(mapping = aes(x=displ,y=hwy, color=class))\n  \nggplot(data = car_frame) + \n  geom_point(mapping = aes(x=displ,y=hwy)) +\n  geom_smooth(mapping = aes(x=displ,y=hwy))\n\nggplot(data = car_frame, mapping = aes(x=displ,y=hwy)) + \n  geom_point() +\n  geom_smooth()"
-  },
-  {
-    "objectID": "seminar-1-grp-4.html#r-markdown",
-    "href": "seminar-1-grp-4.html#r-markdown",
-    "title": "Group 1: Seminar 1",
-    "section": "R Markdown",
-    "text": "R Markdown\nLink to published published markdown: html.\n\n\n---\ntitle: \"Seminar 1, Group 4\"\noutput: html_document\n---\n\n## Markup\n\nmake a list\n\n- item 1\n- item 2\n  - sub-item 2.1\n  \nnumbered list\n\n1. number 1\n2. number 2\n\nAdd math\n\n$$\nY = X\\beta + u\n$$\nin line $\\beta$. \n\n## Adding code\n\nCode block\n\n```{r}\nlibrary(tidyverse)\n \ncar_frame &lt;- mpg\n\nggplot(data = car_frame) + \n  geom_point(mapping = aes(x=displ,y=hwy, color=class))\n```"
-  },
-  {
     "objectID": "seminar-1.html",
     "href": "seminar-1.html",
     "title": "Seminar 1",
@@ -355,5 +131,313 @@
     "title": "Seminar 1",
     "section": "Git and GitHub",
     "text": "Git and GitHub\nHere’s a great youtube on Git and GitHub. Git is a tool used to manage code, designed to deal with version control. GitHub is an online repository.\nThe basic steps, I used:\n\nCreate a GitHub account.\nInstall Git on your computer. This will include an app called Git Bash. You can also check out Git Desktop. I have found it easier to follow the steps below, which can be executed from Git Bash or the terminal within RStudio.\nI typically follow the following steps laid out on this blog under the heading “Type 2: Work on your project locally then create the repository on GitHub and push it to remote.”\n\nWhen using GitHub for a solo project, these are the commands I typically execute in the RStudio terminal when I’ve completed working on a section:\n\ngit status\ngit add .\ngit commit -m \"what I did\"\ngit push origin master\n\nWhen working in a team, you want to ensure that you first “pull” any changes before editing files. This avoids clashes that can be a pain to disentangle. Before editing:\n\ngit fetch - this will fetch the data from the online repo\ngit status - this will show whether you have any local changes\n\nIf you have any changes:\n\ngit add .\ngit commit -m \"what I did\"\n\nIf you don’t have any changes:\n\ngit pull origin master\n\nAfter edits are complete, check again for changes. In my experience, using GitHub does NOT AT ALL negate the need to communicate between team members. If you want to avoid issues with merging, you need be clear about who is working on what when."
+  },
+  {
+    "objectID": "seminar-1-grp-4.html",
+    "href": "seminar-1-grp-4.html",
+    "title": "Group 1: Seminar 1",
+    "section": "",
+    "text": "Here is the material from today’s seminar."
+  },
+  {
+    "objectID": "seminar-1-grp-4.html#r-script",
+    "href": "seminar-1-grp-4.html#r-script",
+    "title": "Group 1: Seminar 1",
+    "section": "R Script",
+    "text": "R Script\n\n\n# Seminar 1, group 4\n\n# defining values\n\nx &lt;- 3 + sin(pi/2)\nsqrt(x)\nx &lt;- sqrt(x)\n\nw &lt;- \"2\"\nv &lt;- \"word of the day\"\n\nw &lt;- as.numeric(w)\n# also see as.character as.integer\n\n# sequences\ng &lt;- seq(1,10)\nh &lt;- 1:10\n\nfor(i in 1:10) {\n  print(i)\n}\n\n# vectors\na &lt;- c(12,1,2,3) \na[3]\nsort(a)\nb &lt;- sort(a)  \nb[3]  \n\ntypeof(a)\nlength(a)\n\nn &lt;- length(a)\nfor(i in 1:n){\n  print(a[i])\n}\n\n## Working with packages\n# install.packages(\"tidyverse\")\nlibrary(tidyverse)\n \ncar_frame &lt;- mpg\n\nggplot(data = car_frame) + \n  geom_point(mapping = aes(x=displ,y=hwy))\n\nggplot(data = car_frame) + \n  geom_point(mapping = aes(x=displ,y=hwy, color=class))\n  \nggplot(data = car_frame) + \n  geom_point(mapping = aes(x=displ,y=hwy)) +\n  geom_smooth(mapping = aes(x=displ,y=hwy))\n\nggplot(data = car_frame, mapping = aes(x=displ,y=hwy)) + \n  geom_point() +\n  geom_smooth()"
+  },
+  {
+    "objectID": "seminar-1-grp-4.html#r-markdown",
+    "href": "seminar-1-grp-4.html#r-markdown",
+    "title": "Group 1: Seminar 1",
+    "section": "R Markdown",
+    "text": "R Markdown\nLink to published published markdown: html.\n\n\n---\ntitle: \"Seminar 1, Group 4\"\noutput: html_document\n---\n\n## Markup\n\nmake a list\n\n- item 1\n- item 2\n  - sub-item 2.1\n  \nnumbered list\n\n1. number 1\n2. number 2\n\nAdd math\n\n$$\nY = X\\beta + u\n$$\nin line $\\beta$. \n\n## Adding code\n\nCode block\n\n```{r}\nlibrary(tidyverse)\n \ncar_frame &lt;- mpg\n\nggplot(data = car_frame) + \n  geom_point(mapping = aes(x=displ,y=hwy, color=class))\n```"
+  },
+  {
+    "objectID": "seminar-1-grp-2.html",
+    "href": "seminar-1-grp-2.html",
+    "title": "Group 1: Seminar 1",
+    "section": "",
+    "text": "Here is the material from today’s seminar."
+  },
+  {
+    "objectID": "seminar-1-grp-2.html#r-script",
+    "href": "seminar-1-grp-2.html#r-script",
+    "title": "Group 1: Seminar 1",
+    "section": "R Script",
+    "text": "R Script\n\n\n# Seminar 1, Group 2\n\n# Basics of R\n\n## Define values\n\nx &lt;- 3 + sin(pi/2)\nx\nsqrt(x)\ny &lt;- sqrt(x)\nz &lt;- \"word\"\n\n## sequence\nv &lt;- seq(1,10)\nv2 &lt;- 1:10\n\n## vectors/collections\nw &lt;- c(12,1,2,3)\ntypeof(w)\nlength(w)\n\n## Loop\nA &lt;- c(\"1\",\"2\",\"5\",\"8\")\ntypeof(A)\nn &lt;- length(A)\nfor(i in 1:n){\n  print(A[i])\n}\n\n## coercion\nfor(i in 1:n){\n  print(as.numeric(A[i]))\n}\n## also see as.integer or as.character\nA &lt;- as.numeric(A)\n\n## Part 2: packages\n#install.package(\"tidyverse\")\nlibrary(tidyverse)\n\ncar_frame &lt;- mpg\n\nggplot(data=car_frame) +\n  geom_point(mapping = aes(x=displ,y=hwy))\n\nggplot(data=car_frame) +\n  geom_point(mapping = aes(x=displ,y=hwy,color=class))"
+  },
+  {
+    "objectID": "seminar-1-grp-2.html#r-markdown",
+    "href": "seminar-1-grp-2.html#r-markdown",
+    "title": "Group 1: Seminar 1",
+    "section": "R Markdown",
+    "text": "R Markdown\nLink to published published markdown: html.\n\n\n---\ntitle: \"Seminar 1, Group 2\"\noutput: html_document\n---\n\n## Markdown \n\nI want a list\n\n- item 1\n- item 2\n  - sub-item 1\n\nnumbers\n\n1. number 1\n2. number 2\n\nadd math\n\n$$\n Y = X\\beta + u\n$$\nin-line math; $\\beta$.\n\n## Add code\n\ncode-block:\n```{r}\nlibrary(tidyverse)\n\ncar_frame &lt;- mpg\n\nggplot(data=car_frame) +\n  geom_point(mapping = aes(x=displ,y=hwy))\n```"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "EC349: Data Science for Economists",
+    "section": "",
+    "text": "This is a Quarto website. To learn more about Quarto websites visit https://quarto.org/docs/websites.\nThe source code for this site can be found at https://github.com/neillo88/warwick-ec349.\nMoodle remains the primary source of material for this module."
+  },
+  {
+    "objectID": "index.html#helpful-links",
+    "href": "index.html#helpful-links",
+    "title": "EC349: Data Science for Economists",
+    "section": "Helpful links:",
+    "text": "Helpful links:\nHere are a few helpful links:\n\nRStudio Download\nMarkdown Guide\nQuarto\nTidyverse\n“R for Data Science”, 2nd Edition, by Hadley Wickham, Mine Çetinkaya-Rundel, and Garrett Grolemund.\nTranslating Stata to R"
+  },
+  {
+    "objectID": "group-material/grp-4/seminar-1.html",
+    "href": "group-material/grp-4/seminar-1.html",
+    "title": "Seminar 1, Group 4",
+    "section": "",
+    "text": "make a list\n\nitem 1\nitem 2\n\nsub-item 2.1\n\n\nnumbered list\n\nnumber 1\nnumber 2\n\nAdd math\n\\[\nY = X\\beta + u\n\\] in line \\(\\beta\\)."
+  },
+  {
+    "objectID": "group-material/grp-4/seminar-1.html#markup",
+    "href": "group-material/grp-4/seminar-1.html#markup",
+    "title": "Seminar 1, Group 4",
+    "section": "",
+    "text": "make a list\n\nitem 1\nitem 2\n\nsub-item 2.1\n\n\nnumbered list\n\nnumber 1\nnumber 2\n\nAdd math\n\\[\nY = X\\beta + u\n\\] in line \\(\\beta\\)."
+  },
+  {
+    "objectID": "group-material/grp-4/seminar-1.html#adding-code",
+    "href": "group-material/grp-4/seminar-1.html#adding-code",
+    "title": "Seminar 1, Group 4",
+    "section": "Adding code",
+    "text": "Adding code\nCode block\n\nlibrary(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.1     ✔ tibble    3.2.1\n✔ lubridate 1.9.3     ✔ tidyr     1.3.1\n✔ purrr     1.0.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\ncar_frame &lt;- mpg\n\nggplot(data = car_frame) + \n  geom_point(mapping = aes(x=displ,y=hwy, color=class))"
+  },
+  {
+    "objectID": "group-material/grp-2/seminar-1.html",
+    "href": "group-material/grp-2/seminar-1.html",
+    "title": "Seminar 1, Group 2",
+    "section": "",
+    "text": "I want a list\n\nitem 1\nitem 2\n\nsub-item 1\n\n\nnumbers\n\nnumber 1\nnumber 2\n\nadd math\n\\[\nY = X\\beta + u\n\\] in-line math; \\(\\beta\\)."
+  },
+  {
+    "objectID": "group-material/grp-2/seminar-1.html#markdown",
+    "href": "group-material/grp-2/seminar-1.html#markdown",
+    "title": "Seminar 1, Group 2",
+    "section": "",
+    "text": "I want a list\n\nitem 1\nitem 2\n\nsub-item 1\n\n\nnumbers\n\nnumber 1\nnumber 2\n\nadd math\n\\[\nY = X\\beta + u\n\\] in-line math; \\(\\beta\\)."
+  },
+  {
+    "objectID": "group-material/grp-2/seminar-1.html#add-code",
+    "href": "group-material/grp-2/seminar-1.html#add-code",
+    "title": "Seminar 1, Group 2",
+    "section": "Add code",
+    "text": "Add code\ncode-block:\n\nlibrary(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.1     ✔ tibble    3.2.1\n✔ lubridate 1.9.3     ✔ tidyr     1.3.1\n✔ purrr     1.0.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\ncar_frame &lt;- mpg\n\nggplot(data=car_frame) +\n  geom_point(mapping = aes(x=displ,y=hwy))"
+  },
+  {
+    "objectID": "group-material/grp-1/seminar-1.html",
+    "href": "group-material/grp-1/seminar-1.html",
+    "title": "seminar-1",
+    "section": "",
+    "text": "For example, a list\n\nitem 1\nitem 2\n\nnumbers\n\nnumber 1\nnumber 2\n\nMath \\[\nY = X\\beta + u\n\\] in line math: \\(Y= X\\beta + u\\)"
+  },
+  {
+    "objectID": "group-material/grp-1/seminar-1.html#markdown",
+    "href": "group-material/grp-1/seminar-1.html#markdown",
+    "title": "seminar-1",
+    "section": "",
+    "text": "For example, a list\n\nitem 1\nitem 2\n\nnumbers\n\nnumber 1\nnumber 2\n\nMath \\[\nY = X\\beta + u\n\\] in line math: \\(Y= X\\beta + u\\)"
+  },
+  {
+    "objectID": "group-material/grp-1/seminar-1.html#adding-code",
+    "href": "group-material/grp-1/seminar-1.html#adding-code",
+    "title": "seminar-1",
+    "section": "Adding code",
+    "text": "Adding code\n\nlibrary(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.1     ✔ tibble    3.2.1\n✔ lubridate 1.9.3     ✔ tidyr     1.3.1\n✔ purrr     1.0.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\ncar_frame &lt;- mpg\nggplot(data = car_frame) +\n  geom_point(mapping = aes(x=displ,y=hwy))"
+  },
+  {
+    "objectID": "group-material/grp-3/seminar-1.html",
+    "href": "group-material/grp-3/seminar-1.html",
+    "title": "seminar-1",
+    "section": "",
+    "text": "make a list\n\nitem 1\nitem 2\n\nsub-item 1\n\n\nnumbers\n\nnumber 1\nnumber 2\n\nmath\n\\[\nY = X\\beta + u\n\\] inline math: \\(\\beta\\)"
+  },
+  {
+    "objectID": "group-material/grp-3/seminar-1.html#markup",
+    "href": "group-material/grp-3/seminar-1.html#markup",
+    "title": "seminar-1",
+    "section": "",
+    "text": "make a list\n\nitem 1\nitem 2\n\nsub-item 1\n\n\nnumbers\n\nnumber 1\nnumber 2\n\nmath\n\\[\nY = X\\beta + u\n\\] inline math: \\(\\beta\\)"
+  },
+  {
+    "objectID": "group-material/grp-3/seminar-1.html#code",
+    "href": "group-material/grp-3/seminar-1.html#code",
+    "title": "seminar-1",
+    "section": "code",
+    "text": "code\n\nlibrary(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.1     ✔ tibble    3.2.1\n✔ lubridate 1.9.3     ✔ tidyr     1.3.1\n✔ purrr     1.0.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\ncar_frame &lt;- mpg\n\nggplot(data=car_frame) +\n  geom_point(mapping=aes(x=displ,y=hwy, color=class))"
+  },
+  {
+    "objectID": "group-material/grp-5/seminar-1.html",
+    "href": "group-material/grp-5/seminar-1.html",
+    "title": "seminar-1",
+    "section": "",
+    "text": "list of items\n\nitem 1\nitem 2\n\nsub-item 2.1\n\n\nnumbered list\n\nnumber 1\nnumber 2\n\nbold italics\nmath\n\\[\nY = X\\beta + u\n\\]\ninline: \\(\\beta\\)"
+  },
+  {
+    "objectID": "group-material/grp-5/seminar-1.html#markup-basics",
+    "href": "group-material/grp-5/seminar-1.html#markup-basics",
+    "title": "seminar-1",
+    "section": "",
+    "text": "list of items\n\nitem 1\nitem 2\n\nsub-item 2.1\n\n\nnumbered list\n\nnumber 1\nnumber 2\n\nbold italics\nmath\n\\[\nY = X\\beta + u\n\\]\ninline: \\(\\beta\\)"
+  },
+  {
+    "objectID": "group-material/grp-5/seminar-1.html#embedding-code",
+    "href": "group-material/grp-5/seminar-1.html#embedding-code",
+    "title": "seminar-1",
+    "section": "embedding code",
+    "text": "embedding code\ncode block\n\nlibrary(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.1     ✔ tibble    3.2.1\n✔ lubridate 1.9.3     ✔ tidyr     1.3.1\n✔ purrr     1.0.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\ncar_frame &lt;- mpg\nggplot(data = car_frame) + \n  geom_point(mapping = aes(x=displ,y=hwy))"
+  },
+  {
+    "objectID": "seminar-1-grp-1.html",
+    "href": "seminar-1-grp-1.html",
+    "title": "Group 1: Seminar 1",
+    "section": "",
+    "text": "Here is the material from today’s seminar."
+  },
+  {
+    "objectID": "seminar-1-grp-1.html#r-script",
+    "href": "seminar-1-grp-1.html#r-script",
+    "title": "Group 1: Seminar 1",
+    "section": "R Script",
+    "text": "R Script\n\n\n# Seminar 1 for Group 1\n\n# define values\nx &lt;- 3 + sin(pi/2) \nx \nsqrt(x)\ny &lt;- sqrt(x)\nz &lt;- \"word\"\n\n# define sequence:\nv&lt;- seq(1,10)\nv2 &lt;- 1:10\n\n# define vectors\nw &lt;- c(12,1,2,3)\nw\nw&lt;-sort(w)\nmin(w)\n\n# use an index to learn about the particular value of w\nw[2]\n\n# multiply all values\nw*2\nw/2\n\n# learn about the type and length of a vector\nA &lt;- c(\"1\",\"2\",\"5\",\"9\")\ntypeof(A)\nn &lt;- length(A)\n\n# use these elements in a loop\nfor(i in 1:n){\n  print(A[i])\n}\n\n# coercion: change the type of value stored\nfor(i in 1:n){\n  print(as.numeric(A[i]))\n}\n\n# Use packages\n\n#install.package(\"tidyverse\")\nlibrary(tidyverse)\n\ncar_frame &lt;- mpg\n\n# basic scatter plot\nggplot(data = car_frame) +\n  geom_point(mapping = aes(x=displ,y=hwy))\n\n# let the color of the dots change by class of vehicle\nggplot(data = car_frame) +\n  geom_point(mapping = aes(x=displ,y=hwy, color=class))\n\n# add multiple plots\nggplot(data = car_frame) +\n  geom_point(mapping = aes(x=displ,y=hwy)) + \n  geom_smooth(mapping = aes(x=displ,y=hwy))"
+  },
+  {
+    "objectID": "seminar-1-grp-1.html#r-markdown",
+    "href": "seminar-1-grp-1.html#r-markdown",
+    "title": "Group 1: Seminar 1",
+    "section": "R Markdown",
+    "text": "R Markdown\nLink to published published markdown: html.\n\n\n---\ntitle: \"seminar-1\"\noutput: html_document\n---\n\n## Markdown\n\nFor example, a list\n\n- item 1\n- item 2\n\nnumbers\n\n1. number 1\n2. number 2\n\nMath\n$$\nY = X\\beta + u\n$$\nin line math: $Y= X\\beta + u$\n\n## Adding code\n\n```{r}\nlibrary(tidyverse)\ncar_frame &lt;- mpg\nggplot(data = car_frame) +\n  geom_point(mapping = aes(x=displ,y=hwy))\n```"
+  },
+  {
+    "objectID": "seminar-1-grp-3.html",
+    "href": "seminar-1-grp-3.html",
+    "title": "Group 1: Seminar 1",
+    "section": "",
+    "text": "Here is the material from today’s seminar."
+  },
+  {
+    "objectID": "seminar-1-grp-3.html#r-script",
+    "href": "seminar-1-grp-3.html#r-script",
+    "title": "Group 1: Seminar 1",
+    "section": "R Script",
+    "text": "R Script\n\n\n# Seminar 1, Group 3\n\n# values\nx &lt;- 3 + sin(pi/2)\nx\nsqrt(x)\nx &lt;- sqrt(x)\n\ny &lt;- \"word\"\nz &lt;- \"2\"\n\n## Sequence\n\nv &lt;- seq(1,10)\nv2 &lt;- 1:10\n\nfor(i in 1:10) {\n  print(i)\n}\n\nv3 &lt;- seq(0,100,10)\n\n## vectors\n\nw &lt;- c(12,1,2,3)\nsort(w)\nlength(w)\ntypeof(w)\n\n## indexing\nw[3]\n\nn &lt;- length(w)\nfor(i in 1:n) {\n  print(w[i])\n}\n\n## coercion: changing type\n\nn &lt;- length(w)\nfor(i in 1:n) {\n  print(as.character(w[i]))\n}\n## likewise, as.numeric() as.integer() \n\n## packages\n\n## tidyverse\n#install.package(\"tidyverse\")\nlibrary(tidyverse)\n\ncar_frame &lt;- mpg\n\nggplot(data=car_frame) +\n  geom_point(mapping=aes(x=displ,y=hwy, color=class)) \n\nggplot(data=car_frame) +\n  geom_point(mapping=aes(x=displ,y=hwy)) + \n  geom_smooth(mapping=aes(x=displ,y=hwy))"
+  },
+  {
+    "objectID": "seminar-1-grp-3.html#r-markdown",
+    "href": "seminar-1-grp-3.html#r-markdown",
+    "title": "Group 1: Seminar 1",
+    "section": "R Markdown",
+    "text": "R Markdown\nLink to published published markdown: html.\n\n\n---\ntitle: \"seminar-1\"\noutput: html_document\n---\n\n## markup\n\nmake a list\n\n- item 1\n- item 2\n  - sub-item 1\n  \nnumbers\n\n1. number 1\n2. number 2\n\nmath\n\n$$\nY = X\\beta + u\n$$\ninline math: $\\beta$\n\n## code\n\n```{r}\nlibrary(tidyverse)\n\ncar_frame &lt;- mpg\n\nggplot(data=car_frame) +\n  geom_point(mapping=aes(x=displ,y=hwy, color=class)) \n```"
+  },
+  {
+    "objectID": "seminar-1-grp-5.html",
+    "href": "seminar-1-grp-5.html",
+    "title": "Group 5: Seminar 1",
+    "section": "",
+    "text": "Here is the material from today’s seminar."
+  },
+  {
+    "objectID": "seminar-1-grp-5.html#r-script",
+    "href": "seminar-1-grp-5.html#r-script",
+    "title": "Group 5: Seminar 1",
+    "section": "R Script",
+    "text": "R Script\n\n\n# Seminar 1, Group 5\n\nx &lt;- 3 + sin(pi/2)\nsqrt(x)\ny &lt;- sqrt(x)\nw &lt;- \"2\"\ntypeof(w)\nv &lt;- as.numeric(w)\n\n# sequences\n\nm &lt;- seq(1,10)\nn &lt;- seq(0,10,2)\no &lt;- 1:10\n\nfor(i in 1:10) {\n  print(i)\n}\n\n# vectors\nA &lt;- c(\"1\", \"2\", \"5\", \"9\")\ntypeof(A)\nlength(A)\nn &lt;- length(A)\nfor(i in 1:n) {\n  print(as.numeric(A[i]))\n}\n\n## Packages\n#install.packages(\"tidyverse\")\nlibrary(tidyverse)\n\ncar_frame &lt;- mpg\nggplot(data = car_frame) + \n  geom_point(mapping = aes(x=displ,y=hwy))\n\nggplot(data = car_frame) + \n  geom_point(mapping = aes(x=displ,y=hwy, color=class))\n\nggplot(data = car_frame) + \n  geom_point(mapping = aes(x=displ,y=hwy)) +\n  geom_smooth(mapping = aes(x=displ,y=hwy))\n\nggplot(data = car_frame, mapping = aes(x=displ,y=hwy)) + \n  geom_point() +\n  geom_smooth()"
+  },
+  {
+    "objectID": "seminar-1-grp-5.html#r-markdown",
+    "href": "seminar-1-grp-5.html#r-markdown",
+    "title": "Group 5: Seminar 1",
+    "section": "R Markdown",
+    "text": "R Markdown\nLink to published published markdown: html.\n\n\n---\ntitle: \"seminar-1\"\noutput: html_document\n---\n\n## Markup basics\n\nlist of items\n\n- item 1\n- item 2\n  - sub-item 2.1\n  \nnumbered list\n\n1. number 1\n2. number 2\n\n**bold** *italics*\n\nmath\n\n$$\nY = X\\beta + u\n$$\n\ninline: $\\beta$\n\n## embedding code\n\ncode block\n\n```{r}\nlibrary(tidyverse)\n\ncar_frame &lt;- mpg\nggplot(data = car_frame) + \n  geom_point(mapping = aes(x=displ,y=hwy))\n```"
+  },
+  {
+    "objectID": "seminar-2-sol-1.html",
+    "href": "seminar-2-sol-1.html",
+    "title": "Student Solution",
+    "section": "",
+    "text": "The following proposed solution uses the “Heart.csv” file to predict incidences of heart disease among patients (i.e. the “AHD” variable). As this is a discrete outcome, some methods will use classification models."
+  },
+  {
+    "objectID": "seminar-2-sol-1.html#loading-packages-data",
+    "href": "seminar-2-sol-1.html#loading-packages-data",
+    "title": "Student Solution",
+    "section": "loading packages & data",
+    "text": "loading packages & data\n\nrm(list = ls())\nlibrary(tidyverse)\nlibrary(glmnet)\nlibrary(tree)\nlibrary(rpart)\nlibrary(rpart.plot)\nlibrary(randomForest)\n\n# read in csv\nheart_raw &lt;- read_csv(\"seminar-material/Heart.csv\")"
+  },
+  {
+    "objectID": "seminar-2-sol-1.html#clean-data-prepare-training-testing-files",
+    "href": "seminar-2-sol-1.html#clean-data-prepare-training-testing-files",
+    "title": "Student Solution",
+    "section": "Clean data & prepare training + testing files",
+    "text": "Clean data & prepare training + testing files\nConvert categorical variables to factors\n\nheart_cleaned = heart_raw %&gt;%\n  drop_na() %&gt;%\n  mutate(across(c(ChestPain, Thal), factor)) %&gt;%\n  mutate(AHD = ifelse(AHD == \"No\",\n                      0,\n                      1)) %&gt;%\n  select(-...1)\n\nCreate training and test data\n\nset.seed(1)\ntraining_list = sample(1:nrow(heart_cleaned), 3*nrow(heart_cleaned)/4)\ntraining_set = heart_cleaned %&gt;%\n  filter(row_number() %in% training_list)\n\n# covariates in training set\ntraining_set_x = training_set %&gt;%\n  select(-AHD)\n\n# y var in training set\ntraining_set_y = training_set %&gt;%\n  select(AHD)\n\ntest_set = heart_cleaned %&gt;%\n  filter(!row_number() %in% training_list)\n\n# covariates in test set\ntest_set_x = test_set %&gt;%\n  select(-AHD)\n\n# y var in test set\ntest_set_y = test_set %&gt;%\n  select(AHD)"
+  },
+  {
+    "objectID": "seminar-2-sol-1.html#linear-probability-model",
+    "href": "seminar-2-sol-1.html#linear-probability-model",
+    "title": "Student Solution",
+    "section": "Linear Probability Model",
+    "text": "Linear Probability Model\nEstimate LPM\n\nlm_heart = lm(AHD ~., data = training_set)\nsummary(lm_heart)\n\n\nCall:\nlm(formula = AHD ~ ., data = training_set)\n\nResiduals:\n     Min       1Q   Median       3Q      Max \n-0.95305 -0.22780 -0.03695  0.18969  0.93653 \n\nCoefficients:\n                      Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept)          0.2421555  0.3864105   0.627 0.531567    \nAge                 -0.0027566  0.0033881  -0.814 0.416812    \nSex                  0.1790580  0.0584518   3.063 0.002483 ** \nChestPainnonanginal -0.2186487  0.0646517  -3.382 0.000862 ***\nChestPainnontypical -0.1978742  0.0783460  -2.526 0.012305 *  \nChestPaintypical    -0.2671775  0.0967247  -2.762 0.006262 ** \nRestBP               0.0027032  0.0014410   1.876 0.062088 .  \nChol                 0.0004496  0.0004828   0.931 0.352899    \nFbs                 -0.0769553  0.0731226  -1.052 0.293848    \nRestECG              0.0317033  0.0254639   1.245 0.214543    \nMaxHR               -0.0026952  0.0014136  -1.907 0.057968 .  \nExAng                0.0912519  0.0627836   1.453 0.147632    \nOldpeak              0.0177934  0.0302302   0.589 0.556778    \nSlope                0.0854202  0.0547350   1.561 0.120157    \nCa                   0.1528525  0.0300224   5.091 8.03e-07 ***\nThalnormal          -0.0864777  0.1100964  -0.785 0.433083    \nThalreversable       0.1085007  0.1029830   1.054 0.293316    \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 0.3535 on 205 degrees of freedom\nMultiple R-squared:  0.5346,    Adjusted R-squared:  0.4982 \nF-statistic: 14.72 on 16 and 205 DF,  p-value: &lt; 2.2e-16\n\n\nCompute and plot predicted values\n\nlm_pred = predict(lm_heart, newdata = test_set_x)\n\n# add to a predictions dataset\npredictions_dataset = test_set_y %&gt;%\n  add_column(lm_pred)\n\n# plotting predictions against actual values of AHD\n# plus regression line (with standard errors)\nggplot(predictions_dataset, aes(x = lm_pred, y = AHD)) + \n  geom_point() +\n  geom_smooth(method = \"lm\", se = TRUE)\n\n`geom_smooth()` using formula = 'y ~ x'\n\n\n\n\n\n\n\n\n\nCompute and store MSE\n\nmse_lm = mean((predictions_dataset$lm_pred - predictions_dataset$AHD)^2)"
+  },
+  {
+    "objectID": "seminar-2-sol-1.html#logit",
+    "href": "seminar-2-sol-1.html#logit",
+    "title": "Student Solution",
+    "section": "Logit",
+    "text": "Logit\nEstimate logit model\n\nlogit_heart = glm(AHD ~., data = training_set,\n                  family = binomial(link = \"logit\"))\nsummary(logit_heart)\n\n\nCall:\nglm(formula = AHD ~ ., family = binomial(link = \"logit\"), data = training_set)\n\nCoefficients:\n                     Estimate Std. Error z value Pr(&gt;|z|)    \n(Intercept)         -4.150966   3.435225  -1.208  0.22691    \nAge                 -0.023463   0.029751  -0.789  0.43033    \nSex                  1.804318   0.603192   2.991  0.00278 ** \nChestPainnonanginal -1.753466   0.569798  -3.077  0.00209 ** \nChestPainnontypical -1.186858   0.659783  -1.799  0.07204 .  \nChestPaintypical    -2.058178   0.739613  -2.783  0.00539 ** \nRestBP               0.027662   0.012578   2.199  0.02786 *  \nChol                 0.006939   0.004460   1.556  0.11969    \nFbs                 -0.580343   0.692135  -0.838  0.40176    \nRestECG              0.215295   0.217382   0.990  0.32198    \nMaxHR               -0.023207   0.013539  -1.714  0.08651 .  \nExAng                0.622182   0.511284   1.217  0.22364    \nOldpeak              0.144425   0.283812   0.509  0.61084    \nSlope                0.873239   0.458705   1.904  0.05695 .  \nCa                   1.346442   0.315736   4.264    2e-05 ***\nThalnormal          -0.093183   0.984062  -0.095  0.92456    \nThalreversable       0.942034   0.949106   0.993  0.32093    \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n(Dispersion parameter for binomial family taken to be 1)\n\n    Null deviance: 305.95  on 221  degrees of freedom\nResidual deviance: 150.14  on 205  degrees of freedom\nAIC: 184.14\n\nNumber of Fisher Scoring iterations: 6\n\n\nCompute and plot the predicted values. Note, logit is a linear regression of log-odds on covariates. Without specifying type = “response”, it will give you the predicted log-odds. Use type = \"response\" to convert these log-odds into probabilities using logistic function.\n\nlogit_pred = predict(logit_heart, newdata = test_set_x,\n                     type = \"response\")\n\n# add to a predictions dataset\npredictions_dataset = predictions_dataset %&gt;%\n  add_column(logit_pred)\n\n# plotting predictions against actual values of AHD\n# plus regression line (with standard errors)\nggplot(predictions_dataset, aes(x = logit_pred, y = AHD)) + \n  geom_point() +\n  geom_smooth(method = \"glm\",\n              method.args = list(family = \"binomial\"),\n              se = TRUE)\n\n`geom_smooth()` using formula = 'y ~ x'\n\n\n\n\n\n\n\n\n\nCompute and store the MSE\n\nmse_logit = mean((predictions_dataset$logit_pred - predictions_dataset$AHD)^2)"
+  },
+  {
+    "objectID": "seminar-2-sol-1.html#lpm-with-penalisation-ridge-lasso",
+    "href": "seminar-2-sol-1.html#lpm-with-penalisation-ridge-lasso",
+    "title": "Student Solution",
+    "section": "LPM with penalisation (Ridge, LASSO)",
+    "text": "LPM with penalisation (Ridge, LASSO)\nCreate matrix of training data covariates and y values for these glmnet regressions. Noe, -1 removes column of intercepts.\n\nX = model.matrix(~. - 1, data = training_set_x)\ny = model.matrix(~. -1, data = training_set_y)\n\nRidge regression (alpha is lasso penalty, lambda is ridge penalty, so alpha = 0). If lambda is not explicitly chosen, glmnet fits the model for a sequence (100) of lambda values and provides regressions for each lambda.\n\n# Ridge (alpha=0)\nridge_lm = glmnet(X, y, alpha = 0)\n\n# LASSO (alpha = 1)\nlasso_lm = glmnet(X, y, alpha = 1)\n\nFind optimal lambda using cross-validation\n\ncv_ridge = cv.glmnet(X, y, alpha = 0)\nplot(cv_ridge)\n\n\n\n\n\n\n\ncv_lasso = cv.glmnet(X, y, alpha = 0)\nplot(cv_lasso)\n\n\n\n\n\n\n\n\nCan use minimum or highest lambda value within 1 se of the minimum value; i.e. statistically indistiguishable but encourages the most parsimony.\n\nbest_lambda_ridge &lt;- cv_ridge$lambda.min\nbest_lambda_lasso &lt;- cv_lasso$lambda.min\n\nRe-estimate using cross-validated lambdas\n\nridge_lm = glmnet(X, y, alpha = 0, lambda = best_lambda_ridge)\ncoef(ridge_lm)\n\n18 x 1 sparse Matrix of class \"dgCMatrix\"\n                                 s0\n(Intercept)            0.1949964465\nAge                   -0.0001486077\nSex                    0.1318820062\nChestPainasymptomatic  0.1239429970\nChestPainnonanginal   -0.0757550405\nChestPainnontypical   -0.0561441225\nChestPaintypical      -0.0974488394\nRestBP                 0.0016269983\nChol                   0.0002823434\nFbs                   -0.0479978216\nRestECG                0.0275318571\nMaxHR                 -0.0023282165\nExAng                  0.0943465699\nOldpeak                0.0318760159\nSlope                  0.0596369624\nCa                     0.1075913668\nThalnormal            -0.1027598013\nThalreversable         0.0933925932\n\nlasso_lm = glmnet(X, y, alpha = 1, lambda = best_lambda_lasso)\ncoef(lasso_lm)\n\n18 x 1 sparse Matrix of class \"dgCMatrix\"\n                                 s0\n(Intercept)            0.5394031490\nAge                    .           \nSex                    .           \nChestPainasymptomatic  0.0311738079\nChestPainnonanginal    .           \nChestPainnontypical    .           \nChestPaintypical       .           \nRestBP                 .           \nChol                   .           \nFbs                    .           \nRestECG                .           \nMaxHR                 -0.0004762322\nExAng                  .           \nOldpeak                .           \nSlope                  .           \nCa                     0.0056972778\nThalnormal            -0.0555254843\nThalreversable         .           \n\n\nMake predictions on test set\n\nX_test = model.matrix(~. - 1, data = test_set_x)\nridge_lm_pred = predict(ridge_lm, newx = X_test, s = best_lambda_ridge)\nlasso_lm_pred = predict(lasso_lm, newx = X_test, s = best_lambda_lasso)\n\nAdd ridge and lasso logit predictions to predictions dataset\n\npredictions_dataset = predictions_dataset %&gt;% \n  bind_cols(ridge_lm_pred,\n            lasso_lm_pred) %&gt;%\n  rename(ridge_lm_pred = last_col(offset = 1),\n         lasso_lm_pred = last_col())\n\nNew names:\n• `s1` -&gt; `s1...4`\n• `s1` -&gt; `s1...5`\n\n\nPlotting predictions against actual values of AHD with regression line (with standard errors) for Ridge,\n\nggplot(predictions_dataset, aes(x = ridge_lm_pred, y = AHD)) + \n  geom_point() +\n  geom_smooth(method = \"lm\", se = TRUE)\n\n`geom_smooth()` using formula = 'y ~ x'\n\n\n\n\n\n\n\n\n\nand then LASSO.\n\nggplot(predictions_dataset, aes(x = lasso_lm_pred, y = AHD)) + \n  geom_point() +\n  geom_smooth(method = \"lm\", se = TRUE)\n\n`geom_smooth()` using formula = 'y ~ x'\n\n\n\n\n\n\n\n\n\nCompute and store MSEs\n\nmse_lm_ridge = mean((predictions_dataset$ridge_lm_pred - predictions_dataset$AHD)^2)\nmse_lm_lasso = mean((predictions_dataset$lasso_lm_pred - predictions_dataset$AHD)^2)"
+  },
+  {
+    "objectID": "seminar-2-sol-1.html#logit-with-penalisation-ridge-lasso",
+    "href": "seminar-2-sol-1.html#logit-with-penalisation-ridge-lasso",
+    "title": "Student Solution",
+    "section": "Logit with penalisation (Ridge, LASSO)",
+    "text": "Logit with penalisation (Ridge, LASSO)\nEstimate models\n\n# ridge regression (alpha = 0)\nridge_logit = glmnet(X, y, family = \"binomial\", alpha = 0)\n\n# LASSO (alpha = 1)\nlasso_logit = glmnet(X, y, family = \"binomial\", alpha = 1)\n\nFind optimal lambda using cross-validation\n\ncv_ridge &lt;- cv.glmnet(X, y, family = \"binomial\", alpha = 0)\nplot(cv_ridge)\n\n\n\n\n\n\n\ncv_lasso &lt;- cv.glmnet(X, y, family = \"binomial\", alpha = 1)\nplot(cv_lasso)\n\n\n\n\n\n\n\n# Best lambda values\nbest_lambda_ridge &lt;- cv_ridge$lambda.min\nbest_lambda_lasso &lt;- cv_lasso$lambda.min\n\nRe-estimate using cross-validated lambdas\n\nridge_logit = glmnet(X, y, family = \"binomial\",\n                     alpha = 0, lambda = best_lambda_ridge)\ncoef(ridge_logit)\n\n18 x 1 sparse Matrix of class \"dgCMatrix\"\n                                s0\n(Intercept)           -2.661402839\nAge                   -0.002610642\nSex                    0.957860963\nChestPainasymptomatic  0.769543615\nChestPainnonanginal   -0.526442599\nChestPainnontypical   -0.259377844\nChestPaintypical      -0.613834638\nRestBP                 0.012988845\nChol                   0.002782430\nFbs                   -0.292254411\nRestECG                0.182781847\nMaxHR                 -0.014358323\nExAng                  0.540745355\nOldpeak                0.221090359\nSlope                  0.407296108\nCa                     0.746793790\nThalnormal            -0.495527722\nThalreversable         0.564571575\n\nlasso_logit = glmnet(X, y, family = \"binomial\",alpha = 1,\n                     lambda = best_lambda_lasso)\ncoef(lasso_logit)\n\n18 x 1 sparse Matrix of class \"dgCMatrix\"\n                                s0\n(Intercept)           -3.162812284\nAge                    .          \nSex                    1.042538876\nChestPainasymptomatic  1.353767797\nChestPainnonanginal    .          \nChestPainnontypical    .          \nChestPaintypical       .          \nRestBP                 0.011537202\nChol                   0.002119158\nFbs                   -0.070976617\nRestECG                0.114921995\nMaxHR                 -0.014420841\nExAng                  0.481805396\nOldpeak                0.144953650\nSlope                  0.429642894\nCa                     0.888321133\nThalnormal            -0.308037617\nThalreversable         0.684159842\n\n\nOutside of sample rediction plotted\n\nridge_logit_pred = predict(ridge_logit, newx = X_test, s = best_lambda_ridge, type = \"response\")\nlasso_logit_pred = predict(lasso_logit, newx = X_test, s = best_lambda_lasso, type = \"response\")\n\n# add ridge and lasso logit predictions to predictions dataset\npredictions_dataset = predictions_dataset %&gt;% \n  bind_cols(ridge_logit_pred,\n            lasso_logit_pred) %&gt;%\n  rename(ridge_logit_pred = last_col(offset = 1),\n         lasso_logit_pred = last_col())\n\nNew names:\n• `s1` -&gt; `s1...6`\n• `s1` -&gt; `s1...7`\n\n# plotting predictions against actual values of AHD\n# plus regression line (with standard errors)\nggplot(predictions_dataset, aes(x = ridge_logit_pred, y = AHD)) + \n  geom_point() +\n  geom_smooth(method = \"glm\",\n              method.args = list(family = \"binomial\"),\n              se = TRUE)\n\n`geom_smooth()` using formula = 'y ~ x'\n\n\n\n\n\n\n\n\n\nAnd for LASSO\n\nggplot(predictions_dataset, aes(x = lasso_logit_pred, y = AHD)) + \n  geom_point() +\n  geom_smooth(method = \"glm\",\n              method.args = list(family = \"binomial\"),\n              se = TRUE)\n\n`geom_smooth()` using formula = 'y ~ x'\n\n\n\n\n\n\n\n\n\nCompute and store MSE\n\nmse_logit_ridge = mean((predictions_dataset$ridge_logit_pred - predictions_dataset$AHD)^2)\nmse_logit_lasso = mean((predictions_dataset$lasso_logit_pred - predictions_dataset$AHD)^2)"
+  },
+  {
+    "objectID": "seminar-2-sol-1.html#regression-tree-with-tree",
+    "href": "seminar-2-sol-1.html#regression-tree-with-tree",
+    "title": "Student Solution",
+    "section": "Regression tree (with tree)",
+    "text": "Regression tree (with tree)\nBegin by converting AHD to factor variable\n\ntraining_set_AHD_fact = training_set %&gt;%\n  mutate(AHD = as.factor(AHD))\n\nEstimate and plot tree using tree\n\ntree_heart = tree(AHD ~., data = training_set_AHD_fact)\nsummary(tree_heart)\n\n\nClassification tree:\ntree(formula = AHD ~ ., data = training_set_AHD_fact)\nVariables actually used in tree construction:\n[1] \"Thal\"      \"Ca\"        \"RestBP\"    \"Chol\"      \"MaxHR\"     \"Oldpeak\"  \n[7] \"Slope\"     \"Sex\"       \"ChestPain\"\nNumber of terminal nodes:  17 \nResidual mean deviance:  0.4809 = 98.57 / 205 \nMisclassification error rate: 0.1126 = 25 / 222 \n\ntree_heart\n\nnode), split, n, deviance, yval, (yprob)\n      * denotes terminal node\n\n  1) root 222 306.000 0 ( 0.54505 0.45495 )  \n    2) Thal: normal 125 137.800 0 ( 0.76000 0.24000 )  \n      4) Ca &lt; 0.5 86  61.820 0 ( 0.88372 0.11628 )  \n        8) RestBP &lt; 156.5 81  42.780 0 ( 0.92593 0.07407 )  \n         16) Chol &lt; 228.5 32   0.000 0 ( 1.00000 0.00000 ) *\n         17) Chol &gt; 228.5 49  36.430 0 ( 0.87755 0.12245 )  \n           34) MaxHR &lt; 169.5 30  30.020 0 ( 0.80000 0.20000 )  \n             68) Oldpeak &lt; 1.25 25  18.350 0 ( 0.88000 0.12000 )  \n              136) Oldpeak &lt; 0.1 13  14.050 0 ( 0.76923 0.23077 ) *\n              137) Oldpeak &gt; 0.1 12   0.000 0 ( 1.00000 0.00000 ) *\n             69) Oldpeak &gt; 1.25 5   6.730 1 ( 0.40000 0.60000 ) *\n           35) MaxHR &gt; 169.5 19   0.000 0 ( 1.00000 0.00000 ) *\n        9) RestBP &gt; 156.5 5   5.004 1 ( 0.20000 0.80000 ) *\n      5) Ca &gt; 0.5 39  54.040 1 ( 0.48718 0.51282 )  \n       10) Slope &lt; 1.5 26  32.100 0 ( 0.69231 0.30769 )  \n         20) Sex &lt; 0.5 13   0.000 0 ( 1.00000 0.00000 ) *\n         21) Sex &gt; 0.5 13  17.320 1 ( 0.38462 0.61538 )  \n           42) ChestPain: nonanginal,nontypical,typical 8  10.590 0 ( 0.62500 0.37500 ) *\n           43) ChestPain: asymptomatic 5   0.000 1 ( 0.00000 1.00000 ) *\n       11) Slope &gt; 1.5 13   7.051 1 ( 0.07692 0.92308 ) *\n    3) Thal: fixed,reversable 97 112.800 1 ( 0.26804 0.73196 )  \n      6) ChestPain: nonanginal,nontypical,typical 37  51.050 0 ( 0.54054 0.45946 )  \n       12) Ca &lt; 0.5 23  26.400 0 ( 0.73913 0.26087 )  \n         24) Slope &lt; 1.5 7   0.000 0 ( 1.00000 0.00000 ) *\n         25) Slope &gt; 1.5 16  21.170 0 ( 0.62500 0.37500 ) *\n       13) Ca &gt; 0.5 14  14.550 1 ( 0.21429 0.78571 )  \n         26) Chol &lt; 232 7   9.561 1 ( 0.42857 0.57143 ) *\n         27) Chol &gt; 232 7   0.000 1 ( 0.00000 1.00000 ) *\n      7) ChestPain: asymptomatic 60  39.010 1 ( 0.10000 0.90000 )  \n       14) Oldpeak &lt; 0.55 11  14.420 1 ( 0.36364 0.63636 ) *\n       15) Oldpeak &gt; 0.55 49  16.710 1 ( 0.04082 0.95918 )  \n         30) Thal: fixed 10  10.010 1 ( 0.20000 0.80000 ) *\n         31) Thal: reversable 39   0.000 1 ( 0.00000 1.00000 ) *\n\n# plot tree\nplot(tree_heart)\n  text(tree_heart, pretty = 1)\n\n\n\n\n\n\n\n\nGenerate predicted values using type = \"vector\" to predict the probability that AHD = 1. Alternatively, can use type = \"class\" to predict the actual class. This produces 2 columns: the first has the probability AHD = 0 and the second the probability AHD = 1 (which is what we’re interested in).\n\ntree_pred = predict(tree_heart, newdata = test_set_x, type = \"vector\")\n\n# add predictions to predictions dataset\n# note we only keep the 2nd column of `tree_pred` as explained above\npredictions_dataset = predictions_dataset %&gt;% \n  bind_cols(tree_pred[,2]) %&gt;%\n  rename(tree_pred = last_col())\n\nNew names:\n• `` -&gt; `...8`\n\n# plot predicted values against actual values\nggplot(predictions_dataset, aes(x = tree_pred, y = AHD)) + \n  geom_point() +\n  geom_smooth(method = \"lm\",\n              se = TRUE)\n\n`geom_smooth()` using formula = 'y ~ x'\n\n\n\n\n\n\n\n\n\nCompute and store MSE. Note, this is the same as the misclassification rate for a binary (0/1) variable. Trees are very sensitive to the sample (overfits - high variance). The tendency to overfit is because of sequential design of trees.\n\nmse_tree = mean((predictions_dataset$AHD - predictions_dataset$tree_pred)^2)\n\n\nPruned tree\n\nset.seed(789)\ncvtree_heart = cv.tree(tree_heart, FUN = prune.tree)\nnames(cvtree_heart)\n\n[1] \"size\"   \"dev\"    \"k\"      \"method\"\n\ncvtree_heart\n\n$size\n [1] 17 16 15 14 13 11 10  9  8  7  6  5  4  3  2  1\n\n$dev\n [1] 407.5569 385.4016 366.2669 367.3015 343.6143 327.9664 328.5242 328.5242\n [9] 325.9152 267.8555 259.0320 260.1638 260.1638 277.7223 278.2690 309.3478\n\n$k\n [1]      -Inf  4.300942  4.947779  4.987522  5.232343  6.376143  6.703877\n [8]  6.738228  7.877432 10.098779 14.044109 14.773333 14.892341 21.905580\n[15] 22.713030 55.410752\n\n$method\n[1] \"deviance\"\n\nattr(,\"class\")\n[1] \"prune\"         \"tree.sequence\"\n\n\nPlot size of tree and cost-complexity parameter against deviance (number of misclassifications). We can visually see that a tree size of 6 (6 terminal nodes) gives minimal deviance. Increasing the tree size beyond that is resulting in overfitting.\n\npar(mfrow = c(1,2))\nplot(cvtree_heart$size, cvtree_heart$dev, type = \"b\")\nplot(cvtree_heart$k, cvtree_heart$dev, type = \"b\")\n\n\n\n\n\n\n\n#returning plots back to 1 plot per figure\npar(mfrow = c(1,1))\n\n# the minimal deviance obtains this value, 6\noptimal_size = cvtree_heart$size[which.min(cvtree_heart$dev)]\noptimal_size\n\n[1] 6\n\n\nPrune tree and generate new predicted values\n\nprune_heart = prune.tree(tree_heart, best = optimal_size)\nplot(prune_heart)\n  text(prune_heart, pretty = 1)\n\n\n\n\n\n\n\n# generate predicted values from pruned tree\nprune_tree_pred = predict(prune_heart, newdata = test_set_x, type = \"vector\")\n\n# add predictions to predictions dataset\npredictions_dataset = predictions_dataset %&gt;% \n  bind_cols(prune_tree_pred[,2]) %&gt;%\n  rename(prune_tree_pred = last_col())\n\nNew names:\n• `` -&gt; `...9`\n\n\nCompute and store MSE. Note. this is the same as the misclassification rate for a binary (0/1) variable.\n\nmse_prune_tree = mean((predictions_dataset$AHD - predictions_dataset$prune_tree_pred)^2)"
+  },
+  {
+    "objectID": "seminar-2-sol-1.html#regression-tree-with-rpart",
+    "href": "seminar-2-sol-1.html#regression-tree-with-rpart",
+    "title": "Student Solution",
+    "section": "Regression tree (with rpart)",
+    "text": "Regression tree (with rpart)\nAHD is a binary variable, so the class method is assumed\n\ntree_heart_rpart = rpart(AHD ~., data = training_set_AHD_fact, method = \"class\")\nsummary(tree_heart_rpart)\n\nCall:\nrpart(formula = AHD ~ ., data = training_set_AHD_fact, method = \"class\")\n  n= 222 \n\n          CP nsplit rel error    xerror       xstd\n1 0.44554455      0 1.0000000 1.0000000 0.07346078\n2 0.05940594      1 0.5544554 0.7128713 0.06905800\n3 0.05445545      3 0.4356436 0.6237624 0.06650755\n4 0.01000000      5 0.3267327 0.5049505 0.06205621\n\nVariable importance\n     Thal     MaxHR        Ca ChestPain       Sex   Oldpeak     ExAng     Slope \n       22        12        11        10        10         9         8         7 \n      Age    RestBP   RestECG      Chol \n        4         2         2         2 \n\nNode number 1: 222 observations,    complexity param=0.4455446\n  predicted class=0  expected loss=0.454955  P(node) =1\n    class counts:   121   101\n   probabilities: 0.545 0.455 \n  left son=2 (125 obs) right son=3 (97 obs)\n  Primary splits:\n      Thal      splits as  RLR,       improve=26.43724, (0 missing)\n      Ca        &lt; 0.5   to the left,  improve=26.35143, (0 missing)\n      MaxHR     &lt; 150.5 to the right, improve=25.49278, (0 missing)\n      ChestPain splits as  RLLL,      improve=24.75130, (0 missing)\n      Oldpeak   &lt; 1.7   to the left,  improve=19.60541, (0 missing)\n  Surrogate splits:\n      MaxHR   &lt; 150.5 to the right, agree=0.707, adj=0.330, (0 split)\n      Slope   &lt; 1.5   to the left,  agree=0.698, adj=0.309, (0 split)\n      Oldpeak &lt; 1.55  to the left,  agree=0.694, adj=0.299, (0 split)\n      ExAng   &lt; 0.5   to the left,  agree=0.685, adj=0.278, (0 split)\n      Sex     &lt; 0.5   to the left,  agree=0.649, adj=0.196, (0 split)\n\nNode number 2: 125 observations,    complexity param=0.05940594\n  predicted class=0  expected loss=0.24  P(node) =0.5630631\n    class counts:    95    30\n   probabilities: 0.760 0.240 \n  left son=4 (86 obs) right son=5 (39 obs)\n  Primary splits:\n      Ca        &lt; 0.5   to the left,  improve=8.438402, (0 missing)\n      ChestPain splits as  RLLR,      improve=6.923375, (0 missing)\n      MaxHR     &lt; 119.5 to the right, improve=5.609579, (0 missing)\n      Oldpeak   &lt; 1.7   to the left,  improve=4.833038, (0 missing)\n      ExAng     &lt; 0.5   to the left,  improve=4.474680, (0 missing)\n  Surrogate splits:\n      Age       &lt; 62.5  to the left,  agree=0.760, adj=0.231, (0 split)\n      MaxHR     &lt; 130.5 to the right, agree=0.736, adj=0.154, (0 split)\n      ChestPain splits as  LLLR,      agree=0.704, adj=0.051, (0 split)\n      Oldpeak   &lt; 1.7   to the left,  agree=0.704, adj=0.051, (0 split)\n\nNode number 3: 97 observations,    complexity param=0.05445545\n  predicted class=1  expected loss=0.2680412  P(node) =0.4369369\n    class counts:    26    71\n   probabilities: 0.268 0.732 \n  left son=6 (37 obs) right son=7 (60 obs)\n  Primary splits:\n      ChestPain splits as  RLLL,      improve=8.883477, (0 missing)\n      Ca        &lt; 0.5   to the left,  improve=8.188351, (0 missing)\n      MaxHR     &lt; 144.5 to the right, improve=6.623394, (0 missing)\n      Oldpeak   &lt; 0.7   to the left,  improve=6.113597, (0 missing)\n      Slope     &lt; 1.5   to the left,  improve=3.431719, (0 missing)\n  Surrogate splits:\n      MaxHR   &lt; 144.5 to the right, agree=0.732, adj=0.297, (0 split)\n      ExAng   &lt; 0.5   to the left,  agree=0.732, adj=0.297, (0 split)\n      Oldpeak &lt; 0.7   to the left,  agree=0.680, adj=0.162, (0 split)\n      RestBP  &lt; 109   to the left,  agree=0.660, adj=0.108, (0 split)\n      Age     &lt; 63.5  to the right, agree=0.649, adj=0.081, (0 split)\n\nNode number 4: 86 observations\n  predicted class=0  expected loss=0.1162791  P(node) =0.3873874\n    class counts:    76    10\n   probabilities: 0.884 0.116 \n\nNode number 5: 39 observations,    complexity param=0.05940594\n  predicted class=1  expected loss=0.4871795  P(node) =0.1756757\n    class counts:    19    20\n   probabilities: 0.487 0.513 \n  left son=10 (17 obs) right son=11 (22 obs)\n  Primary splits:\n      Sex       &lt; 0.5   to the left,  improve=6.818730, (0 missing)\n      Slope     &lt; 1.5   to the left,  improve=6.564103, (0 missing)\n      ChestPain splits as  RLLL,      improve=5.818730, (0 missing)\n      ExAng     &lt; 0.5   to the left,  improve=2.857309, (0 missing)\n      RestBP    &lt; 139   to the right, improve=2.632007, (0 missing)\n  Surrogate splits:\n      ChestPain splits as  RLLR,      agree=0.718, adj=0.353, (0 split)\n      RestECG   &lt; 1     to the left,  agree=0.718, adj=0.353, (0 split)\n      Age       &lt; 56.5  to the right, agree=0.692, adj=0.294, (0 split)\n      RestBP    &lt; 136   to the right, agree=0.667, adj=0.235, (0 split)\n      Chol      &lt; 292   to the right, agree=0.667, adj=0.235, (0 split)\n\nNode number 6: 37 observations,    complexity param=0.05445545\n  predicted class=0  expected loss=0.4594595  P(node) =0.1666667\n    class counts:    20    17\n   probabilities: 0.541 0.459 \n  left son=12 (23 obs) right son=13 (14 obs)\n  Primary splits:\n      Ca     &lt; 0.5   to the left,  improve=4.794527, (0 missing)\n      MaxHR  &lt; 143.5 to the right, improve=4.386315, (0 missing)\n      Slope  &lt; 1.5   to the left,  improve=2.413343, (0 missing)\n      Chol   &lt; 205.5 to the left,  improve=1.730759, (0 missing)\n      RestBP &lt; 122.5 to the left,  improve=1.359745, (0 missing)\n  Surrogate splits:\n      MaxHR     &lt; 146.5 to the right, agree=0.730, adj=0.286, (0 split)\n      Oldpeak   &lt; 1.95  to the left,  agree=0.703, adj=0.214, (0 split)\n      Age       &lt; 68.5  to the left,  agree=0.676, adj=0.143, (0 split)\n      ChestPain splits as  -RLL,      agree=0.676, adj=0.143, (0 split)\n      Chol      &lt; 190.5 to the right, agree=0.649, adj=0.071, (0 split)\n\nNode number 7: 60 observations\n  predicted class=1  expected loss=0.1  P(node) =0.2702703\n    class counts:     6    54\n   probabilities: 0.100 0.900 \n\nNode number 10: 17 observations\n  predicted class=0  expected loss=0.1764706  P(node) =0.07657658\n    class counts:    14     3\n   probabilities: 0.824 0.176 \n\nNode number 11: 22 observations\n  predicted class=1  expected loss=0.2272727  P(node) =0.0990991\n    class counts:     5    17\n   probabilities: 0.227 0.773 \n\nNode number 12: 23 observations\n  predicted class=0  expected loss=0.2608696  P(node) =0.1036036\n    class counts:    17     6\n   probabilities: 0.739 0.261 \n\nNode number 13: 14 observations\n  predicted class=1  expected loss=0.2142857  P(node) =0.06306306\n    class counts:     3    11\n   probabilities: 0.214 0.786 \n\ntree_heart_rpart\n\nn= 222 \n\nnode), split, n, loss, yval, (yprob)\n      * denotes terminal node\n\n 1) root 222 101 0 (0.5450450 0.4549550)  \n   2) Thal=normal 125  30 0 (0.7600000 0.2400000)  \n     4) Ca&lt; 0.5 86  10 0 (0.8837209 0.1162791) *\n     5) Ca&gt;=0.5 39  19 1 (0.4871795 0.5128205)  \n      10) Sex&lt; 0.5 17   3 0 (0.8235294 0.1764706) *\n      11) Sex&gt;=0.5 22   5 1 (0.2272727 0.7727273) *\n   3) Thal=fixed,reversable 97  26 1 (0.2680412 0.7319588)  \n     6) ChestPain=nonanginal,nontypical,typical 37  17 0 (0.5405405 0.4594595)  \n      12) Ca&lt; 0.5 23   6 0 (0.7391304 0.2608696) *\n      13) Ca&gt;=0.5 14   3 1 (0.2142857 0.7857143) *\n     7) ChestPain=asymptomatic 60   6 1 (0.1000000 0.9000000) *\n\n# plot tree\nrpart.plot(tree_heart_rpart)\n\n\n\n\n\n\n\n\nGenerate and plot predicted values\n\ntree_pred_rpart = predict(tree_heart_rpart, newdata = test_set_x, type = \"class\")\n\n# add predictions to predictions dataset\npredictions_dataset = predictions_dataset %&gt;% \n  bind_cols(as.numeric(tree_pred_rpart)-1) %&gt;%\n  rename(tree_pred_rpart = last_col())\n\nNew names:\n• `` -&gt; `...10`\n\n# plot predicted values against actual values\nggplot(predictions_dataset, aes(x = tree_pred_rpart, y = AHD)) + \n  geom_point() +\n  geom_smooth(method = \"lm\",\n              se = TRUE)\n\n`geom_smooth()` using formula = 'y ~ x'\n\n\n\n\n\n\n\n\n\nCompute and store MSE. Note, this is the same as the misclassification rate for a binary (0/1) variable. Trees are very sensitive to the sample (overfits - high variance). They have a tendency to overfit is because of sequential design of trees.\n\nmse_tree_rpart = mean((predictions_dataset$AHD - predictions_dataset$tree_pred_rpart)^2)\n\nPlot cost-complexity parameter of tree\n\nplotcp(tree_heart_rpart)\n\n\n\n\n\n\n\n\nUse CV to pick optimal cp parameter\n\noptimal_cp = tree_heart_rpart$cptable[which.min(tree_heart_rpart$cptable[,\"xerror\"]), \"CP\"]\noptimal_cp\n\n[1] 0.01\n\n\nPrune the tree\n\nprune_heart_rpart = prune(tree_heart_rpart, cp = optimal_cp)\n\n# plot pruned tree\nrpart.plot(prune_heart_rpart)\n\n\n\n\n\n\n\n\nGenerate predicted values from pruned tree. Note, these predictions are saved as factors.\n\nprune_tree_rpart_pred = predict(prune_heart_rpart, newdata = test_set_x, type = \"class\")\n\n# add predictions to predictions dataset\npredictions_dataset = predictions_dataset %&gt;% \n  bind_cols(as.numeric(prune_tree_rpart_pred)-1) %&gt;%\n  rename(prune_tree_rpart_pred = last_col())\n\nNew names:\n• `` -&gt; `...11`\n\n\nCompute and store MSE. Note, this is the same as the misclassification rate for a binary (0/1) variable.\n\nmse_prune_tree_rpart = mean((predictions_dataset$AHD - predictions_dataset$prune_tree_rpart_pred)^2)"
+  },
+  {
+    "objectID": "seminar-2-sol-1.html#bagging",
+    "href": "seminar-2-sol-1.html#bagging",
+    "title": "Student Solution",
+    "section": "Bagging",
+    "text": "Bagging\n\nset.seed(8)\n# number of regressors is total number of x variables\nbag_heart = randomForest(AHD ~., data = training_set_AHD_fact, mtry = ncol(training_set_AHD_fact)-1,\n                         importance = TRUE)\nbag_heart\n\n\nCall:\n randomForest(formula = AHD ~ ., data = training_set_AHD_fact,      mtry = ncol(training_set_AHD_fact) - 1, importance = TRUE) \n               Type of random forest: classification\n                     Number of trees: 500\nNo. of variables tried at each split: 13\n\n        OOB estimate of  error rate: 20.72%\nConfusion matrix:\n   0  1 class.error\n0 98 23   0.1900826\n1 23 78   0.2277228\n\n\nGenerate predictions\n\nbag_pred = predict(bag_heart, newdata = test_set_x)\n\n# add predictions to predictions dataset\npredictions_dataset = predictions_dataset %&gt;% \n  bind_cols(as.numeric(bag_pred)-1) %&gt;%\n  rename(bag_pred = last_col())\n\nNew names:\n• `` -&gt; `...12`\n\n\nCompute and store MSE. Note, this is the same as the misclassification rate for a binary (0/1) variable.\n\nmse_bag = mean((predictions_dataset$bag_pred - predictions_dataset$AHD)^2)"
+  },
+  {
+    "objectID": "seminar-2-sol-1.html#random-forest",
+    "href": "seminar-2-sol-1.html#random-forest",
+    "title": "Student Solution",
+    "section": "Random Forest",
+    "text": "Random Forest\n\nset.seed(9)\n# number of x variables selected for inclusion in each tree is lower than the number of x variables. I chose 5\nforest_heart = randomForest(AHD ~., data = training_set_AHD_fact, mtry = 5,\n                         importance = TRUE)\nforest_heart\n\n\nCall:\n randomForest(formula = AHD ~ ., data = training_set_AHD_fact,      mtry = 5, importance = TRUE) \n               Type of random forest: classification\n                     Number of trees: 500\nNo. of variables tried at each split: 5\n\n        OOB estimate of  error rate: 18.47%\nConfusion matrix:\n    0  1 class.error\n0 106 15   0.1239669\n1  26 75   0.2574257\n\n\nGenerate predictions\n\nforest_pred = predict(forest_heart, newdata = test_set_x)\n\n# add predictions to predictions dataset\npredictions_dataset = predictions_dataset %&gt;% \n  bind_cols(as.numeric(forest_pred)-1) %&gt;%\n  rename(forest_pred = last_col())\n\nNew names:\n• `` -&gt; `...13`\n\n\nCompute and store MSE. Note, this is the same as the misclassification rate for a binary (0/1) variable.\n\nmse_forest = mean((predictions_dataset$forest_pred - predictions_dataset$AHD)^2)\n\nView importance of each variable\n\nimportance(forest_heart)\n\n                   0          1 MeanDecreaseAccuracy MeanDecreaseGini\nAge        7.4813332  1.5625272           6.72565563        8.4384225\nSex       14.8645298  7.7057242          15.96165461        4.8548739\nChestPain  9.3111531 11.5074587          14.94983417       12.3559486\nRestBP     1.5848401  2.0435154           2.35415853        8.4844240\nChol       2.1655147 -2.8478400          -0.09698318        8.5918130\nFbs        1.5604704 -0.6417825           0.90755919        0.7394629\nRestECG    0.2401243  0.8172705           0.71520690        1.7564494\nMaxHR     11.0172530  5.9234611          12.57651338       16.8039954\nExAng      4.6298814  4.9564873           6.90975700        4.9899581\nOldpeak   10.1551432 10.9200106          15.31150069       10.0643034\nSlope      8.7171783  8.7564891          12.41001509        6.3931459\nCa        21.8972697 19.0532580          26.53962079       15.5191479\nThal      12.4311268  8.8729300          14.76064804       10.5493398\n\nvarImpPlot(forest_heart)"
+  },
+  {
+    "objectID": "seminar-2-sol-1.html#comparison",
+    "href": "seminar-2-sol-1.html#comparison",
+    "title": "Student Solution",
+    "section": "Comparison",
+    "text": "Comparison\n\n# Get variables starting with \"mse_\"\nmse_vars = ls(pattern = \"^mse_\")\n\n# Create dataframe with variable names and values\nmse_df = data.frame(\n  method = sub(\"^mse_\", \"\", mse_vars),\n  mse = sapply(mse_vars, get),\n  stringsAsFactors = FALSE)\n\nmse_df = mse_df %&gt;%\n  arrange(mse)\n\nview(mse_df)\nmse_df\n\n                               method        mse\nmse_logit_ridge           logit_ridge 0.09556880\nmse_logit_lasso           logit_lasso 0.09775592\nmse_logit                       logit 0.10001662\nmse_lm_ridge                 lm_ridge 0.10308230\nmse_lm                             lm 0.10644605\nmse_prune_tree             prune_tree 0.17054945\nmse_forest                     forest 0.17333333\nmse_tree                         tree 0.18526094\nmse_bag                           bag 0.20000000\nmse_prune_tree_rpart prune_tree_rpart 0.20000000\nmse_tree_rpart             tree_rpart 0.20000000\nmse_lm_lasso                 lm_lasso 0.21966165\n\n\nTo view predictions_dataset for probabilistic/factor predictions under each model, run\n\nview(predictions_dataset)"
   }
 ]
