@@ -8,32 +8,25 @@ website:
     left:
       - href: index.qmd
         text: Home
-      - text: Seminars
+      - text: Seminar 1
         menu: 
         - href: seminar-1.qmd
-          text: Seminar 1
-        - href: seminar-2.qmd
-          text: Seminar 2
-      - text: Group 1
-        menu:
+          text: Material
         - href: seminar-1-grp-1.qmd
-          text: Seminar 1
-      - text: Group 2
-        menu:
+          text: Group 1
         - href: seminar-1-grp-2.qmd
-          text: Seminar 1    
-      - text: Group 3
-        menu:
+          text: Group 2
         - href: seminar-1-grp-3.qmd
-          text: Seminar 1  
-      - text: Group 4
-        menu:
+          text: Group 3 
         - href: seminar-1-grp-4.qmd
-          text: Seminar 1  
-      - text: Group 5
-        menu:
+          text: Group 4     
         - href: seminar-1-grp-5.qmd
-          text: Seminar 1      
+          text: Group 5        
+      - text: Seminar 2
+        menu:
+        - href: seminar-2.qmd
+          text: Material
+
         
 format:
   html:
