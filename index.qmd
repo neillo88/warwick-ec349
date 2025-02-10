@@ -1,5 +1,8 @@
 ---
 title: "EC349: Data Science for Economists"
+author: 
+  name: "Neil Lloyd"
+  email: "neil.lloyd@warwick.ac.uk"
 ---
 
 This is a Quarto website. To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
