@@ -1,7 +1,5 @@
 ---
 title: "Student Solution"
-author: u2100282
-date: 9 February 2025
 format: html
 ---
 
