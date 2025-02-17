@@ -33,11 +33,15 @@ library(MASS)
 data <- Boston 
 ```
 
+I had trouble installing and running `tensorflow`. I've added a discussion of my troubleshooting journey to the end. Due to some decisions I made along the way (suggested by ChatGPT), I now require the additional code:
+
+
 ```{r}
-#| echo: false
 library(reticulate)
 reticulate::use_python("C:/Users/neil_/anaconda3/python.exe")
 ```
+
+**I hope you don't have the same trouble!**
 
 ## Create training and testing database
 
@@ -167,4 +171,124 @@ ggplot(history_df, aes(x = epoch)) +
     legend.title = element_blank(),
     legend.position = "bottom"  # Options: "top", "bottom", "left", "right", or c(x, y) for custom
   )
+```
+
+## Troubleshooting
+
+I struggled initially to run the following code. In the end, I used ChatGPT to help me work through a series errors, but found that ChatGPTs solutions created new problems that I struggled to undo. 
+
+::: {.callout-warning title="PC vs Mac"}
+I am PC user, so the following advice may not relate to the experience of a Mac user.  
+:::
+
+Here's what I did:`
+
+1. Initially, I installed `tensorflow` and `keras` in R (via RStudio).
+2. I then noted that the packages required R4.2.2 and I was on R4.2.0. So, I updated R; which essentially requires installing R again. RStudio refused to recognize the new version, so I had to manually do so using the following advice from ChatGPT: 
+
+- Close RStudio.
+- Open RStudio, but hold Ctrl (Windows) or Cmd (Mac) while clicking the icon.
+- A menu should appear allowing you to select the new R installation.
+
+I then used the following code to shift my packages:
+
+```{r}
+#| eval: false
+# Run in NEW version of R (not RStudio)
+old_lib <- "C:/Program Files/R/R-4.4.0/library"
+new_lib <- "C:/Program Files/R/R-4.4.2/library"
+dir.create(new_lib, showWarnings = FALSE)
+file.copy(list.files(old_lib, full.names = TRUE), new_lib, recursive = TRUE)
+```
+
+Type `version` into the RStudio console to check that the up-to-date version is being used. 
+
+3. As soon as I tried to run the code I got an error, the beginning of which read:
+
+```{r}
+#| eval: false
+Error: Valid installation of TensorFlow not found.
+
+Python environments searched for 'tensorflow' package:
+ C:\Users\neil_\anaconda3\python.exe
+```
+
+This is where things started to go wrong. 
+
+4. You can use the following code in RStudio to check your python environment:
+
+```{r}
+#| eval: true
+library(reticulate)
+py_config()
+```
+
+I followed ChatGPTs suggestion to "Open Anaconda Prompt (or your command prompt) and run:"
+```{r}
+#| eval: false
+conda activate base
+conda install tensorflow
+```
+
+This gave me a long error. Something like, 
+
+```{r}
+#| eval: false
+Channels:
+ - defaults
+Platform: win-64
+Collecting package metadata (repodata.json): done
+Solving environment: - warning  libmamba Added empty dependency for problem type SOLVER_RULE_UPDATE
+failed
+
+LibMambaUnsatisfiableError: Encountered problems while solving:
+  - nothing provides bleach 1.5.0 needed by tensorboard-1.7.0-py35he025d50_1
+```
+
+
+5. According to ChatGPT, "The error suggests that there’s a Python version mismatch when trying to install TensorFlow in your Anaconda environment. It looks like your Anaconda environment has Python 3.12, but TensorFlow requires Python 3.8–3.10 (depending on the version)." So, it suggested creating a virtual environment with Python 3.10. Using the code:
+
+```{r}
+#| eval: false
+conda create --name r-tensorflow python=3.10
+conda activate r-tensorflow
+pip install tensorflow
+```
+
+You then need to configure R to use this new environment. 
+```{r}
+#| eval: false
+library(reticulate)
+use_condaenv("r-tensorflow", required = TRUE)
+py_config()
+install.packages("tensorflow")
+tensorflow::install_tensorflow()
+library(tensorflow)
+tf$constant("TensorFlow is working!")
+```
+
+6. I eventually had to undo all of this. 
+
+```{r}
+#| eval: false
+conda info --envs
+conda deactivate
+conda env remove --name r-tensorflow
+conda info --envs
+conda clean --all
+```
+
+AND instead, managed to install `tensorflow` in the Base environment using
+
+```{r}
+#| eval: false
+pip install tensorflow
+```
+
+7. For some reason, I could not get Quarto to stop looking in the `r-tensorflow` environment. So, now the code runs only if I add:
+
+```{r}
+#| eval: false
+library(reticulate)
+reticulate::use_python("C:/Users/neil_/anaconda3/python.exe")
 ```
