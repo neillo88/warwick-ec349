@@ -1,360 +1,45 @@
 [
   {
-    "objectID": "seminar-2.html",
-    "href": "seminar-2.html",
-    "title": "Seminar 2",
+    "objectID": "seminar-3.html",
+    "href": "seminar-3.html",
+    "title": "Seminar 3",
     "section": "",
-    "text": "The goal of seminar 2 is to review the questions in Problem Set 1. Many of these questions do no require R and a selection will be discussed in person during class. Here, you will find an initial attempt at Q11.\nQuestion 11: Try repeating exercises with another dataset available here: https://www.statlearning.com/resources-second-edition.\nFor this exercise, I have chosen to use the file Credit.csv, which includes the debt levels of 400 individuals. The exercise will be predict the credit-balance of card holders using the other information in the file.\n\nExercise 1 Download one of the datasets and apply each of the models below. In addition, try to improve on my code by using functions in tidyverse package. For example, look at this example that uses dplyr package to create the training and testing data."
+    "text": "The goal of seminar 3 is to review the questions in Problem Set 2. Many of these questions do no require R and a selection will be discussed in person during class. Here, you will find an initial attempt at Q4.\nQuestion 4: Please try working through the coding example in the week 6’s lecture note on the feedforward neural network.\n\nExercise 1 Try to run the following code on your own computer. You should be able to replicate the results in the slides for a 128-128-128 architecture. Next, modify the code to replicate other architectures."
   },
   {
-    "objectID": "seminar-2.html#overview",
-    "href": "seminar-2.html#overview",
-    "title": "Seminar 2",
+    "objectID": "seminar-3.html#overview",
+    "href": "seminar-3.html#overview",
+    "title": "Seminar 3",
     "section": "",
-    "text": "The goal of seminar 2 is to review the questions in Problem Set 1. Many of these questions do no require R and a selection will be discussed in person during class. Here, you will find an initial attempt at Q11.\nQuestion 11: Try repeating exercises with another dataset available here: https://www.statlearning.com/resources-second-edition.\nFor this exercise, I have chosen to use the file Credit.csv, which includes the debt levels of 400 individuals. The exercise will be predict the credit-balance of card holders using the other information in the file.\n\nExercise 1 Download one of the datasets and apply each of the models below. In addition, try to improve on my code by using functions in tidyverse package. For example, look at this example that uses dplyr package to create the training and testing data."
+    "text": "The goal of seminar 3 is to review the questions in Problem Set 2. Many of these questions do no require R and a selection will be discussed in person during class. Here, you will find an initial attempt at Q4.\nQuestion 4: Please try working through the coding example in the week 6’s lecture note on the feedforward neural network.\n\nExercise 1 Try to run the following code on your own computer. You should be able to replicate the results in the slides for a 128-128-128 architecture. Next, modify the code to replicate other architectures."
   },
   {
-    "objectID": "seminar-2.html#load-packages-and-data",
-    "href": "seminar-2.html#load-packages-and-data",
-    "title": "Seminar 2",
+    "objectID": "seminar-3.html#load-packages-and-data",
+    "href": "seminar-3.html#load-packages-and-data",
+    "title": "Seminar 3",
     "section": "Load packages and data",
-    "text": "Load packages and data\n\nlibrary(tidyverse)\nlibrary(glmnet)\nlibrary(tree)\nlibrary(rpart)\nlibrary(rpart.plot)\nlibrary(randomForest)\n\n# read in csv\ncredit.base &lt;- read.csv(\"seminar-material/Credit.csv\",header=TRUE, stringsAsFactors=TRUE)"
+    "text": "Load packages and data\n\n\n\n\n\n\nUpdating R and installing tensorflow\n\n\n\nI had issues with some of the packages and needed to update to the latest version of R (4.2.2.). In addition, you will need to have tensorflow installed with Python on your computer. To do so, open the Anaconda Prompt and type pip install tensorflow.\n\n\n\nlibrary(tensorflow)\nlibrary(keras)\nlibrary(ggplot2)\n\nWe will use a data that comes with R: “Boston”. It 506 observations and 14 variables. The outcome we aim to predict is “medv”: the median value of owner occupied homes (in ’000s dollars). The number of predictors is \\(p=13\\).\n\n# Load the Boston dataset\nlibrary(MASS)\ndata &lt;- Boston"
   },
   {
-    "objectID": "seminar-2.html#create-training-and-testing-database",
-    "href": "seminar-2.html#create-training-and-testing-database",
-    "title": "Seminar 2",
+    "objectID": "seminar-3.html#create-training-and-testing-database",
+    "href": "seminar-3.html#create-training-and-testing-database",
+    "title": "Seminar 3",
     "section": "Create training and testing database",
-    "text": "Create training and testing database\nThe outcome of interest is “Balance”, which appears as the last variable in the data.\n\nset.seed(1)\ntrain &lt;- sample(1:nrow(credit.base), 3*nrow(credit.base)/4)\n\n# Create training data\ncredit.train &lt;- credit.base[train,]\ncredit.trainX &lt;- credit.train[,-ncol(credit.train)]\ncredit.trainY &lt;- credit.train[,ncol(credit.train)]\n\n# Create testing data\ncredit.test &lt;- credit.base[-train,]\ncredit.testX &lt;- credit.test[,-ncol(credit.train)]\ncredit.testY &lt;- credit.test[,ncol(credit.train)]"
+    "text": "Create training and testing database\nAs in Seminar 2, we need to split the data into a training and testing sample. Take note of the normalization step. We missed this step in Seminar 2.\n\nset.seed(6)\nx &lt;- as.matrix(data[, -ncol(data)])  # All columns except the last (predictors)\ny &lt;- as.numeric(data[, ncol(data)])  # The last column\nx &lt;- scale(x) # Normalize the predictors\n\n# Split the data\ntest_proportion &lt;- 0.2 # Define the proportion of the test set\nn &lt;- nrow(data)\ntest_indices &lt;- sample(1:n, size = floor(test_proportion * n)) \ntrain_indices &lt;- setdiff(1:n, test_indices) # find all indices that are not in test_indices\nx_train &lt;- as.matrix(x[train_indices, ])\ny_train &lt;- as.numeric(y[train_indices])\nx_test &lt;- as.matrix(x[test_indices, ])\ny_test &lt;- as.numeric(y[test_indices])"
   },
   {
-    "objectID": "seminar-2.html#linear-regression",
-    "href": "seminar-2.html#linear-regression",
-    "title": "Seminar 2",
-    "section": "Linear regression",
-    "text": "Linear regression\n\nlm.credit &lt;- lm(Balance ~ ., data = credit.train)\nsummary(lm.credit)\n\n\nCall:\nlm(formula = Balance ~ ., data = credit.train)\n\nResiduals:\n    Min      1Q  Median      3Q     Max \n-142.12  -72.93  -15.53   49.04  328.78 \n\nCoefficients:\n             Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept) -484.8236    39.9566 -12.134  &lt; 2e-16 ***\nIncome        -7.7615     0.2725 -28.484  &lt; 2e-16 ***\nLimit          0.2426     0.0364   6.664 1.36e-10 ***\nRating         0.4109     0.5474   0.751   0.4534    \nCards         22.4444     4.8474   4.630 5.53e-06 ***\nAge           -0.7274     0.3317  -2.193   0.0291 *  \nEducation      0.0567     1.7870   0.032   0.9747    \nOwnYes       -19.3752    11.0876  -1.747   0.0816 .  \nStudentYes   417.2180    17.9747  23.211  &lt; 2e-16 ***\nMarriedYes    -4.2692    11.7505  -0.363   0.7166    \nRegionSouth   -0.8237    13.7553  -0.060   0.9523    \nRegionWest    15.5498    16.2218   0.959   0.3386    \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 95.65 on 288 degrees of freedom\nMultiple R-squared:  0.9589,    Adjusted R-squared:  0.9574 \nF-statistic: 611.2 on 11 and 288 DF,  p-value: &lt; 2.2e-16\n\n\nCompute the predicted values and MSE\n\nlm.pred &lt;- predict(lm.credit, newdata = credit.testX)\nplot(lm.pred , credit.testY)\n abline(0, 1)\n\n\n\n\n\n\n\nMSE.lm &lt;- mean((lm.pred - credit.testY)^2)\n\n\n\n\n\n\n\nNon-linear models\n\n\n\nFor discrete outcomes, see probit/logit models: https://www.geeksforgeeks.org/logistic-regression-in-r-programming/?ref=header_outind. And for categorical variables, see multinomial logit models: https://www.geeksforgeeks.org/multinomial-logistic-regression-in-r/. This resource uses the vglm function."
+    "objectID": "seminar-3.html#execute-feedforward-neural-network",
+    "href": "seminar-3.html#execute-feedforward-neural-network",
+    "title": "Seminar 3",
+    "section": "Execute Feedforward Neural Network",
+    "text": "Execute Feedforward Neural Network\nTo begin, we will execute a model with a 128-128-128 architecture:\n\nwidth \\(q=128\\);\ndepth \\(r=3\\);\nactivation function \\(g = ReLU\\)\n\nThis means that the number of parameters (weights) will be,\n\\[\n  \\underbrace{(13+1)\\cdot128}_\\text{Layer 1} + \\underbrace{(128+1)\\cdot128}_\\text{Layer 2} + \\underbrace{(128+1)\\cdot128}_\\text{Layer 3}+\\underbrace{128+1}_\\text{Output Layer} = 34,945\n\\]\n\n# Input layer\ninput &lt;- layer_input(shape = c(ncol(x_train)))  \n\noutput &lt;- input %&gt;%\n  layer_dense(units = 128, activation = \"relu\") %&gt;%\n  layer_dropout(rate = 0.5) %&gt;%\n  layer_dense(units = 128, activation = \"relu\") %&gt;%\n  layer_dropout(rate = 0.5) %&gt;%\n  layer_dense(units = 128, activation = \"relu\") %&gt;%\n  layer_dropout(rate = 0.5) %&gt;%\n  layer_dense(units = 1)  # Single output layer\n\nmodel &lt;- keras_model(inputs = input, outputs = output)\n\n# Configure the model\ntensorflow::tf$keras$Model$compile(\n  model,\n  loss = \"mse\",  # Mean Squared Error\n  optimizer = tensorflow::tf$keras$optimizers$Adam(),\n  metrics = list(\"mae\")  # Mean Absolute Error\n) \n\n\n# Train the model\nhistory &lt;- tensorflow::tf$keras$Model$fit(\n  model,\n  x = tensorflow::tf$convert_to_tensor(x_train),  # Convert x to TensorFlow Tensor\n  y = tensorflow::tf$convert_to_tensor(y_train),  # Convert y to TensorFlow Tensor\n  epochs = 50L,  # Number of epochs, L indicates integer; \n  batch_size = 32L,  # Batch size\n  validation_split = 0.2  # Use 20% of the data for validation\n)\n\nEpoch 1/50\n\n\u001b[1m 1/11\u001b[0m \u001b[32m━\u001b[0m\u001b[37m━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[1m29s\u001b[0m 3s/step - loss: 828.9982 - mae: 26.7995\n\u001b[1m11/11\u001b[0m \u001b[32m━━━━━━━━━━━━━━━━━━━━\u001b[0m\u001b[37m\u001b[0m \u001b[1m3s\u001b[0m 36ms/step - loss: 696.7134 - mae: 24.4449 - val_loss: 240.3061 - val_mae: 14.5130\nEpoch 2/50\n\n\u001b[1m 1/11\u001b[0m \u001b[32m━\u001b[0m\u001b[37m━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[1m0s\u001b[0m 32ms/step - loss: 485.6781 - mae: 20.4724\n\u001b[1m11/11\u001b[0m \u001b[32m━━━━━━━━━━━━━━━━━━━━\u001b[0m\u001b[37m\u001b[0m \u001b[1m0s\u001b[0m 10ms/step - loss: 506.1240 - mae: 20.5483 - val_loss: 156.2215 - val_mae: 10.9791\nEpoch 3/50\n\n\u001b[1m 1/11\u001b[0m \u001b[32m━\u001b[0m\u001b[37m━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[1m0s\u001b[0m 18ms/step - loss: 467.8419 - mae: 19.3198\n\u001b[1m11/11\u001b[0m \u001b[32m━━━━━━━━━━━━━━━━━━━━\u001b[0m\u001b[37m\u001b[0m \u001b[1m0s\u001b[0m 11ms/step - loss: 338.5060 - mae: 15.9255 - val_loss: 77.8477 - val_mae: 7.3119\nEpoch 4/50\n\n\u001b[1m 1/11\u001b[0m \u001b[32m━\u001b[0m\u001b[37m━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[1m0s\u001b[0m 32ms/step - loss: 235.1049 - mae: 12.3651\n\u001b[1m11/11\u001b[0m \u001b[32m━━━━━━━━━━━━━━━━━━━━\u001b[0m\u001b[37m\u001b[0m \u001b[1m0s\u001b[0m 9ms/step - loss: 172.8891 - mae: 10.1096 - val_loss: 60.7516 - val_mae: 6.3970\nEpoch 5/50\n\n\u001b[1m 1/11\u001b[0m \u001b[32m━\u001b[0m\u001b[37m━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[1m0s\u001b[0m 32ms/step - loss: 112.8865 - mae: 8.2149\n\u001b[1m11/11\u001b[0m \u001b[32m━━━━━━━━━━━━━━━━━━━━\u001b[0m\u001b[37m\u001b[0m \u001b[1m0s\u001b[0m 10ms/step - loss: 128.8596 - mae: 8.3523 - val_loss: 58.7740 - val_mae: 6.2600\nEpoch 6/50\n\n\u001b[1m 1/11\u001b[0m \u001b[32m━\u001b[0m\u001b[37m━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[1m0s\u001b[0m 18ms/step - loss: 64.5152 - mae: 5.8228\n\u001b[1m11/11\u001b[0m \u001b[32m━━━━━━━━━━━━━━━━━━━━\u001b[0m\u001b[37m\u001b[0m \u001b[1m0s\u001b[0m 10ms/step - loss: 89.1932 - mae: 7.0035 - val_loss: 57.6571 - val_mae: 6.2084\nEpoch 7/50\n\n\u001b[1m 1/11\u001b[0m \u001b[32m━\u001b[0m\u001b[37m━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[1m0s\u001b[0m 32ms/step - loss: 86.0183 - mae: 6.4813\n\u001b[1m11/11\u001b[0m \u001b[32m━━━━━━━━━━━━━━━━━━━━\u001b[0m\u001b[37m\u001b[0m \u001b[1m0s\u001b[0m 10ms/step - loss: 82.5929 - mae: 6.7389 - val_loss: 54.4164 - val_mae: 6.0528\nEpoch 8/50\n\n\u001b[1m 1/11\u001b[0m \u001b[32m━\u001b[0m\u001b[37m━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[1m0s\u001b[0m 28ms/step - loss: 119.3588 - mae: 8.0595\n\u001b[1m11/11\u001b[0m \u001b[32m━━━━━━━━━━━━━━━━━━━━\u001b[0m\u001b[37m\u001b[0m \u001b[1m0s\u001b[0m 10ms/step - loss: 76.9607 - mae: 6.2320 - val_loss: 51.6954 - val_mae: 5.9356\nEpoch 9/50\n\n\u001b[1m 1/11\u001b[0m \u001b[32m━\u001b[0m\u001b[37m━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[1m0s\u001b[0m 37ms/step - loss: 68.3912 - mae: 6.3936\n\u001b[1m11/11\u001b[0m \u001b[32m━━━━━━━━━━━━━━━━━━━━\u001b[0m\u001b[37m\u001b[0m \u001b[1m0s\u001b[0m 10ms/step - loss: 63.6838 - mae: 5.9332 - val_loss: 48.0809 - val_mae: 5.7368\nEpoch 10/50\n\n\u001b[1m 1/11\u001b[0m \u001b[32m━\u001b[0m\u001b[37m━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[1m0s\u001b[0m 16ms/step - loss: 41.8643 - mae: 4.5271\n\u001b[1m11/11\u001b[0m \u001b[32m━━━━━━━━━━━━━━━━━━━━\u001b[0m\u001b[37m\u001b[0m \u001b[1m0s\u001b[0m 11ms/step - loss: 65.1658 - mae: 5.8820 - val_loss: 42.6633 - val_mae: 5.4849\nEpoch 11/50\n\n\u001b[1m 1/11\u001b[0m \u001b[32m━\u001b[0m\u001b[37m━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[1m0s\u001b[0m 16ms/step - loss: 55.2878 - mae: 5.9920\n\u001b[1m11/11\u001b[0m \u001b[32m━━━━━━━━━━━━━━━━━━━━\u001b[0m\u001b[37m\u001b[0m \u001b[1m0s\u001b[0m 10ms/step - loss: 56.8920 - mae: 5.7231 - val_loss: 42.9034 - val_mae: 5.4986\nEpoch 12/50\n\n\u001b[1m 1/11\u001b[0m \u001b[32m━\u001b[0m\u001b[37m━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[1m0s\u001b[0m 32ms/step - loss: 34.2518 - mae: 4.1092\n\u001b[1m11/11\u001b[0m \u001b[32m━━━━━━━━━━━━━━━━━━━━\u001b[0m\u001b[37m\u001b[0m \u001b[1m0s\u001b[0m 11ms/step - loss: 55.4360 - mae: 5.4036 - val_loss: 39.7168 - val_mae: 5.3330\nEpoch 13/50\n\n\u001b[1m 1/11\u001b[0m \u001b[32m━\u001b[0m\u001b[37m━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[1m0s\u001b[0m 32ms/step - loss: 30.8093 - mae: 4.4471\n\u001b[1m11/11\u001b[0m \u001b[32m━━━━━━━━━━━━━━━━━━━━\u001b[0m\u001b[37m\u001b[0m \u001b[1m0s\u001b[0m 10ms/step - loss: 53.7140 - mae: 5.3846 - val_loss: 38.3282 - val_mae: 5.2531\nEpoch 14/50\n\n\u001b[1m 1/11\u001b[0m \u001b[32m━\u001b[0m\u001b[37m━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[1m0s\u001b[0m 23ms/step - loss: 50.5549 - mae: 6.1205\n\u001b[1m11/11\u001b[0m \u001b[32m━━━━━━━━━━━━━━━━━━━━\u001b[0m\u001b[37m\u001b[0m \u001b[1m0s\u001b[0m 9ms/step - loss: 49.5176 - mae: 5.2581 - val_loss: 34.5016 - val_mae: 5.0028\nEpoch 15/50\n\n\u001b[1m 1/11\u001b[0m \u001b[32m━\u001b[0m\u001b[37m━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[1m0s\u001b[0m 32ms/step - loss: 82.0992 - mae: 5.7872\n\u001b[1m11/11\u001b[0m \u001b[32m━━━━━━━━━━━━━━━━━━━━\u001b[0m\u001b[37m\u001b[0m \u001b[1m0s\u001b[0m 10ms/step - loss: 58.7970 - mae: 5.6111 - val_loss: 33.2052 - val_mae: 4.9088\nEpoch 16/50\n\n\u001b[1m 1/11\u001b[0m \u001b[32m━\u001b[0m\u001b[37m━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[1m0s\u001b[0m 32ms/step - loss: 70.3703 - mae: 6.8657\n\u001b[1m11/11\u001b[0m \u001b[32m━━━━━━━━━━━━━━━━━━━━\u001b[0m\u001b[37m\u001b[0m \u001b[1m0s\u001b[0m 13ms/step - loss: 63.3173 - mae: 6.0147 - val_loss: 30.9935 - val_mae: 4.7512\nEpoch 17/50\n\n\u001b[1m 1/11\u001b[0m \u001b[32m━\u001b[0m\u001b[37m━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[1m0s\u001b[0m 38ms/step - loss: 39.8774 - mae: 5.1131\n\u001b[1m11/11\u001b[0m \u001b[32m━━━━━━━━━━━━━━━━━━━━\u001b[0m\u001b[37m\u001b[0m \u001b[1m0s\u001b[0m 11ms/step - loss: 48.6401 - mae: 5.2498 - val_loss: 28.6566 - val_mae: 4.5632\nEpoch 18/50\n\n\u001b[1m 1/11\u001b[0m \u001b[32m━\u001b[0m\u001b[37m━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[1m0s\u001b[0m 48ms/step - loss: 87.4348 - mae: 7.1489\n\u001b[1m11/11\u001b[0m \u001b[32m━━━━━━━━━━━━━━━━━━━━\u001b[0m\u001b[37m\u001b[0m \u001b[1m0s\u001b[0m 9ms/step - loss: 63.3734 - mae: 5.9585 - val_loss: 27.1301 - val_mae: 4.4098\nEpoch 19/50\n\n\u001b[1m 1/11\u001b[0m \u001b[32m━\u001b[0m\u001b[37m━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[1m0s\u001b[0m 32ms/step - loss: 52.7319 - mae: 4.7154\n\u001b[1m11/11\u001b[0m \u001b[32m━━━━━━━━━━━━━━━━━━━━\u001b[0m\u001b[37m\u001b[0m \u001b[1m0s\u001b[0m 10ms/step - loss: 50.1812 - mae: 5.2395 - val_loss: 25.6724 - val_mae: 4.2902\nEpoch 20/50\n\n\u001b[1m 1/11\u001b[0m \u001b[32m━\u001b[0m\u001b[37m━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[1m0s\u001b[0m 32ms/step - loss: 42.2463 - mae: 5.2852\n\u001b[1m11/11\u001b[0m \u001b[32m━━━━━━━━━━━━━━━━━━━━\u001b[0m\u001b[37m\u001b[0m \u001b[1m0s\u001b[0m 10ms/step - loss: 46.9262 - mae: 5.1742 - val_loss: 26.0209 - val_mae: 4.3128\nEpoch 21/50\n\n\u001b[1m 1/11\u001b[0m \u001b[32m━\u001b[0m\u001b[37m━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[1m0s\u001b[0m 32ms/step - loss: 73.2043 - mae: 6.2381\n\u001b[1m11/11\u001b[0m \u001b[32m━━━━━━━━━━━━━━━━━━━━\u001b[0m\u001b[37m\u001b[0m \u001b[1m0s\u001b[0m 9ms/step - loss: 55.0064 - mae: 5.5678 - val_loss: 26.0519 - val_mae: 4.1933\nEpoch 22/50\n\n\u001b[1m 1/11\u001b[0m \u001b[32m━\u001b[0m\u001b[37m━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[1m0s\u001b[0m 32ms/step - loss: 42.4103 - mae: 5.1491\n\u001b[1m11/11\u001b[0m \u001b[32m━━━━━━━━━━━━━━━━━━━━\u001b[0m\u001b[37m\u001b[0m \u001b[1m0s\u001b[0m 9ms/step - loss: 43.5788 - mae: 5.0575 - val_loss: 25.3584 - val_mae: 4.2685\nEpoch 23/50\n\n\u001b[1m 1/11\u001b[0m \u001b[32m━\u001b[0m\u001b[37m━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[1m0s\u001b[0m 30ms/step - loss: 45.9861 - mae: 5.2918\n\u001b[1m11/11\u001b[0m \u001b[32m━━━━━━━━━━━━━━━━━━━━\u001b[0m\u001b[37m\u001b[0m \u001b[1m0s\u001b[0m 10ms/step - loss: 45.1830 - mae: 5.1560 - val_loss: 25.1599 - val_mae: 4.2469\nEpoch 24/50\n\n\u001b[1m 1/11\u001b[0m \u001b[32m━\u001b[0m\u001b[37m━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[1m0s\u001b[0m 32ms/step - loss: 55.5890 - mae: 6.0120\n\u001b[1m11/11\u001b[0m \u001b[32m━━━━━━━━━━━━━━━━━━━━\u001b[0m\u001b[37m\u001b[0m \u001b[1m0s\u001b[0m 10ms/step - loss: 47.9821 - mae: 5.3942 - val_loss: 23.5981 - val_mae: 3.9713\nEpoch 25/50\n\n\u001b[1m 1/11\u001b[0m \u001b[32m━\u001b[0m\u001b[37m━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[1m0s\u001b[0m 18ms/step - loss: 21.9316 - mae: 3.8638\n\u001b[1m11/11\u001b[0m \u001b[32m━━━━━━━━━━━━━━━━━━━━\u001b[0m\u001b[37m\u001b[0m \u001b[1m0s\u001b[0m 11ms/step - loss: 41.3733 - mae: 4.8391 - val_loss: 23.3300 - val_mae: 3.8830\nEpoch 26/50\n\n\u001b[1m 1/11\u001b[0m \u001b[32m━\u001b[0m\u001b[37m━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[1m0s\u001b[0m 32ms/step - loss: 52.2922 - mae: 5.6303\n\u001b[1m11/11\u001b[0m \u001b[32m━━━━━━━━━━━━━━━━━━━━\u001b[0m\u001b[37m\u001b[0m \u001b[1m0s\u001b[0m 10ms/step - loss: 44.2808 - mae: 5.1323 - val_loss: 25.1359 - val_mae: 4.2120\nEpoch 27/50\n\n\u001b[1m 1/11\u001b[0m \u001b[32m━\u001b[0m\u001b[37m━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[1m0s\u001b[0m 30ms/step - loss: 48.1420 - mae: 5.4344\n\u001b[1m11/11\u001b[0m \u001b[32m━━━━━━━━━━━━━━━━━━━━\u001b[0m\u001b[37m\u001b[0m \u001b[1m0s\u001b[0m 10ms/step - loss: 39.9781 - mae: 4.8838 - val_loss: 24.6868 - val_mae: 4.1166\nEpoch 28/50\n\n\u001b[1m 1/11\u001b[0m \u001b[32m━\u001b[0m\u001b[37m━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[1m0s\u001b[0m 21ms/step - loss: 58.7689 - mae: 5.7272\n\u001b[1m11/11\u001b[0m \u001b[32m━━━━━━━━━━━━━━━━━━━━\u001b[0m\u001b[37m\u001b[0m \u001b[1m0s\u001b[0m 10ms/step - loss: 45.6897 - mae: 5.0262 - val_loss: 22.5417 - val_mae: 3.8875\nEpoch 29/50\n\n\u001b[1m 1/11\u001b[0m \u001b[32m━\u001b[0m\u001b[37m━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[1m0s\u001b[0m 16ms/step - loss: 53.9863 - mae: 5.6481\n\u001b[1m11/11\u001b[0m \u001b[32m━━━━━━━━━━━━━━━━━━━━\u001b[0m\u001b[37m\u001b[0m \u001b[1m0s\u001b[0m 10ms/step - loss: 52.3501 - mae: 5.1761 - val_loss: 20.5138 - val_mae: 3.5982\nEpoch 30/50\n\n\u001b[1m 1/11\u001b[0m \u001b[32m━\u001b[0m\u001b[37m━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[1m0s\u001b[0m 32ms/step - loss: 53.2253 - mae: 5.5974\n\u001b[1m11/11\u001b[0m \u001b[32m━━━━━━━━━━━━━━━━━━━━\u001b[0m\u001b[37m\u001b[0m \u001b[1m0s\u001b[0m 10ms/step - loss: 39.5537 - mae: 4.8709 - val_loss: 19.7742 - val_mae: 3.4903\nEpoch 31/50\n\n\u001b[1m 1/11\u001b[0m \u001b[32m━\u001b[0m\u001b[37m━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[1m0s\u001b[0m 28ms/step - loss: 42.7333 - mae: 4.4758\n\u001b[1m11/11\u001b[0m \u001b[32m━━━━━━━━━━━━━━━━━━━━\u001b[0m\u001b[37m\u001b[0m \u001b[1m0s\u001b[0m 10ms/step - loss: 38.5375 - mae: 4.5885 - val_loss: 19.2339 - val_mae: 3.4463\nEpoch 32/50\n\n\u001b[1m 1/11\u001b[0m \u001b[32m━\u001b[0m\u001b[37m━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[1m0s\u001b[0m 32ms/step - loss: 58.7662 - mae: 5.4204\n\u001b[1m11/11\u001b[0m \u001b[32m━━━━━━━━━━━━━━━━━━━━\u001b[0m\u001b[37m\u001b[0m \u001b[1m0s\u001b[0m 10ms/step - loss: 44.1589 - mae: 4.8778 - val_loss: 18.5946 - val_mae: 3.3618\nEpoch 33/50\n\n\u001b[1m 1/11\u001b[0m \u001b[32m━\u001b[0m\u001b[37m━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[1m0s\u001b[0m 32ms/step - loss: 31.9200 - mae: 3.9065\n\u001b[1m11/11\u001b[0m \u001b[32m━━━━━━━━━━━━━━━━━━━━\u001b[0m\u001b[37m\u001b[0m \u001b[1m0s\u001b[0m 10ms/step - loss: 36.9730 - mae: 4.4024 - val_loss: 18.5529 - val_mae: 3.3760\nEpoch 34/50\n\n\u001b[1m 1/11\u001b[0m \u001b[32m━\u001b[0m\u001b[37m━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[1m0s\u001b[0m 32ms/step - loss: 38.6272 - mae: 4.8657\n\u001b[1m11/11\u001b[0m \u001b[32m━━━━━━━━━━━━━━━━━━━━\u001b[0m\u001b[37m\u001b[0m \u001b[1m0s\u001b[0m 11ms/step - loss: 39.3167 - mae: 4.7235 - val_loss: 18.3495 - val_mae: 3.3064\nEpoch 35/50\n\n\u001b[1m 1/11\u001b[0m \u001b[32m━\u001b[0m\u001b[37m━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[1m0s\u001b[0m 32ms/step - loss: 63.9224 - mae: 6.0767\n\u001b[1m11/11\u001b[0m \u001b[32m━━━━━━━━━━━━━━━━━━━━\u001b[0m\u001b[37m\u001b[0m \u001b[1m0s\u001b[0m 12ms/step - loss: 37.2537 - mae: 4.6267 - val_loss: 19.8758 - val_mae: 3.4593\nEpoch 36/50\n\n\u001b[1m 1/11\u001b[0m \u001b[32m━\u001b[0m\u001b[37m━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[1m0s\u001b[0m 32ms/step - loss: 58.0719 - mae: 5.6993\n\u001b[1m11/11\u001b[0m \u001b[32m━━━━━━━━━━━━━━━━━━━━\u001b[0m\u001b[37m\u001b[0m \u001b[1m0s\u001b[0m 11ms/step - loss: 47.4730 - mae: 5.1456 - val_loss: 18.9531 - val_mae: 3.3830\nEpoch 37/50\n\n\u001b[1m 1/11\u001b[0m \u001b[32m━\u001b[0m\u001b[37m━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[1m0s\u001b[0m 32ms/step - loss: 59.9648 - mae: 5.9595\n\u001b[1m11/11\u001b[0m \u001b[32m━━━━━━━━━━━━━━━━━━━━\u001b[0m\u001b[37m\u001b[0m \u001b[1m0s\u001b[0m 11ms/step - loss: 47.6630 - mae: 5.2752 - val_loss: 19.6042 - val_mae: 3.4551\nEpoch 38/50\n\n\u001b[1m 1/11\u001b[0m \u001b[32m━\u001b[0m\u001b[37m━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[1m0s\u001b[0m 32ms/step - loss: 31.1966 - mae: 4.2508\n\u001b[1m11/11\u001b[0m \u001b[32m━━━━━━━━━━━━━━━━━━━━\u001b[0m\u001b[37m\u001b[0m \u001b[1m0s\u001b[0m 10ms/step - loss: 34.8387 - mae: 4.5657 - val_loss: 20.0726 - val_mae: 3.5817\nEpoch 39/50\n\n\u001b[1m 1/11\u001b[0m \u001b[32m━\u001b[0m\u001b[37m━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[1m0s\u001b[0m 27ms/step - loss: 24.7697 - mae: 4.0582\n\u001b[1m11/11\u001b[0m \u001b[32m━━━━━━━━━━━━━━━━━━━━\u001b[0m\u001b[37m\u001b[0m \u001b[1m0s\u001b[0m 10ms/step - loss: 38.2497 - mae: 4.6618 - val_loss: 19.8169 - val_mae: 3.5626\nEpoch 40/50\n\n\u001b[1m 1/11\u001b[0m \u001b[32m━\u001b[0m\u001b[37m━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[1m0s\u001b[0m 32ms/step - loss: 69.3482 - mae: 5.9674\n\u001b[1m11/11\u001b[0m \u001b[32m━━━━━━━━━━━━━━━━━━━━\u001b[0m\u001b[37m\u001b[0m \u001b[1m0s\u001b[0m 10ms/step - loss: 54.4308 - mae: 5.4092 - val_loss: 20.0639 - val_mae: 3.5869\nEpoch 41/50\n\n\u001b[1m 1/11\u001b[0m \u001b[32m━\u001b[0m\u001b[37m━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[1m0s\u001b[0m 32ms/step - loss: 65.1053 - mae: 5.6592\n\u001b[1m11/11\u001b[0m \u001b[32m━━━━━━━━━━━━━━━━━━━━\u001b[0m\u001b[37m\u001b[0m \u001b[1m0s\u001b[0m 10ms/step - loss: 45.1876 - mae: 4.9635 - val_loss: 19.1346 - val_mae: 3.4901\nEpoch 42/50\n\n\u001b[1m 1/11\u001b[0m \u001b[32m━\u001b[0m\u001b[37m━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[1m0s\u001b[0m 32ms/step - loss: 28.5042 - mae: 4.4145\n\u001b[1m11/11\u001b[0m \u001b[32m━━━━━━━━━━━━━━━━━━━━\u001b[0m\u001b[37m\u001b[0m \u001b[1m0s\u001b[0m 10ms/step - loss: 38.7856 - mae: 4.7168 - val_loss: 19.2993 - val_mae: 3.4498\nEpoch 43/50\n\n\u001b[1m 1/11\u001b[0m \u001b[32m━\u001b[0m\u001b[37m━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[1m0s\u001b[0m 28ms/step - loss: 59.1926 - mae: 5.9563\n\u001b[1m11/11\u001b[0m \u001b[32m━━━━━━━━━━━━━━━━━━━━\u001b[0m\u001b[37m\u001b[0m \u001b[1m0s\u001b[0m 10ms/step - loss: 43.9449 - mae: 5.1178 - val_loss: 19.2580 - val_mae: 3.4416\nEpoch 44/50\n\n\u001b[1m 1/11\u001b[0m \u001b[32m━\u001b[0m\u001b[37m━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[1m0s\u001b[0m 32ms/step - loss: 61.0170 - mae: 5.4739\n\u001b[1m11/11\u001b[0m \u001b[32m━━━━━━━━━━━━━━━━━━━━\u001b[0m\u001b[37m\u001b[0m \u001b[1m0s\u001b[0m 10ms/step - loss: 42.4064 - mae: 4.9163 - val_loss: 18.8079 - val_mae: 3.4198\nEpoch 45/50\n\n\u001b[1m 1/11\u001b[0m \u001b[32m━\u001b[0m\u001b[37m━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[1m0s\u001b[0m 32ms/step - loss: 24.5396 - mae: 3.9671\n\u001b[1m11/11\u001b[0m \u001b[32m━━━━━━━━━━━━━━━━━━━━\u001b[0m\u001b[37m\u001b[0m \u001b[1m0s\u001b[0m 8ms/step - loss: 41.4317 - mae: 4.8053 - val_loss: 20.0648 - val_mae: 3.6065\nEpoch 46/50\n\n\u001b[1m 1/11\u001b[0m \u001b[32m━\u001b[0m\u001b[37m━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[1m0s\u001b[0m 32ms/step - loss: 42.3646 - mae: 5.3227\n\u001b[1m11/11\u001b[0m \u001b[32m━━━━━━━━━━━━━━━━━━━━\u001b[0m\u001b[37m\u001b[0m \u001b[1m0s\u001b[0m 10ms/step - loss: 36.4497 - mae: 4.6064 - val_loss: 20.4175 - val_mae: 3.6712\nEpoch 47/50\n\n\u001b[1m 1/11\u001b[0m \u001b[32m━\u001b[0m\u001b[37m━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[1m0s\u001b[0m 32ms/step - loss: 20.4261 - mae: 3.3189\n\u001b[1m11/11\u001b[0m \u001b[32m━━━━━━━━━━━━━━━━━━━━\u001b[0m\u001b[37m\u001b[0m \u001b[1m0s\u001b[0m 10ms/step - loss: 26.3275 - mae: 3.8974 - val_loss: 19.3878 - val_mae: 3.4986\nEpoch 48/50\n\n\u001b[1m 1/11\u001b[0m \u001b[32m━\u001b[0m\u001b[37m━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[1m0s\u001b[0m 32ms/step - loss: 37.2453 - mae: 4.6537\n\u001b[1m11/11\u001b[0m \u001b[32m━━━━━━━━━━━━━━━━━━━━\u001b[0m\u001b[37m\u001b[0m \u001b[1m0s\u001b[0m 10ms/step - loss: 34.0098 - mae: 4.3087 - val_loss: 19.1585 - val_mae: 3.4617\nEpoch 49/50\n\n\u001b[1m 1/11\u001b[0m \u001b[32m━\u001b[0m\u001b[37m━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[1m0s\u001b[0m 34ms/step - loss: 40.8390 - mae: 5.2471\n\u001b[1m11/11\u001b[0m \u001b[32m━━━━━━━━━━━━━━━━━━━━\u001b[0m\u001b[37m\u001b[0m \u001b[1m0s\u001b[0m 11ms/step - loss: 39.4001 - mae: 4.8075 - val_loss: 18.6411 - val_mae: 3.4188\nEpoch 50/50\n\n\u001b[1m 1/11\u001b[0m \u001b[32m━\u001b[0m\u001b[37m━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[1m0s\u001b[0m 31ms/step - loss: 46.5221 - mae: 5.3998\n\u001b[1m11/11\u001b[0m \u001b[32m━━━━━━━━━━━━━━━━━━━━\u001b[0m\u001b[37m\u001b[0m \u001b[1m0s\u001b[0m 13ms/step - loss: 41.9976 - mae: 4.9848 - val_loss: 17.3732 - val_mae: 3.3100\n\n# Predictions\npredictions &lt;- tensorflow::tf$keras$Model$predict(model, tensorflow::tf$convert_to_tensor(x_test))\n\n\n\u001b[1m1/4\u001b[0m \u001b[32m━━━━━\u001b[0m\u001b[37m━━━━━━━━━━━━━━━\u001b[0m \u001b[1m0s\u001b[0m 93ms/step\n\u001b[1m4/4\u001b[0m \u001b[32m━━━━━━━━━━━━━━━━━━━━\u001b[0m\u001b[37m\u001b[0m \u001b[1m0s\u001b[0m 22ms/step\n\u001b[1m4/4\u001b[0m \u001b[32m━━━━━━━━━━━━━━━━━━━━\u001b[0m\u001b[37m\u001b[0m \u001b[1m0s\u001b[0m 27ms/step\n\n# Print the result\ntensorflow::tf$keras$Model$summary(model)\n\nModel: \"functional\"\n┌─────────────────────────────────┬────────────────────────┬───────────────┐\n│ Layer (type)                    │ Output Shape           │       Param # │\n├─────────────────────────────────┼────────────────────────┼───────────────┤\n│ input_layer (InputLayer)        │ (None, 13)             │             0 │\n├─────────────────────────────────┼────────────────────────┼───────────────┤\n│ dense_3 (Dense)                 │ (None, 128)            │         1,792 │\n├─────────────────────────────────┼────────────────────────┼───────────────┤\n│ dropout_2 (Dropout)             │ (None, 128)            │             0 │\n├─────────────────────────────────┼────────────────────────┼───────────────┤\n│ dense_2 (Dense)                 │ (None, 128)            │        16,512 │\n├─────────────────────────────────┼────────────────────────┼───────────────┤\n│ dropout_1 (Dropout)             │ (None, 128)            │             0 │\n├─────────────────────────────────┼────────────────────────┼───────────────┤\n│ dense_1 (Dense)                 │ (None, 128)            │        16,512 │\n├─────────────────────────────────┼────────────────────────┼───────────────┤\n│ dropout (Dropout)               │ (None, 128)            │             0 │\n├─────────────────────────────────┼────────────────────────┼───────────────┤\n│ dense (Dense)                   │ (None, 1)              │           129 │\n└─────────────────────────────────┴────────────────────────┴───────────────┘\n Total params: 104,837 (409.52 KB)\n Trainable params: 34,945 (136.50 KB)\n Non-trainable params: 0 (0.00 B)\n Optimizer params: 69,892 (273.02 KB)\n\n\nExtract the final training and validation loss\n\nfinal_training_loss &lt;- history$history$loss[length(history$history$loss)]\nfinal_validation_loss &lt;- history$history$val_loss[length(history$history$val_loss)]\n\ncat(\"Final Training Loss:\", final_training_loss, \"\\n\")\n\nFinal Training Loss: 38.97912 \n\ncat(\"Final Validation Loss:\", final_validation_loss, \"\\n\")\n\nFinal Validation Loss: 17.3732"
   },
   {
-    "objectID": "seminar-2.html#ridge-regression",
-    "href": "seminar-2.html#ridge-regression",
-    "title": "Seminar 2",
-    "section": "Ridge regression",
-    "text": "Ridge regression\nThe dataset contains factor variables: these have numerical values with labels attached (e.g. “Yes”,“No”). When using a function like lm() it will convert this two a set of dummy variables.\n\n\n\n\n\n\nMatrices with factor variables\n\n\n\nThe glmnet function wants you to input a Y and X matrix. I had trouble using the as.matrix() function with the factor variables. As a solution (courtesy of ChatGPT), I first convert the X’s into a matrix where the factor variable appear as dummy variables.\n\n\n\ncredit.trainX.mat &lt;- model.matrix(~ ., data = credit.trainX)[, -1]\ncredit.testX.mat &lt;- model.matrix(~ ., data = credit.testX)[, -1]\n\nThe as.matrix function works fine for the outcome variable. We can now estimate the model.\n\nridge.credit &lt;- glmnet(credit.trainX.mat, as.matrix(credit.trainY), alpha=0, lamnda=3, thresh = 1e-12)\n#coef(ridge.credit)\n\nAdding cross-validation\n\ncv.out &lt;- cv.glmnet(credit.trainX.mat,as.matrix(credit.trainY), alpha=0, nfold=3)\nplot(cv.out)\n\n\n\n\n\n\n\nlambda.ridge.cv &lt;- cv.out$lambda.min\n\nRe-estimate using cross-validated lambda\n\nridge.credit &lt;- glmnet(credit.trainX.mat, as.matrix(credit.trainY), alpha=0, lamnda=lambda.ridge.cv, thresh = 1e-12)\n\nFit the model in the test data\n\nridge.pred &lt;- predict(ridge.credit, s = lambda.ridge.cv, newx = credit.testX.mat)\nplot(ridge.pred , credit.testY)\n abline(0, 1)\n\n\n\n\n\n\n\nMSE.ridge &lt;- mean((ridge.pred - credit.testY)^2)"
-  },
-  {
-    "objectID": "seminar-2.html#lasso",
-    "href": "seminar-2.html#lasso",
-    "title": "Seminar 2",
-    "section": "LASSO",
-    "text": "LASSO\nRepeat the above steps with cross-validation, but setting alpha=1.\n\ncv.out &lt;- cv.glmnet(credit.trainX.mat,as.matrix(credit.trainY), alpha=1, nfold=3)\nplot(cv.out)\n\n\n\n\n\n\n\nlambda.LASSO.cv &lt;- cv.out$lambda.min\n\nRe-estimate using cross-validated lambda\n\nLASSO.credit &lt;- glmnet(credit.trainX.mat, as.matrix(credit.trainY), alpha=0, lamnda=lambda.LASSO.cv, thresh = 1e-12)\n\nFit the model in the test data\n\nLASSO.pred &lt;- predict(LASSO.credit, s = lambda.LASSO.cv, newx = credit.testX.mat)\nplot(LASSO.pred , credit.testY)\n abline(0, 1)\n\n\n\n\n\n\n\nMSE.LASSO &lt;- mean((LASSO.pred - credit.testY)^2)"
-  },
-  {
-    "objectID": "seminar-2.html#regression-trees",
-    "href": "seminar-2.html#regression-trees",
-    "title": "Seminar 2",
-    "section": "Regression Trees",
-    "text": "Regression Trees\nI first tried following the coded examples in James et al. (2023) Chapter 8. However, the pruning process was not clear. Next, I followed the advice of https://www.geeksforgeeks.org/how-to-prune-a-tree-in-r/ using the rpart package.\n\nVersion 1\nHere is the first version using the tree package.\n\ntree.credit &lt;- tree(Balance ~ ., data = credit.train)\nsummary(tree.credit)\n\n\nRegression tree:\ntree(formula = Balance ~ ., data = credit.train)\nVariables actually used in tree construction:\n[1] \"Rating\"  \"Income\"  \"Student\" \"Limit\"  \nNumber of terminal nodes:  9 \nResidual mean deviance:  29060 = 8457000 / 291 \nDistribution of residuals:\n   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. \n-672.40  -70.32  -18.64    0.00  107.60  484.60 \n\ntree.credit\n\nnode), split, n, deviance, yval\n      * denotes terminal node\n\n 1) root 300 64150000  528.70  \n   2) Rating &lt; 353.5 163  8879000  199.10  \n     4) Rating &lt; 278.5 99  1377000   70.32 *\n     5) Rating &gt; 278.5 64  3320000  398.30  \n      10) Income &lt; 45.049 51  1828000  473.70  \n        20) Student: No 45   902100  427.10 *\n        21) Student: Yes 6    93940  823.50 *\n      11) Income &gt; 45.049 13    63310  102.30 *\n   3) Rating &gt; 353.5 137 16500000  920.80  \n     6) Rating &lt; 717.5 126 10880000  863.90  \n      12) Limit &lt; 5353 39  1253000  618.90  \n        24) Income &lt; 48.3975 27   424300  708.00 *\n        25) Income &gt; 48.3975 12   132600  418.50 *\n      13) Limit &gt; 5353 87  6239000  973.80  \n        26) Student: No 74  4220000  922.40 *\n        27) Student: Yes 13   709200 1266.00 *\n     7) Rating &gt; 717.5 11   534000 1573.00 *\n\n\nPlot the tree\n\nplot(tree.credit)\n  text(tree.credit , pretty = 1)\n\n\n\n\n\n\n\n\nCompute the predicted values and MSE:\n\ntree.pred &lt;- predict(tree.credit, newdata = credit.test)\nplot(tree.pred , credit.testY)\n abline(0, 1)\n\n\n\n\n\n\n\nMSE.tree &lt;- mean((tree.pred - credit.testY)^2)\n\nPruned tree (following example on P.355):\n\nset.seed(789)\ncvtree.credit &lt;- cv.tree(tree.credit, FUN = prune.tree)\nnames(cvtree.credit)\n\n[1] \"size\"   \"dev\"    \"k\"      \"method\"\n\ncvtree.credit\n\n$size\n[1] 9 8 7 6 5 4 3 2 1\n\n$dev\n[1] 12853234 13736173 13923420 15697812 16415511 22200274 24575504 25292336\n[9] 64799501\n\n$k\n[1]       -Inf   696091.6   831927.0  1309232.5  1429088.0  3391459.1  4180845.0\n[8]  5079908.9 38774711.8\n\n$method\n[1] \"deviance\"\n\nattr(,\"class\")\n[1] \"prune\"         \"tree.sequence\"\n\npar(mfrow = c(1, 2))\nplot(cvtree.credit$size , cvtree.credit$dev, type = \"b\")\nplot(cvtree.credit$k, cvtree.credit$dev, type = \"b\")\n\n\n\n\n\n\n\n\nPrune the tree, predict and compute MSE, and plot new tree\n\nprune.credit &lt;- prune.tree(tree.credit , best = 8)\nplot(prune.credit)\n text(prune.credit , pretty = 1)\n\n\n\n\n\n\n\n\nCompute predicted values\n\nprune.pred &lt;- predict(prune.credit, newdata = credit.test)\nplot(prune.pred , credit.testY)\n abline(0, 1)\n\n\n\n\n\n\n\nMSE.prune &lt;- mean((prune.pred - credit.testY)^2)\n\n\n\nVersion 2\nNext, using the rpart package. I get the following:\n\ntree.credit2 &lt;- rpart(Balance ~ ., data = credit.train, method = \"anova\")\nsummary(tree.credit2)\n\nCall:\nrpart(formula = Balance ~ ., data = credit.train, method = \"anova\")\n  n= 300 \n\n          CP nsplit rel error    xerror       xstd\n1 0.60443234      0 1.0000000 1.0073204 0.07254634\n2 0.07918721      1 0.3955677 0.4664061 0.04213623\n3 0.06517232      2 0.3163805 0.3434325 0.03249794\n4 0.05286712      3 0.2512081 0.3167628 0.03079975\n5 0.02227707      4 0.1983410 0.2465855 0.02432872\n6 0.02040873      5 0.1760639 0.2455674 0.02409388\n7 0.01200212      6 0.1556552 0.2378676 0.02362119\n8 0.01085089      8 0.1316510 0.2156099 0.02410439\n9 0.01000000      9 0.1208001 0.2123373 0.02369780\n\nVariable importance\n   Rating     Limit    Income       Age Education     Cards   Student \n       39        37        18         3         1         1         1 \n\nNode number 1: 300 observations,    complexity param=0.6044323\n  mean=528.6867, MSE=213835.4 \n  left son=2 (163 obs) right son=3 (137 obs)\n  Primary splits:\n      Rating  &lt; 353.5    to the left,  improve=0.60443230, (0 missing)\n      Limit   &lt; 4421     to the left,  improve=0.60178010, (0 missing)\n      Income  &lt; 58.566   to the left,  improve=0.20501110, (0 missing)\n      Student splits as  LR,           improve=0.04117036, (0 missing)\n      Age     &lt; 58.5     to the right, improve=0.01333096, (0 missing)\n  Surrogate splits:\n      Limit     &lt; 4765.5   to the left,  agree=0.980, adj=0.956, (0 split)\n      Income    &lt; 45.5635  to the left,  agree=0.747, adj=0.445, (0 split)\n      Age       &lt; 79.5     to the left,  agree=0.583, adj=0.088, (0 split)\n      Cards     &lt; 1.5      to the right, agree=0.553, adj=0.022, (0 split)\n      Education &lt; 7.5      to the right, agree=0.553, adj=0.022, (0 split)\n\nNode number 2: 163 observations,    complexity param=0.06517232\n  mean=199.092, MSE=54470.16 \n  left son=4 (99 obs) right son=5 (64 obs)\n  Primary splits:\n      Rating  &lt; 278.5    to the left,  improve=0.47088820, (0 missing)\n      Limit   &lt; 3570.5   to the left,  improve=0.46202030, (0 missing)\n      Student splits as  LR,           improve=0.12815030, (0 missing)\n      Income  &lt; 15.0005  to the right, improve=0.05136852, (0 missing)\n      Age     &lt; 31.5     to the right, improve=0.03893959, (0 missing)\n  Surrogate splits:\n      Limit     &lt; 3429     to the left,  agree=0.945, adj=0.859, (0 split)\n      Income    &lt; 39.1305  to the left,  agree=0.687, adj=0.203, (0 split)\n      Age       &lt; 31.5     to the right, agree=0.626, adj=0.047, (0 split)\n      Cards     &lt; 5.5      to the left,  agree=0.620, adj=0.031, (0 split)\n      Education &lt; 9.5      to the right, agree=0.620, adj=0.031, (0 split)\n\nNode number 3: 137 observations,    complexity param=0.07918721\n  mean=920.8321, MSE=120418.1 \n  left son=6 (126 obs) right son=7 (11 obs)\n  Primary splits:\n      Rating    &lt; 717.5    to the left,  improve=0.30792410, (0 missing)\n      Limit     &lt; 8922.5   to the left,  improve=0.30596580, (0 missing)\n      Income    &lt; 134.6495 to the left,  improve=0.12713150, (0 missing)\n      Student   splits as  LR,           improve=0.09558537, (0 missing)\n      Education &lt; 13.5     to the left,  improve=0.03174229, (0 missing)\n  Surrogate splits:\n      Limit  &lt; 9956     to the left,  agree=0.993, adj=0.909, (0 split)\n      Income &lt; 150.807  to the left,  agree=0.956, adj=0.455, (0 split)\n      Cards  &lt; 6.5      to the left,  agree=0.927, adj=0.091, (0 split)\n      Age    &lt; 85.5     to the left,  agree=0.927, adj=0.091, (0 split)\n\nNode number 4: 99 observations\n  mean=70.32323, MSE=13913.81 \n\nNode number 5: 64 observations,    complexity param=0.02227707\n  mean=398.2812, MSE=51880.05 \n  left son=10 (13 obs) right son=11 (51 obs)\n  Primary splits:\n      Income &lt; 45.049   to the right, improve=0.43040630, (0 missing)\n      Limit  &lt; 4421     to the left,  improve=0.12565140, (0 missing)\n      Age    &lt; 72.5     to the right, improve=0.09399284, (0 missing)\n      Rating &lt; 327.5    to the left,  improve=0.05022884, (0 missing)\n      Cards  &lt; 3.5      to the left,  improve=0.04388043, (0 missing)\n  Surrogate splits:\n      Age &lt; 79.5     to the right, agree=0.859, adj=0.308, (0 split)\n\nNode number 6: 126 observations,    complexity param=0.05286712\n  mean=863.9365, MSE=86375.81 \n  left son=12 (39 obs) right son=13 (87 obs)\n  Primary splits:\n      Limit     &lt; 5353     to the left,  improve=0.31161900, (0 missing)\n      Rating    &lt; 406.5    to the left,  improve=0.25619670, (0 missing)\n      Student   splits as  LR,           improve=0.20599790, (0 missing)\n      Education &lt; 8.5      to the left,  improve=0.06908941, (0 missing)\n      Age       &lt; 70       to the right, improve=0.02733715, (0 missing)\n  Surrogate splits:\n      Rating    &lt; 403.5    to the left,  agree=0.944, adj=0.821, (0 split)\n      Education &lt; 18.5     to the right, agree=0.722, adj=0.103, (0 split)\n      Income    &lt; 20.1615  to the left,  agree=0.706, adj=0.051, (0 split)\n\nNode number 7: 11 observations\n  mean=1572.545, MSE=48546.98 \n\nNode number 10: 13 observations\n  mean=102.3077, MSE=4870.213 \n\nNode number 11: 51 observations\n  mean=473.7255, MSE=35841.61 \n\nNode number 12: 39 observations,    complexity param=0.01085089\n  mean=618.8974, MSE=32128.55 \n  left son=24 (12 obs) right son=25 (27 obs)\n  Primary splits:\n      Income    &lt; 48.3975  to the right, improve=0.55553400, (0 missing)\n      Education &lt; 10.5     to the left,  improve=0.18867870, (0 missing)\n      Age       &lt; 70       to the right, improve=0.10403420, (0 missing)\n      Limit     &lt; 4942     to the right, improve=0.08655423, (0 missing)\n      Region    splits as  RLL,          improve=0.07476262, (0 missing)\n  Surrogate splits:\n      Limit     &lt; 5291.5   to the right, agree=0.769, adj=0.250, (0 split)\n      Education &lt; 9.5      to the left,  agree=0.769, adj=0.250, (0 split)\n      Rating    &lt; 388      to the right, agree=0.744, adj=0.167, (0 split)\n      Age       &lt; 70       to the right, agree=0.718, adj=0.083, (0 split)\n\nNode number 13: 87 observations,    complexity param=0.02040873\n  mean=973.7816, MSE=71711.25 \n  left son=26 (74 obs) right son=27 (13 obs)\n  Primary splits:\n      Student   splits as  LR,           improve=0.20985060, (0 missing)\n      Income    &lt; 72.5045  to the right, improve=0.13136250, (0 missing)\n      Education &lt; 13.5     to the left,  improve=0.07140088, (0 missing)\n      Age       &lt; 70       to the right, improve=0.06687376, (0 missing)\n      Limit     &lt; 7854.5   to the left,  improve=0.06149053, (0 missing)\n  Surrogate splits:\n      Rating &lt; 385.5    to the right, agree=0.874, adj=0.154, (0 split)\n      Limit  &lt; 5386     to the right, agree=0.862, adj=0.077, (0 split)\n\nNode number 24: 12 observations\n  mean=418.5, MSE=11049.92 \n\nNode number 25: 27 observations\n  mean=707.963, MSE=15715.67 \n\nNode number 26: 74 observations,    complexity param=0.01200212\n  mean=922.3649, MSE=57033.69 \n  left son=52 (60 obs) right son=53 (14 obs)\n  Primary splits:\n      Limit     &lt; 7854.5   to the left,  improve=0.14294230, (0 missing)\n      Income    &lt; 83.9085  to the right, improve=0.14144100, (0 missing)\n      Education &lt; 13.5     to the left,  improve=0.11730300, (0 missing)\n      Rating    &lt; 563.5    to the left,  improve=0.11369130, (0 missing)\n      Age       &lt; 81.5     to the right, improve=0.08734887, (0 missing)\n  Surrogate splits:\n      Rating &lt; 563.5    to the left,  agree=0.986, adj=0.929, (0 split)\n      Income &lt; 128.3545 to the left,  agree=0.865, adj=0.286, (0 split)\n\nNode number 27: 13 observations\n  mean=1266.462, MSE=54550.25 \n\nNode number 52: 60 observations,    complexity param=0.01200212\n  mean=878.75, MSE=41006.69 \n  left son=104 (9 obs) right son=105 (51 obs)\n  Primary splits:\n      Income    &lt; 86.474   to the right, improve=0.38066960, (0 missing)\n      Rating    &lt; 457      to the left,  improve=0.03416397, (0 missing)\n      Education &lt; 13.5     to the left,  improve=0.03168693, (0 missing)\n      Limit     &lt; 6131     to the left,  improve=0.03136799, (0 missing)\n      Cards     &lt; 3.5      to the left,  improve=0.02967154, (0 missing)\n  Surrogate splits:\n      Limit  &lt; 7565.5   to the right, agree=0.917, adj=0.444, (0 split)\n      Rating &lt; 548      to the right, agree=0.883, adj=0.222, (0 split)\n\nNode number 53: 14 observations\n  mean=1109.286, MSE=82628.92 \n\nNode number 104: 9 observations\n  mean=581.3333, MSE=41310.44 \n\nNode number 105: 51 observations\n  mean=931.2353, MSE=22588.38 \n\ntree.credit2\n\nn= 300 \n\nnode), split, n, deviance, yval\n      * denotes terminal node\n\n  1) root 300 64150620.00  528.68670  \n    2) Rating&lt; 353.5 163  8878636.00  199.09200  \n      4) Rating&lt; 278.5 99  1377468.00   70.32323 *\n      5) Rating&gt;=278.5 64  3320323.00  398.28120  \n       10) Income&gt;=45.049 13    63312.77  102.30770 *\n       11) Income&lt; 45.049 51  1827922.00  473.72550 *\n    3) Rating&gt;=353.5 137 16497280.00  920.83210  \n      6) Rating&lt; 717.5 126 10883350.00  863.93650  \n       12) Limit&lt; 5353 39  1253014.00  618.89740  \n         24) Income&gt;=48.3975 12   132599.00  418.50000 *\n         25) Income&lt; 48.3975 27   424323.00  707.96300 *\n       13) Limit&gt;=5353 87  6238879.00  973.78160  \n         26) Student=No 74  4220493.00  922.36490  \n           52) Limit&lt; 7854.5 60  2460401.00  878.75000  \n            104) Income&gt;=86.474 9   371794.00  581.33330 *\n            105) Income&lt; 86.474 51  1152007.00  931.23530 *\n           53) Limit&gt;=7854.5 14  1156805.00 1109.28600 *\n         27) Student=Yes 13   709153.20 1266.46200 *\n      7) Rating&gt;=717.5 11   534016.70 1572.54500 *\n\n\nThis package makes nicer plots:\n\nrpart.plot(tree.credit2)\n\n\n\n\n\n\n\n\nCompute predicted values and MSE:\n\ntree.pred2 &lt;- predict(tree.credit2, newdata = credit.test)\nplot(tree.pred2 , credit.testY)\n abline(0, 1)\n\n\n\n\n\n\n\nMSE.tree2 &lt;- mean((tree.pred2 - credit.testY)^2)\n\nPlot the cost-complexity parameter of the tree\n\nplotcp(tree.credit2)\n\n\n\n\n\n\n\n\nUse cross-validation to pick the optimal cp parameter:\n\n# Get the optimal cp value\noptimal.cp &lt;- tree.credit2$cptable[which.min(tree.credit2$cptable[,\"xerror\"]), \"CP\"]\n\n# Prune the tree\nprune.credit2 &lt;- prune(tree.credit2, cp = optimal.cp)\n\n# Plot the pruned tree\nrpart.plot(prune.credit2)\n\n\n\n\n\n\n\n\nCompute predicted values and MSE for pruned tree:\n\nprune.pred2 &lt;- predict(prune.credit2, newdata = credit.test)\nplot(prune.pred2 , credit.testY)\n abline(0, 1)\n\n\n\n\n\n\n\nMSE.prune2 &lt;- mean((prune.pred2 - credit.testY)^2)"
-  },
-  {
-    "objectID": "seminar-2.html#bagging",
-    "href": "seminar-2.html#bagging",
-    "title": "Seminar 2",
-    "section": "Bagging",
-    "text": "Bagging\nYou can implement Bagging using the randomForest code (see p. 357). The function ipred is also suggested in the notes. All you need to do is ensure that you always predict on all regressors. In this example, there are 10 regressors.\n\nset.seed(8)\nbag.credit &lt;- randomForest(Balance ~ . , data= credit.train,mtry = 10, importance = TRUE)\nbag.credit\n\n\nCall:\n randomForest(formula = Balance ~ ., data = credit.train, mtry = 10,      importance = TRUE) \n               Type of random forest: regression\n                     Number of trees: 500\nNo. of variables tried at each split: 10\n\n          Mean of squared residuals: 14245.24\n                    % Var explained: 93.34\n\nbag.pred &lt;- predict(bag.credit , newdata = credit.test)\nplot(bag.pred , credit.testY)\n abline(0, 1)\n\n\n\n\n\n\n\nMSE.bag &lt;- mean((bag.pred - credit.testY)^2)"
-  },
-  {
-    "objectID": "seminar-2.html#random-forest",
-    "href": "seminar-2.html#random-forest",
-    "title": "Seminar 2",
-    "section": "Random Forest",
-    "text": "Random Forest\nYou can implement Random Forest using the same code. All you need to do is ensure that you reduce the number of regressors selected each time.\n\nset.seed(9)\nforest.credit &lt;- randomForest(Balance ~ . , data= credit.train,mtry = 5, importance = TRUE)\nforest.pred &lt;- predict(forest.credit, newdata = credit.test)\nplot(forest.pred , credit.testY)\n abline(0, 1)\n\n\n\n\n\n\n\nMSE.forest &lt;- mean((forest.pred - credit.testY)^2)\n\nWe can view the importance of each variable (see p.359):\n\nimportance(forest.credit)\n\n             %IncMSE IncNodePurity\nIncome    42.3912507     6330962.3\nLimit     34.6335482    27443953.1\nRating    30.0028867    24137311.4\nCards      1.5694270      416814.6\nAge        3.5262315     1269395.6\nEducation  2.5241391      713138.2\nOwn       -0.4445780      112842.9\nStudent   43.3139207     2529273.1\nMarried   -0.4083316      152515.5\nRegion     0.4913264      297770.1\n\nvarImpPlot(forest.credit)"
-  },
-  {
-    "objectID": "seminar-2.html#comparison",
-    "href": "seminar-2.html#comparison",
-    "title": "Seminar 2",
-    "section": "Comparison",
-    "text": "Comparison\n\nMSE &lt;- c(LM = MSE.lm, Ridge = MSE.ridge, LASSO = MSE.LASSO, Tree = MSE.tree, PrunedTree = MSE.prune, Tree2 = MSE.tree2, PrunedTree2 = MSE.prune2, Bag = MSE.bag, Forest = MSE.forest)\nt(t(MSE))\n\n                [,1]\nLM          12361.96\nRidge       15751.42\nLASSO       15751.42\nTree        39324.74\nPrunedTree  49255.46\nTree2       34343.51\nPrunedTree2 34343.51\nBag         12386.55\nForest      17411.44"
-  },
-  {
-    "objectID": "seminar-1.html",
-    "href": "seminar-1.html",
-    "title": "Seminar 1",
-    "section": "",
-    "text": "The goal for this seminar is to:\n\nensure everyone has successfully installed R and RStudio;\nreview some R basics;\nreview tidyverse packages\n\nggplot\ndplyr\n\ncreate and publish a RMarkdown file;\nintroduction to GitHub."
-  },
-  {
-    "objectID": "seminar-1.html#overview",
-    "href": "seminar-1.html#overview",
-    "title": "Seminar 1",
-    "section": "",
-    "text": "The goal for this seminar is to:\n\nensure everyone has successfully installed R and RStudio;\nreview some R basics;\nreview tidyverse packages\n\nggplot\ndplyr\n\ncreate and publish a RMarkdown file;\nintroduction to GitHub."
-  },
-  {
-    "objectID": "seminar-1.html#installing-r-and-rstudio",
-    "href": "seminar-1.html#installing-r-and-rstudio",
-    "title": "Seminar 1",
-    "section": "Installing R and RStudio",
-    "text": "Installing R and RStudio\nFollow instructions outlined at https://posit.co/download/rstudio-desktop/.\nMore advanced users may wish to investigate Positron, a new IDE for R from the creators of RStudio."
-  },
-  {
-    "objectID": "seminar-1.html#r-basics",
-    "href": "seminar-1.html#r-basics",
-    "title": "Seminar 1",
-    "section": "R basics",
-    "text": "R basics\nR is a programming language designed by Statisticians for statistical computation and data visualization. This makes it is distinct from Stata, SPSS, or SAS which are statistical softwares. Base R has a range of built in functions and tools used in Econometrics and Data Science. However, the real strength of R is the wider ecosystem of user-written packages. In this section we will review a few features of base R. In the next section, we will look at the tidyverse package, focusing on two of its subsidiary packages ggplot and dplyr.\n\nSingle values\nWe begin by assign an object x a value using the operator &lt;-.\n\nx &lt;- 3 + sin(pi/2)\n\nIf you’re working in RStudio, x (=4) will appear as a stored value under the “Environment” tab. We can now use x in various computations; for example, solving for its square root.\n\nsqrt(x)\n\n[1] 2\n\n\nNote, doing so does not change the stored value of x. We could define a new value y as its square root or replace x with its square root.\ny &lt;- sqrt(x)\nx &lt;- sqrt(x)\nThe store value of x (and y) is now 2.\nValues need not be numerical. They can also stored characters (often referred to as strings in other languages/software). For example,\n\nz &lt;- \"United Kingdom\"\n\n\n\nSequences and Loops\nSequences are used extensively in programming. The most common place is in a loop that iterates through a sequence. We can define a sequence of numbers on in two ways. Consider the sequence \\(1,\\dots,10\\).\n\nu &lt;- seq(1,10)\nv &lt;- 1:10\n\nBoth give the same result, but the seq()-uence function is more flexible since it allows you adapt the interval. For example, we can we can make the intervals in the sequence \\(0.5\\).\n\nU &lt;- seq(1,10,0.5)\n\nAn immediate application of a sequence is in a loop. Consider a loop over the sequence \\(1(1)10\\) that simply prints the number of the loop.\n\nfor(i in 1:10){\n  print(i)\n}\n\n[1] 1\n[1] 2\n[1] 3\n[1] 4\n[1] 5\n[1] 6\n[1] 7\n[1] 8\n[1] 9\n[1] 10\n\n\n\n\nVectors and Matrices\nWhen stored as values, sequences are essentially vectors. A more flexible function for creating a vector is the c()-ombine function. We can combine a set of objects, numeric or character.\n\nw &lt;- c(12,1,2,3)\nW &lt;- c(\"12\",\"1\",\"2\",\"3\")\n\nVectors have two important features: length and type.\n\nlength(w)\n\n[1] 4\n\ntypeof(w)\n\n[1] \"double\"\n\ntypeof(W)\n\n[1] \"character\"\n\n\nYou can even include a sequence within the combination.\n\nw &lt;- c(12,1:3)\nw\n\n[1] 12  1  2  3\n\n\nWhen you print w (as above), it does so as a single row. However, if you use the t()-ranspose function, you will see that it displays as a row vector. Taking the transpose of the transpose shows you that the default is in fact to think about w as a column vector.\n\nt(w)\n\n     [,1] [,2] [,3] [,4]\n[1,]   12    1    2    3\n\nt(t(w))\n\n     [,1]\n[1,]   12\n[2,]    1\n[3,]    2\n[4,]    3\n\n\nHere are a few fuctions that may be useful:\n\n# minimum\nmin(w)\n\n[1] 1\n\n# maximum\nmax(w)\n\n[1] 12\n\n# sort\nsort(w)\n\n[1]  1  2  3 12\n\n\nNote, sort(w) outputs a sorted version of w, but does not change the stored order of values in w. Multiplication/division by a scalar, is element by element.\n\nw*2\n\n[1] 24  2  4  6\n\nw/2\n\n[1] 6.0 0.5 1.0 1.5\n\n\nWe can combine two columns to form a matrix.\n\nA &lt;- cbind(w,seq(1,4))\nA\n\n      w  \n[1,] 12 1\n[2,]  1 2\n[3,]  2 3\n[4,]  3 4\n\nB &lt;- rbind(w,seq(1,4))\nB\n\n  [,1] [,2] [,3] [,4]\nw   12    1    2    3\n     1    2    3    4\n\n\nInterestingly, this shows us that R does not fix the row-column dimension of a vector. Else, rbind() would give you a \\(8\\times 1\\) vector. We can achieve this result by first fixing w as a \\(4\\times 1\\) matrix.\n\nC &lt;- rbind(matrix(w),matrix(seq(1,4)))\nC\n\n     [,1]\n[1,]   12\n[2,]    1\n[3,]    2\n[4,]    3\n[5,]    1\n[6,]    2\n[7,]    3\n[8,]    4\n\n\nWhen working with vectors (and matrices) it is important to know how to index specific values. For example, if you want the third value of w you can say,\n\nw[3]\n\n[1] 2\n\n\nWe can now consider a loop that prints the elements of w and W'. Here, I use thelength()` function to know the stopping point of the loop.\n\nn &lt;- length(w)\nfor(i in 1:n){\n  print(w[i])\n  print(W[i])\n}\n\n[1] 12\n[1] \"12\"\n[1] 1\n[1] \"1\"\n[1] 2\n[1] \"2\"\n[1] 3\n[1] \"3\"\n\n\nSuppose, we wanted to change change the type of W from character to numeric and w as a character.\n\nfor(i in 1:n){\n  print(as.character(w[i]))\n  print(as.numeric(W[i]))\n}\n\n[1] \"12\"\n[1] 12\n[1] \"1\"\n[1] 1\n[1] \"2\"\n[1] 2\n[1] \"3\"\n[1] 3\n\n\nIn this instance, as.integer would work in place of as.numeric.\n\n\nLists\nLists can combine multiple types of data and/or values. The can become relatively complex collections, that employ a hierarchical structure to navigate. When you scrape data from a website it will usually be structured in a list.\n\nsite &lt;- list(\"22 January 2025\",\"United Kingdom\",1:10,A)\ntypeof(site)\n\n[1] \"list\"\n\nlength(site)\n\n[1] 4\n\n\nThe above list has length 4 as it includes for items. The third item is a sequence from \\(1(1)10\\). We can index a particular element of the list by indexing.\n\nsite[3]\n\n[[1]]\n [1]  1  2  3  4  5  6  7  8  9 10\n\ntypeof(site[[3]])\n\n[1] \"integer\"\n\nlength(site[[3]])\n\n[1] 10\n\n\nLists can be recursive\n\npage &lt;- list(list(\"22 January 2025\",\"United Kingdom\"),list(\"URL\",\"download-date\"))\n\nYou can then extract a sublist,\n\npage1 &lt;- page[[1]]\nelement11 &lt;- page1[[1]]"
-  },
-  {
-    "objectID": "seminar-1.html#tidy-data-with-tidyverse",
-    "href": "seminar-1.html#tidy-data-with-tidyverse",
-    "title": "Seminar 1",
-    "section": "‘Tidy’ data with tidyverse",
-    "text": "‘Tidy’ data with tidyverse\ntidyverse is a package designed for data scientists to create and analyse “tidy data” (see description from source). If you have analysed cross-sectional, longitudinal, or time-series data in Stata/R, then you are likely used to ‘tidy’ data. However, not all data is ‘tidy’. For example, when you scrape data from a website it has a complex structure with many levels (often using a list structure in R).\n‘Tidy’ data essentially has a matrix structure (sometimes referred to as “rectangular” data) where a row represents a unique observation, a column a unique variable, and a cell a unique value.\nTo use this package we need to first install it and then load its library.\n\n#install.package(\"tidyverse\")\nlibrary(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.1     ✔ tibble    3.2.1\n✔ lubridate 1.9.3     ✔ tidyr     1.3.1\n✔ purrr     1.0.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\n\nWe will two packages within tidyverse: ggplot2 and dplyr. By loading tidyverse library, these subsidiary libraries will also be loaded. ### Graphing with ggplot2\nggplot2 is a very flexible graphing function. You start off by defining the data frame being mapped. Here we will use a small dataset that is included in the ggplot2 package.\n\ncar_frame &lt;- mpg\n\nBrowsing this data in RStudio, you will see that it contains city and highway gas mileage (i.e. fuel economy) figures for various vehicles as well as the characteristics of these figures.\nWe begin by picking the data frame we wish to plot.\n\nggplot(data = car_frame)\n\n\n\n\n\n\n\n\nThis will plot a blank screen as we have not assigned any “geoms” to be graphed. We begin with a simple scatter plot of hwy (highway mileage) and displ (displacement). To do this, we must add a mapping which is paired to an aes()-thetic.\n\nggplot(data = car_frame) + \n  geom_point(mapping=aes(x=displ,y=hwy))\n\n\n\n\n\n\n\n\nWe can now modify the aesthetics of the graph. For example, by setting the colours of the points to vary with class of vehicle. You could also change the size and/or shape of the points by class: size=class or shape=class.\n\nggplot(data = car_frame) + \n  geom_point(mapping=aes(x=displ,y=hwy,color=class))\n\n\n\n\n\n\n\n\nThe color variable need not be categorical. For example, we could use a color gradient based on cty (city) mileage.\n\nggplot(data = car_frame) + \n  geom_point(mapping=aes(x=displ,y=hwy,color=cty))\n\n\n\n\n\n\n\n\nWe could make subplots by drive train class using facets.\n\nggplot(data = car_frame) + \n  geom_point(mapping=aes(x=displ,y=hwy,color=cty)) +\n  facet_wrap(~ drv,nrow=1)\n\n\n\n\n\n\n\n\nWe can also overlay a second geom. For example, a loess smoothing.\n\nggplot(data = car_frame) + \n  geom_point(mapping=aes(x=displ,y=hwy)) +\n  geom_smooth(mapping=aes(x=displ,y=hwy,color=\"red\"))\n\n`geom_smooth()` using method = 'loess' and formula = 'y ~ x'\n\n\n\n\n\n\n\n\n\nAs the aesthetic is shared across both geoms, we can make it common.\n\nggplot(data = car_frame,mapping=aes(x=displ,y=hwy)) + \n  geom_point() +\n  geom_smooth(color=\"red\")\n\nAlternatively, you can edit the data used for one geom.\n\nggplot(data = car_frame, mapping=aes(x=displ, y=hwy)) +\n  geom_smooth(\n    se = FALSE\n  ) +\n  geom_smooth(\n    data = filter(car_frame, class == \"subcompact\"),\n    color=\"red\",\n    se = FALSE\n  )\n\n`geom_smooth()` using method = 'loess' and formula = 'y ~ x'\n`geom_smooth()` using method = 'loess' and formula = 'y ~ x'\n\n\n\n\n\n\n\n\n\n\nCleaning data with dplyr\nThe dplyr has a number of useful functions used to create and modify ‘tidy’ data. These include: mutate,select,filter,summarize, and arrange.\nWe begin by making a new dataset that includes only SUV vehicles. We can do this using the filter function.\n\nsuv_frame &lt;- filter(car_frame,class==\"suv\")\n\nNote, the use of “==” to select a specific value. Next, we will select a subset of the variables.\n\nsuv_frame &lt;- select(suv_frame,hwy,cty,displ,drv)\n\nSuppose we wanted to create new variables based on the existing set, we can do this using mutate. See also, transmute to keep only new variables.\n\nsuv_frame &lt;- mutate(suv_frame,ratio = cty/hwy,hwy_d = hwy/displ,cty_d = cty/displ)\n\nsummarize allows you to compute statistics of the existing variables. For example, the average city mileage.\n\nsummarize(suv_frame, avg_cty=mean(cty, na.rm = TRUE))\n\n# A tibble: 1 × 1\n  avg_cty\n    &lt;dbl&gt;\n1    13.5\n\n\nBut, suppose you wanted statistics by drive-train type. We can do this by first grouping the data frame.\n\nsuv_frame &lt;- group_by(suv_frame, drv)\nsummarize(suv_frame, avg_cty=mean(cty_d, na.rm = TRUE))\n\n# A tibble: 2 × 2\n  drv   avg_cty\n  &lt;chr&gt;   &lt;dbl&gt;\n1 4        3.63\n2 r        2.24\n\n\nNotice, in each of these steps we transformed the same data frame. That is, the data argument remained the same in each step. We can code this more efficiently using a “pipe” operator.\n\ndrv_stats &lt;- car_frame %&gt;% \n  filter(class==\"suv\") %&gt;%\n  mutate(ratio = cty/hwy,hwy_d = hwy/displ,cty_d = cty/displ) %&gt;%\n  group_by(drv) %&gt;%\n  summarize( \n            count=n(),\n            cty_d=mean(cty_d, na.rm = TRUE),\n            hwy_d=mean(hwy_d, na.rm = TRUE)\n  )"
-  },
-  {
-    "objectID": "seminar-1.html#rmarkdown",
-    "href": "seminar-1.html#rmarkdown",
-    "title": "Seminar 1",
-    "section": "RMarkdown",
-    "text": "RMarkdown\nMarkdown is a markup language. It includes relatively simple formatting that can incorporate more “creative” features through embedded HTML and CSS elements.\nWhen programming in R using a .R-script file, by default, text is treated as code. If you want to leave a comment, you need to comment-out the line using #. Markdown files flip this around: by default, any text is treated as plain text. Executable code must be placed within a code block for it to be executed. These blocks are then executed as a sequence of “chunks”.\n\nx &lt;- c(4,5,7,9)\n\nMarkdown files have a number of useful features; including,\n\nintuitive combination of code and text;\nstraight forward embedding of graphs;\npublication in a number of formats (including, html, pdf, docx);\ninclusion of LaTeX."
-  },
-  {
-    "objectID": "seminar-1.html#quarto",
-    "href": "seminar-1.html#quarto",
-    "title": "Seminar 1",
-    "section": "Quarto",
-    "text": "Quarto\nI would recommend that you investigate the cool things you can do with Quarto."
-  },
-  {
-    "objectID": "seminar-1.html#git-and-github",
-    "href": "seminar-1.html#git-and-github",
-    "title": "Seminar 1",
-    "section": "Git and GitHub",
-    "text": "Git and GitHub\nHere’s a great youtube on Git and GitHub. Git is a tool used to manage code, designed to deal with version control. GitHub is an online repository.\nThe basic steps, I used:\n\nCreate a GitHub account.\nInstall Git on your computer. This will include an app called Git Bash. You can also check out Git Desktop. I have found it easier to follow the steps below, which can be executed from Git Bash or the terminal within RStudio.\nI typically follow the following steps laid out on this blog under the heading “Type 2: Work on your project locally then create the repository on GitHub and push it to remote.”\n\nWhen using GitHub for a solo project, these are the commands I typically execute in the RStudio terminal when I’ve completed working on a section:\n\ngit status\ngit add .\ngit commit -m \"what I did\"\ngit push origin master\n\nWhen working in a team, you want to ensure that you first “pull” any changes before editing files. This avoids clashes that can be a pain to disentangle. Before editing:\n\ngit fetch - this will fetch the data from the online repo\ngit status - this will show whether you have any local changes\n\nIf you have any changes:\n\ngit add .\ngit commit -m \"what I did\"\n\nIf you don’t have any changes:\n\ngit pull origin master\n\nAfter edits are complete, check again for changes. In my experience, using GitHub does NOT AT ALL negate the need to communicate between team members. If you want to avoid issues with merging, you need be clear about who is working on what when."
-  },
-  {
-    "objectID": "seminar-1-grp-4.html",
-    "href": "seminar-1-grp-4.html",
-    "title": "Group 1: Seminar 1",
-    "section": "",
-    "text": "Here is the material from today’s seminar."
-  },
-  {
-    "objectID": "seminar-1-grp-4.html#r-script",
-    "href": "seminar-1-grp-4.html#r-script",
-    "title": "Group 1: Seminar 1",
-    "section": "R Script",
-    "text": "R Script\n\n\n# Seminar 1, group 4\n\n# defining values\n\nx &lt;- 3 + sin(pi/2)\nsqrt(x)\nx &lt;- sqrt(x)\n\nw &lt;- \"2\"\nv &lt;- \"word of the day\"\n\nw &lt;- as.numeric(w)\n# also see as.character as.integer\n\n# sequences\ng &lt;- seq(1,10)\nh &lt;- 1:10\n\nfor(i in 1:10) {\n  print(i)\n}\n\n# vectors\na &lt;- c(12,1,2,3) \na[3]\nsort(a)\nb &lt;- sort(a)  \nb[3]  \n\ntypeof(a)\nlength(a)\n\nn &lt;- length(a)\nfor(i in 1:n){\n  print(a[i])\n}\n\n## Working with packages\n# install.packages(\"tidyverse\")\nlibrary(tidyverse)\n \ncar_frame &lt;- mpg\n\nggplot(data = car_frame) + \n  geom_point(mapping = aes(x=displ,y=hwy))\n\nggplot(data = car_frame) + \n  geom_point(mapping = aes(x=displ,y=hwy, color=class))\n  \nggplot(data = car_frame) + \n  geom_point(mapping = aes(x=displ,y=hwy)) +\n  geom_smooth(mapping = aes(x=displ,y=hwy))\n\nggplot(data = car_frame, mapping = aes(x=displ,y=hwy)) + \n  geom_point() +\n  geom_smooth()"
-  },
-  {
-    "objectID": "seminar-1-grp-4.html#r-markdown",
-    "href": "seminar-1-grp-4.html#r-markdown",
-    "title": "Group 1: Seminar 1",
-    "section": "R Markdown",
-    "text": "R Markdown\nLink to published published markdown: html.\n\n\n---\ntitle: \"Seminar 1, Group 4\"\noutput: html_document\n---\n\n## Markup\n\nmake a list\n\n- item 1\n- item 2\n  - sub-item 2.1\n  \nnumbered list\n\n1. number 1\n2. number 2\n\nAdd math\n\n$$\nY = X\\beta + u\n$$\nin line $\\beta$. \n\n## Adding code\n\nCode block\n\n```{r}\nlibrary(tidyverse)\n \ncar_frame &lt;- mpg\n\nggplot(data = car_frame) + \n  geom_point(mapping = aes(x=displ,y=hwy, color=class))\n```"
-  },
-  {
-    "objectID": "seminar-1-grp-2.html",
-    "href": "seminar-1-grp-2.html",
-    "title": "Group 1: Seminar 1",
-    "section": "",
-    "text": "Here is the material from today’s seminar."
-  },
-  {
-    "objectID": "seminar-1-grp-2.html#r-script",
-    "href": "seminar-1-grp-2.html#r-script",
-    "title": "Group 1: Seminar 1",
-    "section": "R Script",
-    "text": "R Script\n\n\n# Seminar 1, Group 2\n\n# Basics of R\n\n## Define values\n\nx &lt;- 3 + sin(pi/2)\nx\nsqrt(x)\ny &lt;- sqrt(x)\nz &lt;- \"word\"\n\n## sequence\nv &lt;- seq(1,10)\nv2 &lt;- 1:10\n\n## vectors/collections\nw &lt;- c(12,1,2,3)\ntypeof(w)\nlength(w)\n\n## Loop\nA &lt;- c(\"1\",\"2\",\"5\",\"8\")\ntypeof(A)\nn &lt;- length(A)\nfor(i in 1:n){\n  print(A[i])\n}\n\n## coercion\nfor(i in 1:n){\n  print(as.numeric(A[i]))\n}\n## also see as.integer or as.character\nA &lt;- as.numeric(A)\n\n## Part 2: packages\n#install.package(\"tidyverse\")\nlibrary(tidyverse)\n\ncar_frame &lt;- mpg\n\nggplot(data=car_frame) +\n  geom_point(mapping = aes(x=displ,y=hwy))\n\nggplot(data=car_frame) +\n  geom_point(mapping = aes(x=displ,y=hwy,color=class))"
-  },
-  {
-    "objectID": "seminar-1-grp-2.html#r-markdown",
-    "href": "seminar-1-grp-2.html#r-markdown",
-    "title": "Group 1: Seminar 1",
-    "section": "R Markdown",
-    "text": "R Markdown\nLink to published published markdown: html.\n\n\n---\ntitle: \"Seminar 1, Group 2\"\noutput: html_document\n---\n\n## Markdown \n\nI want a list\n\n- item 1\n- item 2\n  - sub-item 1\n\nnumbers\n\n1. number 1\n2. number 2\n\nadd math\n\n$$\n Y = X\\beta + u\n$$\nin-line math; $\\beta$.\n\n## Add code\n\ncode-block:\n```{r}\nlibrary(tidyverse)\n\ncar_frame &lt;- mpg\n\nggplot(data=car_frame) +\n  geom_point(mapping = aes(x=displ,y=hwy))\n```"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "EC349: Data Science for Economists",
-    "section": "",
-    "text": "This is a Quarto website. To learn more about Quarto websites visit https://quarto.org/docs/websites.\nThe source code for this site can be found at https://github.com/neillo88/warwick-ec349.\nMoodle remains the primary source of material for this module."
-  },
-  {
-    "objectID": "index.html#helpful-links",
-    "href": "index.html#helpful-links",
-    "title": "EC349: Data Science for Economists",
-    "section": "Helpful links:",
-    "text": "Helpful links:\nHere are a few helpful links:\n\nRStudio Download\nMarkdown Guide\nQuarto\nTidyverse\n“R for Data Science”, 2nd Edition, by Hadley Wickham, Mine Çetinkaya-Rundel, and Garrett Grolemund.\nTranslating Stata to R"
-  },
-  {
-    "objectID": "group-material/grp-4/seminar-1.html",
-    "href": "group-material/grp-4/seminar-1.html",
-    "title": "Seminar 1, Group 4",
-    "section": "",
-    "text": "make a list\n\nitem 1\nitem 2\n\nsub-item 2.1\n\n\nnumbered list\n\nnumber 1\nnumber 2\n\nAdd math\n\\[\nY = X\\beta + u\n\\] in line \\(\\beta\\)."
-  },
-  {
-    "objectID": "group-material/grp-4/seminar-1.html#markup",
-    "href": "group-material/grp-4/seminar-1.html#markup",
-    "title": "Seminar 1, Group 4",
-    "section": "",
-    "text": "make a list\n\nitem 1\nitem 2\n\nsub-item 2.1\n\n\nnumbered list\n\nnumber 1\nnumber 2\n\nAdd math\n\\[\nY = X\\beta + u\n\\] in line \\(\\beta\\)."
-  },
-  {
-    "objectID": "group-material/grp-4/seminar-1.html#adding-code",
-    "href": "group-material/grp-4/seminar-1.html#adding-code",
-    "title": "Seminar 1, Group 4",
-    "section": "Adding code",
-    "text": "Adding code\nCode block\n\nlibrary(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.1     ✔ tibble    3.2.1\n✔ lubridate 1.9.3     ✔ tidyr     1.3.1\n✔ purrr     1.0.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\ncar_frame &lt;- mpg\n\nggplot(data = car_frame) + \n  geom_point(mapping = aes(x=displ,y=hwy, color=class))"
-  },
-  {
-    "objectID": "group-material/grp-2/seminar-1.html",
-    "href": "group-material/grp-2/seminar-1.html",
-    "title": "Seminar 1, Group 2",
-    "section": "",
-    "text": "I want a list\n\nitem 1\nitem 2\n\nsub-item 1\n\n\nnumbers\n\nnumber 1\nnumber 2\n\nadd math\n\\[\nY = X\\beta + u\n\\] in-line math; \\(\\beta\\)."
-  },
-  {
-    "objectID": "group-material/grp-2/seminar-1.html#markdown",
-    "href": "group-material/grp-2/seminar-1.html#markdown",
-    "title": "Seminar 1, Group 2",
-    "section": "",
-    "text": "I want a list\n\nitem 1\nitem 2\n\nsub-item 1\n\n\nnumbers\n\nnumber 1\nnumber 2\n\nadd math\n\\[\nY = X\\beta + u\n\\] in-line math; \\(\\beta\\)."
-  },
-  {
-    "objectID": "group-material/grp-2/seminar-1.html#add-code",
-    "href": "group-material/grp-2/seminar-1.html#add-code",
-    "title": "Seminar 1, Group 2",
-    "section": "Add code",
-    "text": "Add code\ncode-block:\n\nlibrary(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.1     ✔ tibble    3.2.1\n✔ lubridate 1.9.3     ✔ tidyr     1.3.1\n✔ purrr     1.0.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\ncar_frame &lt;- mpg\n\nggplot(data=car_frame) +\n  geom_point(mapping = aes(x=displ,y=hwy))"
-  },
-  {
-    "objectID": "group-material/grp-1/seminar-1.html",
-    "href": "group-material/grp-1/seminar-1.html",
-    "title": "seminar-1",
-    "section": "",
-    "text": "For example, a list\n\nitem 1\nitem 2\n\nnumbers\n\nnumber 1\nnumber 2\n\nMath \\[\nY = X\\beta + u\n\\] in line math: \\(Y= X\\beta + u\\)"
-  },
-  {
-    "objectID": "group-material/grp-1/seminar-1.html#markdown",
-    "href": "group-material/grp-1/seminar-1.html#markdown",
-    "title": "seminar-1",
-    "section": "",
-    "text": "For example, a list\n\nitem 1\nitem 2\n\nnumbers\n\nnumber 1\nnumber 2\n\nMath \\[\nY = X\\beta + u\n\\] in line math: \\(Y= X\\beta + u\\)"
-  },
-  {
-    "objectID": "group-material/grp-1/seminar-1.html#adding-code",
-    "href": "group-material/grp-1/seminar-1.html#adding-code",
-    "title": "seminar-1",
-    "section": "Adding code",
-    "text": "Adding code\n\nlibrary(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.1     ✔ tibble    3.2.1\n✔ lubridate 1.9.3     ✔ tidyr     1.3.1\n✔ purrr     1.0.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\ncar_frame &lt;- mpg\nggplot(data = car_frame) +\n  geom_point(mapping = aes(x=displ,y=hwy))"
-  },
-  {
-    "objectID": "group-material/grp-3/seminar-1.html",
-    "href": "group-material/grp-3/seminar-1.html",
-    "title": "seminar-1",
-    "section": "",
-    "text": "make a list\n\nitem 1\nitem 2\n\nsub-item 1\n\n\nnumbers\n\nnumber 1\nnumber 2\n\nmath\n\\[\nY = X\\beta + u\n\\] inline math: \\(\\beta\\)"
-  },
-  {
-    "objectID": "group-material/grp-3/seminar-1.html#markup",
-    "href": "group-material/grp-3/seminar-1.html#markup",
-    "title": "seminar-1",
-    "section": "",
-    "text": "make a list\n\nitem 1\nitem 2\n\nsub-item 1\n\n\nnumbers\n\nnumber 1\nnumber 2\n\nmath\n\\[\nY = X\\beta + u\n\\] inline math: \\(\\beta\\)"
-  },
-  {
-    "objectID": "group-material/grp-3/seminar-1.html#code",
-    "href": "group-material/grp-3/seminar-1.html#code",
-    "title": "seminar-1",
-    "section": "code",
-    "text": "code\n\nlibrary(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.1     ✔ tibble    3.2.1\n✔ lubridate 1.9.3     ✔ tidyr     1.3.1\n✔ purrr     1.0.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\ncar_frame &lt;- mpg\n\nggplot(data=car_frame) +\n  geom_point(mapping=aes(x=displ,y=hwy, color=class))"
-  },
-  {
-    "objectID": "group-material/grp-5/seminar-1.html",
-    "href": "group-material/grp-5/seminar-1.html",
-    "title": "seminar-1",
-    "section": "",
-    "text": "list of items\n\nitem 1\nitem 2\n\nsub-item 2.1\n\n\nnumbered list\n\nnumber 1\nnumber 2\n\nbold italics\nmath\n\\[\nY = X\\beta + u\n\\]\ninline: \\(\\beta\\)"
-  },
-  {
-    "objectID": "group-material/grp-5/seminar-1.html#markup-basics",
-    "href": "group-material/grp-5/seminar-1.html#markup-basics",
-    "title": "seminar-1",
-    "section": "",
-    "text": "list of items\n\nitem 1\nitem 2\n\nsub-item 2.1\n\n\nnumbered list\n\nnumber 1\nnumber 2\n\nbold italics\nmath\n\\[\nY = X\\beta + u\n\\]\ninline: \\(\\beta\\)"
-  },
-  {
-    "objectID": "group-material/grp-5/seminar-1.html#embedding-code",
-    "href": "group-material/grp-5/seminar-1.html#embedding-code",
-    "title": "seminar-1",
-    "section": "embedding code",
-    "text": "embedding code\ncode block\n\nlibrary(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.1     ✔ tibble    3.2.1\n✔ lubridate 1.9.3     ✔ tidyr     1.3.1\n✔ purrr     1.0.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\ncar_frame &lt;- mpg\nggplot(data = car_frame) + \n  geom_point(mapping = aes(x=displ,y=hwy))"
-  },
-  {
-    "objectID": "seminar-1-grp-1.html",
-    "href": "seminar-1-grp-1.html",
-    "title": "Group 1: Seminar 1",
-    "section": "",
-    "text": "Here is the material from today’s seminar."
-  },
-  {
-    "objectID": "seminar-1-grp-1.html#r-script",
-    "href": "seminar-1-grp-1.html#r-script",
-    "title": "Group 1: Seminar 1",
-    "section": "R Script",
-    "text": "R Script\n\n\n# Seminar 1 for Group 1\n\n# define values\nx &lt;- 3 + sin(pi/2) \nx \nsqrt(x)\ny &lt;- sqrt(x)\nz &lt;- \"word\"\n\n# define sequence:\nv&lt;- seq(1,10)\nv2 &lt;- 1:10\n\n# define vectors\nw &lt;- c(12,1,2,3)\nw\nw&lt;-sort(w)\nmin(w)\n\n# use an index to learn about the particular value of w\nw[2]\n\n# multiply all values\nw*2\nw/2\n\n# learn about the type and length of a vector\nA &lt;- c(\"1\",\"2\",\"5\",\"9\")\ntypeof(A)\nn &lt;- length(A)\n\n# use these elements in a loop\nfor(i in 1:n){\n  print(A[i])\n}\n\n# coercion: change the type of value stored\nfor(i in 1:n){\n  print(as.numeric(A[i]))\n}\n\n# Use packages\n\n#install.package(\"tidyverse\")\nlibrary(tidyverse)\n\ncar_frame &lt;- mpg\n\n# basic scatter plot\nggplot(data = car_frame) +\n  geom_point(mapping = aes(x=displ,y=hwy))\n\n# let the color of the dots change by class of vehicle\nggplot(data = car_frame) +\n  geom_point(mapping = aes(x=displ,y=hwy, color=class))\n\n# add multiple plots\nggplot(data = car_frame) +\n  geom_point(mapping = aes(x=displ,y=hwy)) + \n  geom_smooth(mapping = aes(x=displ,y=hwy))"
-  },
-  {
-    "objectID": "seminar-1-grp-1.html#r-markdown",
-    "href": "seminar-1-grp-1.html#r-markdown",
-    "title": "Group 1: Seminar 1",
-    "section": "R Markdown",
-    "text": "R Markdown\nLink to published published markdown: html.\n\n\n---\ntitle: \"seminar-1\"\noutput: html_document\n---\n\n## Markdown\n\nFor example, a list\n\n- item 1\n- item 2\n\nnumbers\n\n1. number 1\n2. number 2\n\nMath\n$$\nY = X\\beta + u\n$$\nin line math: $Y= X\\beta + u$\n\n## Adding code\n\n```{r}\nlibrary(tidyverse)\ncar_frame &lt;- mpg\nggplot(data = car_frame) +\n  geom_point(mapping = aes(x=displ,y=hwy))\n```"
-  },
-  {
-    "objectID": "seminar-1-grp-3.html",
-    "href": "seminar-1-grp-3.html",
-    "title": "Group 1: Seminar 1",
-    "section": "",
-    "text": "Here is the material from today’s seminar."
-  },
-  {
-    "objectID": "seminar-1-grp-3.html#r-script",
-    "href": "seminar-1-grp-3.html#r-script",
-    "title": "Group 1: Seminar 1",
-    "section": "R Script",
-    "text": "R Script\n\n\n# Seminar 1, Group 3\n\n# values\nx &lt;- 3 + sin(pi/2)\nx\nsqrt(x)\nx &lt;- sqrt(x)\n\ny &lt;- \"word\"\nz &lt;- \"2\"\n\n## Sequence\n\nv &lt;- seq(1,10)\nv2 &lt;- 1:10\n\nfor(i in 1:10) {\n  print(i)\n}\n\nv3 &lt;- seq(0,100,10)\n\n## vectors\n\nw &lt;- c(12,1,2,3)\nsort(w)\nlength(w)\ntypeof(w)\n\n## indexing\nw[3]\n\nn &lt;- length(w)\nfor(i in 1:n) {\n  print(w[i])\n}\n\n## coercion: changing type\n\nn &lt;- length(w)\nfor(i in 1:n) {\n  print(as.character(w[i]))\n}\n## likewise, as.numeric() as.integer() \n\n## packages\n\n## tidyverse\n#install.package(\"tidyverse\")\nlibrary(tidyverse)\n\ncar_frame &lt;- mpg\n\nggplot(data=car_frame) +\n  geom_point(mapping=aes(x=displ,y=hwy, color=class)) \n\nggplot(data=car_frame) +\n  geom_point(mapping=aes(x=displ,y=hwy)) + \n  geom_smooth(mapping=aes(x=displ,y=hwy))"
-  },
-  {
-    "objectID": "seminar-1-grp-3.html#r-markdown",
-    "href": "seminar-1-grp-3.html#r-markdown",
-    "title": "Group 1: Seminar 1",
-    "section": "R Markdown",
-    "text": "R Markdown\nLink to published published markdown: html.\n\n\n---\ntitle: \"seminar-1\"\noutput: html_document\n---\n\n## markup\n\nmake a list\n\n- item 1\n- item 2\n  - sub-item 1\n  \nnumbers\n\n1. number 1\n2. number 2\n\nmath\n\n$$\nY = X\\beta + u\n$$\ninline math: $\\beta$\n\n## code\n\n```{r}\nlibrary(tidyverse)\n\ncar_frame &lt;- mpg\n\nggplot(data=car_frame) +\n  geom_point(mapping=aes(x=displ,y=hwy, color=class)) \n```"
-  },
-  {
-    "objectID": "seminar-1-grp-5.html",
-    "href": "seminar-1-grp-5.html",
-    "title": "Group 5: Seminar 1",
-    "section": "",
-    "text": "Here is the material from today’s seminar."
-  },
-  {
-    "objectID": "seminar-1-grp-5.html#r-script",
-    "href": "seminar-1-grp-5.html#r-script",
-    "title": "Group 5: Seminar 1",
-    "section": "R Script",
-    "text": "R Script\n\n\n# Seminar 1, Group 5\n\nx &lt;- 3 + sin(pi/2)\nsqrt(x)\ny &lt;- sqrt(x)\nw &lt;- \"2\"\ntypeof(w)\nv &lt;- as.numeric(w)\n\n# sequences\n\nm &lt;- seq(1,10)\nn &lt;- seq(0,10,2)\no &lt;- 1:10\n\nfor(i in 1:10) {\n  print(i)\n}\n\n# vectors\nA &lt;- c(\"1\", \"2\", \"5\", \"9\")\ntypeof(A)\nlength(A)\nn &lt;- length(A)\nfor(i in 1:n) {\n  print(as.numeric(A[i]))\n}\n\n## Packages\n#install.packages(\"tidyverse\")\nlibrary(tidyverse)\n\ncar_frame &lt;- mpg\nggplot(data = car_frame) + \n  geom_point(mapping = aes(x=displ,y=hwy))\n\nggplot(data = car_frame) + \n  geom_point(mapping = aes(x=displ,y=hwy, color=class))\n\nggplot(data = car_frame) + \n  geom_point(mapping = aes(x=displ,y=hwy)) +\n  geom_smooth(mapping = aes(x=displ,y=hwy))\n\nggplot(data = car_frame, mapping = aes(x=displ,y=hwy)) + \n  geom_point() +\n  geom_smooth()"
-  },
-  {
-    "objectID": "seminar-1-grp-5.html#r-markdown",
-    "href": "seminar-1-grp-5.html#r-markdown",
-    "title": "Group 5: Seminar 1",
-    "section": "R Markdown",
-    "text": "R Markdown\nLink to published published markdown: html.\n\n\n---\ntitle: \"seminar-1\"\noutput: html_document\n---\n\n## Markup basics\n\nlist of items\n\n- item 1\n- item 2\n  - sub-item 2.1\n  \nnumbered list\n\n1. number 1\n2. number 2\n\n**bold** *italics*\n\nmath\n\n$$\nY = X\\beta + u\n$$\n\ninline: $\\beta$\n\n## embedding code\n\ncode block\n\n```{r}\nlibrary(tidyverse)\n\ncar_frame &lt;- mpg\nggplot(data = car_frame) + \n  geom_point(mapping = aes(x=displ,y=hwy))\n```"
+    "objectID": "seminar-3.html#visualize-the-results",
+    "href": "seminar-3.html#visualize-the-results",
+    "title": "Seminar 3",
+    "section": "Visualize the results",
+    "text": "Visualize the results\nConvert history to a data frame with epoch numbers\n\nhistory_df &lt;- as.data.frame(history$history)\nhistory_df$epoch &lt;- seq_len(nrow(history_df))\n\nPlot training and validation loss\n\nggplot(history_df, aes(x = epoch)) +\n  geom_line(aes(y = loss, color = \"Training Loss\"), linewidth = 1) +\n  geom_line(aes(y = val_loss, color = \"Validation Loss\"), linewidth = 1) +\n  labs(\n    title = \"Training and Validation Loss\",\n    x = \"Epoch\",\n    y = \"Loss\"\n  ) +\n  scale_color_manual(values = c(\"blue\", \"red\")) +\n  theme_minimal() +\n  theme(\n    legend.title = element_blank(),\n    legend.position = \"bottom\"  # Options: \"top\", \"bottom\", \"left\", \"right\", or c(x, y) for custom\n  )\n\n\n\n\n\n\n\n\nPlot training and validation mean absolute error (MAE)\n\nggplot(history_df, aes(x = epoch)) +\n  geom_line(aes(y = mae, color = \"Training MAE\"), linewidth = 1) +\n  geom_line(aes(y = val_mae, color = \"Validation MAE\"), linewidth = 1) +\n  labs(\n    title = \"Training and Validation Mean Absolute Error\",\n    x = \"Epoch\",\n    y = \"Mean Absolute Error\"\n  ) +\n  scale_color_manual(values = c(\"blue\", \"red\")) +\n  theme_minimal() +\n  theme(\n    legend.title = element_blank(),\n    legend.position = \"bottom\"  # Options: \"top\", \"bottom\", \"left\", \"right\", or c(x, y) for custom\n  )"
   },
   {
     "objectID": "seminar-2-sol-1.html",
@@ -439,5 +124,362 @@
     "title": "Student Solution",
     "section": "Comparison",
     "text": "Comparison\n\n# Get variables starting with \"mse_\"\nmse_vars = ls(pattern = \"^mse_\")\n\n# Create dataframe with variable names and values\nmse_df = data.frame(\n  method = sub(\"^mse_\", \"\", mse_vars),\n  mse = sapply(mse_vars, get),\n  stringsAsFactors = FALSE)\n\nmse_df = mse_df %&gt;%\n  arrange(mse)\n\nview(mse_df)\nmse_df\n\n                               method        mse\nmse_logit_ridge           logit_ridge 0.09556880\nmse_logit_lasso           logit_lasso 0.09775592\nmse_logit                       logit 0.10001662\nmse_lm_ridge                 lm_ridge 0.10308230\nmse_lm                             lm 0.10644605\nmse_prune_tree             prune_tree 0.17054945\nmse_forest                     forest 0.17333333\nmse_tree                         tree 0.18526094\nmse_bag                           bag 0.20000000\nmse_prune_tree_rpart prune_tree_rpart 0.20000000\nmse_tree_rpart             tree_rpart 0.20000000\nmse_lm_lasso                 lm_lasso 0.21966165\n\n\nTo view predictions_dataset for probabilistic/factor predictions under each model, run\n\nview(predictions_dataset)"
+  },
+  {
+    "objectID": "seminar-1-grp-5.html",
+    "href": "seminar-1-grp-5.html",
+    "title": "Group 5: Seminar 1",
+    "section": "",
+    "text": "Here is the material from today’s seminar."
+  },
+  {
+    "objectID": "seminar-1-grp-5.html#r-script",
+    "href": "seminar-1-grp-5.html#r-script",
+    "title": "Group 5: Seminar 1",
+    "section": "R Script",
+    "text": "R Script\n\n\n# Seminar 1, Group 5\n\nx &lt;- 3 + sin(pi/2)\nsqrt(x)\ny &lt;- sqrt(x)\nw &lt;- \"2\"\ntypeof(w)\nv &lt;- as.numeric(w)\n\n# sequences\n\nm &lt;- seq(1,10)\nn &lt;- seq(0,10,2)\no &lt;- 1:10\n\nfor(i in 1:10) {\n  print(i)\n}\n\n# vectors\nA &lt;- c(\"1\", \"2\", \"5\", \"9\")\ntypeof(A)\nlength(A)\nn &lt;- length(A)\nfor(i in 1:n) {\n  print(as.numeric(A[i]))\n}\n\n## Packages\n#install.packages(\"tidyverse\")\nlibrary(tidyverse)\n\ncar_frame &lt;- mpg\nggplot(data = car_frame) + \n  geom_point(mapping = aes(x=displ,y=hwy))\n\nggplot(data = car_frame) + \n  geom_point(mapping = aes(x=displ,y=hwy, color=class))\n\nggplot(data = car_frame) + \n  geom_point(mapping = aes(x=displ,y=hwy)) +\n  geom_smooth(mapping = aes(x=displ,y=hwy))\n\nggplot(data = car_frame, mapping = aes(x=displ,y=hwy)) + \n  geom_point() +\n  geom_smooth()"
+  },
+  {
+    "objectID": "seminar-1-grp-5.html#r-markdown",
+    "href": "seminar-1-grp-5.html#r-markdown",
+    "title": "Group 5: Seminar 1",
+    "section": "R Markdown",
+    "text": "R Markdown\nLink to published published markdown: html.\n\n\n---\ntitle: \"seminar-1\"\noutput: html_document\n---\n\n## Markup basics\n\nlist of items\n\n- item 1\n- item 2\n  - sub-item 2.1\n  \nnumbered list\n\n1. number 1\n2. number 2\n\n**bold** *italics*\n\nmath\n\n$$\nY = X\\beta + u\n$$\n\ninline: $\\beta$\n\n## embedding code\n\ncode block\n\n```{r}\nlibrary(tidyverse)\n\ncar_frame &lt;- mpg\nggplot(data = car_frame) + \n  geom_point(mapping = aes(x=displ,y=hwy))\n```"
+  },
+  {
+    "objectID": "seminar-1-grp-3.html",
+    "href": "seminar-1-grp-3.html",
+    "title": "Group 1: Seminar 1",
+    "section": "",
+    "text": "Here is the material from today’s seminar."
+  },
+  {
+    "objectID": "seminar-1-grp-3.html#r-script",
+    "href": "seminar-1-grp-3.html#r-script",
+    "title": "Group 1: Seminar 1",
+    "section": "R Script",
+    "text": "R Script\n\n\n# Seminar 1, Group 3\n\n# values\nx &lt;- 3 + sin(pi/2)\nx\nsqrt(x)\nx &lt;- sqrt(x)\n\ny &lt;- \"word\"\nz &lt;- \"2\"\n\n## Sequence\n\nv &lt;- seq(1,10)\nv2 &lt;- 1:10\n\nfor(i in 1:10) {\n  print(i)\n}\n\nv3 &lt;- seq(0,100,10)\n\n## vectors\n\nw &lt;- c(12,1,2,3)\nsort(w)\nlength(w)\ntypeof(w)\n\n## indexing\nw[3]\n\nn &lt;- length(w)\nfor(i in 1:n) {\n  print(w[i])\n}\n\n## coercion: changing type\n\nn &lt;- length(w)\nfor(i in 1:n) {\n  print(as.character(w[i]))\n}\n## likewise, as.numeric() as.integer() \n\n## packages\n\n## tidyverse\n#install.package(\"tidyverse\")\nlibrary(tidyverse)\n\ncar_frame &lt;- mpg\n\nggplot(data=car_frame) +\n  geom_point(mapping=aes(x=displ,y=hwy, color=class)) \n\nggplot(data=car_frame) +\n  geom_point(mapping=aes(x=displ,y=hwy)) + \n  geom_smooth(mapping=aes(x=displ,y=hwy))"
+  },
+  {
+    "objectID": "seminar-1-grp-3.html#r-markdown",
+    "href": "seminar-1-grp-3.html#r-markdown",
+    "title": "Group 1: Seminar 1",
+    "section": "R Markdown",
+    "text": "R Markdown\nLink to published published markdown: html.\n\n\n---\ntitle: \"seminar-1\"\noutput: html_document\n---\n\n## markup\n\nmake a list\n\n- item 1\n- item 2\n  - sub-item 1\n  \nnumbers\n\n1. number 1\n2. number 2\n\nmath\n\n$$\nY = X\\beta + u\n$$\ninline math: $\\beta$\n\n## code\n\n```{r}\nlibrary(tidyverse)\n\ncar_frame &lt;- mpg\n\nggplot(data=car_frame) +\n  geom_point(mapping=aes(x=displ,y=hwy, color=class)) \n```"
+  },
+  {
+    "objectID": "seminar-1-grp-1.html",
+    "href": "seminar-1-grp-1.html",
+    "title": "Group 1: Seminar 1",
+    "section": "",
+    "text": "Here is the material from today’s seminar."
+  },
+  {
+    "objectID": "seminar-1-grp-1.html#r-script",
+    "href": "seminar-1-grp-1.html#r-script",
+    "title": "Group 1: Seminar 1",
+    "section": "R Script",
+    "text": "R Script\n\n\n# Seminar 1 for Group 1\n\n# define values\nx &lt;- 3 + sin(pi/2) \nx \nsqrt(x)\ny &lt;- sqrt(x)\nz &lt;- \"word\"\n\n# define sequence:\nv&lt;- seq(1,10)\nv2 &lt;- 1:10\n\n# define vectors\nw &lt;- c(12,1,2,3)\nw\nw&lt;-sort(w)\nmin(w)\n\n# use an index to learn about the particular value of w\nw[2]\n\n# multiply all values\nw*2\nw/2\n\n# learn about the type and length of a vector\nA &lt;- c(\"1\",\"2\",\"5\",\"9\")\ntypeof(A)\nn &lt;- length(A)\n\n# use these elements in a loop\nfor(i in 1:n){\n  print(A[i])\n}\n\n# coercion: change the type of value stored\nfor(i in 1:n){\n  print(as.numeric(A[i]))\n}\n\n# Use packages\n\n#install.package(\"tidyverse\")\nlibrary(tidyverse)\n\ncar_frame &lt;- mpg\n\n# basic scatter plot\nggplot(data = car_frame) +\n  geom_point(mapping = aes(x=displ,y=hwy))\n\n# let the color of the dots change by class of vehicle\nggplot(data = car_frame) +\n  geom_point(mapping = aes(x=displ,y=hwy, color=class))\n\n# add multiple plots\nggplot(data = car_frame) +\n  geom_point(mapping = aes(x=displ,y=hwy)) + \n  geom_smooth(mapping = aes(x=displ,y=hwy))"
+  },
+  {
+    "objectID": "seminar-1-grp-1.html#r-markdown",
+    "href": "seminar-1-grp-1.html#r-markdown",
+    "title": "Group 1: Seminar 1",
+    "section": "R Markdown",
+    "text": "R Markdown\nLink to published published markdown: html.\n\n\n---\ntitle: \"seminar-1\"\noutput: html_document\n---\n\n## Markdown\n\nFor example, a list\n\n- item 1\n- item 2\n\nnumbers\n\n1. number 1\n2. number 2\n\nMath\n$$\nY = X\\beta + u\n$$\nin line math: $Y= X\\beta + u$\n\n## Adding code\n\n```{r}\nlibrary(tidyverse)\ncar_frame &lt;- mpg\nggplot(data = car_frame) +\n  geom_point(mapping = aes(x=displ,y=hwy))\n```"
+  },
+  {
+    "objectID": "group-material/grp-5/seminar-1.html",
+    "href": "group-material/grp-5/seminar-1.html",
+    "title": "seminar-1",
+    "section": "",
+    "text": "list of items\n\nitem 1\nitem 2\n\nsub-item 2.1\n\n\nnumbered list\n\nnumber 1\nnumber 2\n\nbold italics\nmath\n\\[\nY = X\\beta + u\n\\]\ninline: \\(\\beta\\)"
+  },
+  {
+    "objectID": "group-material/grp-5/seminar-1.html#markup-basics",
+    "href": "group-material/grp-5/seminar-1.html#markup-basics",
+    "title": "seminar-1",
+    "section": "",
+    "text": "list of items\n\nitem 1\nitem 2\n\nsub-item 2.1\n\n\nnumbered list\n\nnumber 1\nnumber 2\n\nbold italics\nmath\n\\[\nY = X\\beta + u\n\\]\ninline: \\(\\beta\\)"
+  },
+  {
+    "objectID": "group-material/grp-5/seminar-1.html#embedding-code",
+    "href": "group-material/grp-5/seminar-1.html#embedding-code",
+    "title": "seminar-1",
+    "section": "embedding code",
+    "text": "embedding code\ncode block\n\nlibrary(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.1     ✔ tibble    3.2.1\n✔ lubridate 1.9.3     ✔ tidyr     1.3.1\n✔ purrr     1.0.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\ncar_frame &lt;- mpg\nggplot(data = car_frame) + \n  geom_point(mapping = aes(x=displ,y=hwy))"
+  },
+  {
+    "objectID": "group-material/grp-3/seminar-1.html",
+    "href": "group-material/grp-3/seminar-1.html",
+    "title": "seminar-1",
+    "section": "",
+    "text": "make a list\n\nitem 1\nitem 2\n\nsub-item 1\n\n\nnumbers\n\nnumber 1\nnumber 2\n\nmath\n\\[\nY = X\\beta + u\n\\] inline math: \\(\\beta\\)"
+  },
+  {
+    "objectID": "group-material/grp-3/seminar-1.html#markup",
+    "href": "group-material/grp-3/seminar-1.html#markup",
+    "title": "seminar-1",
+    "section": "",
+    "text": "make a list\n\nitem 1\nitem 2\n\nsub-item 1\n\n\nnumbers\n\nnumber 1\nnumber 2\n\nmath\n\\[\nY = X\\beta + u\n\\] inline math: \\(\\beta\\)"
+  },
+  {
+    "objectID": "group-material/grp-3/seminar-1.html#code",
+    "href": "group-material/grp-3/seminar-1.html#code",
+    "title": "seminar-1",
+    "section": "code",
+    "text": "code\n\nlibrary(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.1     ✔ tibble    3.2.1\n✔ lubridate 1.9.3     ✔ tidyr     1.3.1\n✔ purrr     1.0.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\ncar_frame &lt;- mpg\n\nggplot(data=car_frame) +\n  geom_point(mapping=aes(x=displ,y=hwy, color=class))"
+  },
+  {
+    "objectID": "group-material/grp-1/seminar-1.html",
+    "href": "group-material/grp-1/seminar-1.html",
+    "title": "seminar-1",
+    "section": "",
+    "text": "For example, a list\n\nitem 1\nitem 2\n\nnumbers\n\nnumber 1\nnumber 2\n\nMath \\[\nY = X\\beta + u\n\\] in line math: \\(Y= X\\beta + u\\)"
+  },
+  {
+    "objectID": "group-material/grp-1/seminar-1.html#markdown",
+    "href": "group-material/grp-1/seminar-1.html#markdown",
+    "title": "seminar-1",
+    "section": "",
+    "text": "For example, a list\n\nitem 1\nitem 2\n\nnumbers\n\nnumber 1\nnumber 2\n\nMath \\[\nY = X\\beta + u\n\\] in line math: \\(Y= X\\beta + u\\)"
+  },
+  {
+    "objectID": "group-material/grp-1/seminar-1.html#adding-code",
+    "href": "group-material/grp-1/seminar-1.html#adding-code",
+    "title": "seminar-1",
+    "section": "Adding code",
+    "text": "Adding code\n\nlibrary(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.1     ✔ tibble    3.2.1\n✔ lubridate 1.9.3     ✔ tidyr     1.3.1\n✔ purrr     1.0.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\ncar_frame &lt;- mpg\nggplot(data = car_frame) +\n  geom_point(mapping = aes(x=displ,y=hwy))"
+  },
+  {
+    "objectID": "group-material/grp-2/seminar-1.html",
+    "href": "group-material/grp-2/seminar-1.html",
+    "title": "Seminar 1, Group 2",
+    "section": "",
+    "text": "I want a list\n\nitem 1\nitem 2\n\nsub-item 1\n\n\nnumbers\n\nnumber 1\nnumber 2\n\nadd math\n\\[\nY = X\\beta + u\n\\] in-line math; \\(\\beta\\)."
+  },
+  {
+    "objectID": "group-material/grp-2/seminar-1.html#markdown",
+    "href": "group-material/grp-2/seminar-1.html#markdown",
+    "title": "Seminar 1, Group 2",
+    "section": "",
+    "text": "I want a list\n\nitem 1\nitem 2\n\nsub-item 1\n\n\nnumbers\n\nnumber 1\nnumber 2\n\nadd math\n\\[\nY = X\\beta + u\n\\] in-line math; \\(\\beta\\)."
+  },
+  {
+    "objectID": "group-material/grp-2/seminar-1.html#add-code",
+    "href": "group-material/grp-2/seminar-1.html#add-code",
+    "title": "Seminar 1, Group 2",
+    "section": "Add code",
+    "text": "Add code\ncode-block:\n\nlibrary(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.1     ✔ tibble    3.2.1\n✔ lubridate 1.9.3     ✔ tidyr     1.3.1\n✔ purrr     1.0.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\ncar_frame &lt;- mpg\n\nggplot(data=car_frame) +\n  geom_point(mapping = aes(x=displ,y=hwy))"
+  },
+  {
+    "objectID": "group-material/grp-4/seminar-1.html",
+    "href": "group-material/grp-4/seminar-1.html",
+    "title": "Seminar 1, Group 4",
+    "section": "",
+    "text": "make a list\n\nitem 1\nitem 2\n\nsub-item 2.1\n\n\nnumbered list\n\nnumber 1\nnumber 2\n\nAdd math\n\\[\nY = X\\beta + u\n\\] in line \\(\\beta\\)."
+  },
+  {
+    "objectID": "group-material/grp-4/seminar-1.html#markup",
+    "href": "group-material/grp-4/seminar-1.html#markup",
+    "title": "Seminar 1, Group 4",
+    "section": "",
+    "text": "make a list\n\nitem 1\nitem 2\n\nsub-item 2.1\n\n\nnumbered list\n\nnumber 1\nnumber 2\n\nAdd math\n\\[\nY = X\\beta + u\n\\] in line \\(\\beta\\)."
+  },
+  {
+    "objectID": "group-material/grp-4/seminar-1.html#adding-code",
+    "href": "group-material/grp-4/seminar-1.html#adding-code",
+    "title": "Seminar 1, Group 4",
+    "section": "Adding code",
+    "text": "Adding code\nCode block\n\nlibrary(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.1     ✔ tibble    3.2.1\n✔ lubridate 1.9.3     ✔ tidyr     1.3.1\n✔ purrr     1.0.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\ncar_frame &lt;- mpg\n\nggplot(data = car_frame) + \n  geom_point(mapping = aes(x=displ,y=hwy, color=class))"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "EC349: Data Science for Economists",
+    "section": "",
+    "text": "This is a Quarto website. To learn more about Quarto websites visit https://quarto.org/docs/websites.\nThe source code for this site can be found at https://github.com/neillo88/warwick-ec349.\nMoodle remains the primary source of material for this module."
+  },
+  {
+    "objectID": "index.html#helpful-links",
+    "href": "index.html#helpful-links",
+    "title": "EC349: Data Science for Economists",
+    "section": "Helpful links:",
+    "text": "Helpful links:\nHere are a few helpful links:\n\nRStudio Download\nMarkdown Guide\nQuarto\nTidyverse\n“R for Data Science”, 2nd Edition, by Hadley Wickham, Mine Çetinkaya-Rundel, and Garrett Grolemund.\nTranslating Stata to R"
+  },
+  {
+    "objectID": "seminar-1-grp-2.html",
+    "href": "seminar-1-grp-2.html",
+    "title": "Group 1: Seminar 1",
+    "section": "",
+    "text": "Here is the material from today’s seminar."
+  },
+  {
+    "objectID": "seminar-1-grp-2.html#r-script",
+    "href": "seminar-1-grp-2.html#r-script",
+    "title": "Group 1: Seminar 1",
+    "section": "R Script",
+    "text": "R Script\n\n\n# Seminar 1, Group 2\n\n# Basics of R\n\n## Define values\n\nx &lt;- 3 + sin(pi/2)\nx\nsqrt(x)\ny &lt;- sqrt(x)\nz &lt;- \"word\"\n\n## sequence\nv &lt;- seq(1,10)\nv2 &lt;- 1:10\n\n## vectors/collections\nw &lt;- c(12,1,2,3)\ntypeof(w)\nlength(w)\n\n## Loop\nA &lt;- c(\"1\",\"2\",\"5\",\"8\")\ntypeof(A)\nn &lt;- length(A)\nfor(i in 1:n){\n  print(A[i])\n}\n\n## coercion\nfor(i in 1:n){\n  print(as.numeric(A[i]))\n}\n## also see as.integer or as.character\nA &lt;- as.numeric(A)\n\n## Part 2: packages\n#install.package(\"tidyverse\")\nlibrary(tidyverse)\n\ncar_frame &lt;- mpg\n\nggplot(data=car_frame) +\n  geom_point(mapping = aes(x=displ,y=hwy))\n\nggplot(data=car_frame) +\n  geom_point(mapping = aes(x=displ,y=hwy,color=class))"
+  },
+  {
+    "objectID": "seminar-1-grp-2.html#r-markdown",
+    "href": "seminar-1-grp-2.html#r-markdown",
+    "title": "Group 1: Seminar 1",
+    "section": "R Markdown",
+    "text": "R Markdown\nLink to published published markdown: html.\n\n\n---\ntitle: \"Seminar 1, Group 2\"\noutput: html_document\n---\n\n## Markdown \n\nI want a list\n\n- item 1\n- item 2\n  - sub-item 1\n\nnumbers\n\n1. number 1\n2. number 2\n\nadd math\n\n$$\n Y = X\\beta + u\n$$\nin-line math; $\\beta$.\n\n## Add code\n\ncode-block:\n```{r}\nlibrary(tidyverse)\n\ncar_frame &lt;- mpg\n\nggplot(data=car_frame) +\n  geom_point(mapping = aes(x=displ,y=hwy))\n```"
+  },
+  {
+    "objectID": "seminar-1-grp-4.html",
+    "href": "seminar-1-grp-4.html",
+    "title": "Group 1: Seminar 1",
+    "section": "",
+    "text": "Here is the material from today’s seminar."
+  },
+  {
+    "objectID": "seminar-1-grp-4.html#r-script",
+    "href": "seminar-1-grp-4.html#r-script",
+    "title": "Group 1: Seminar 1",
+    "section": "R Script",
+    "text": "R Script\n\n\n# Seminar 1, group 4\n\n# defining values\n\nx &lt;- 3 + sin(pi/2)\nsqrt(x)\nx &lt;- sqrt(x)\n\nw &lt;- \"2\"\nv &lt;- \"word of the day\"\n\nw &lt;- as.numeric(w)\n# also see as.character as.integer\n\n# sequences\ng &lt;- seq(1,10)\nh &lt;- 1:10\n\nfor(i in 1:10) {\n  print(i)\n}\n\n# vectors\na &lt;- c(12,1,2,3) \na[3]\nsort(a)\nb &lt;- sort(a)  \nb[3]  \n\ntypeof(a)\nlength(a)\n\nn &lt;- length(a)\nfor(i in 1:n){\n  print(a[i])\n}\n\n## Working with packages\n# install.packages(\"tidyverse\")\nlibrary(tidyverse)\n \ncar_frame &lt;- mpg\n\nggplot(data = car_frame) + \n  geom_point(mapping = aes(x=displ,y=hwy))\n\nggplot(data = car_frame) + \n  geom_point(mapping = aes(x=displ,y=hwy, color=class))\n  \nggplot(data = car_frame) + \n  geom_point(mapping = aes(x=displ,y=hwy)) +\n  geom_smooth(mapping = aes(x=displ,y=hwy))\n\nggplot(data = car_frame, mapping = aes(x=displ,y=hwy)) + \n  geom_point() +\n  geom_smooth()"
+  },
+  {
+    "objectID": "seminar-1-grp-4.html#r-markdown",
+    "href": "seminar-1-grp-4.html#r-markdown",
+    "title": "Group 1: Seminar 1",
+    "section": "R Markdown",
+    "text": "R Markdown\nLink to published published markdown: html.\n\n\n---\ntitle: \"Seminar 1, Group 4\"\noutput: html_document\n---\n\n## Markup\n\nmake a list\n\n- item 1\n- item 2\n  - sub-item 2.1\n  \nnumbered list\n\n1. number 1\n2. number 2\n\nAdd math\n\n$$\nY = X\\beta + u\n$$\nin line $\\beta$. \n\n## Adding code\n\nCode block\n\n```{r}\nlibrary(tidyverse)\n \ncar_frame &lt;- mpg\n\nggplot(data = car_frame) + \n  geom_point(mapping = aes(x=displ,y=hwy, color=class))\n```"
+  },
+  {
+    "objectID": "seminar-1.html",
+    "href": "seminar-1.html",
+    "title": "Seminar 1",
+    "section": "",
+    "text": "The goal for this seminar is to:\n\nensure everyone has successfully installed R and RStudio;\nreview some R basics;\nreview tidyverse packages\n\nggplot\ndplyr\n\ncreate and publish a RMarkdown file;\nintroduction to GitHub."
+  },
+  {
+    "objectID": "seminar-1.html#overview",
+    "href": "seminar-1.html#overview",
+    "title": "Seminar 1",
+    "section": "",
+    "text": "The goal for this seminar is to:\n\nensure everyone has successfully installed R and RStudio;\nreview some R basics;\nreview tidyverse packages\n\nggplot\ndplyr\n\ncreate and publish a RMarkdown file;\nintroduction to GitHub."
+  },
+  {
+    "objectID": "seminar-1.html#installing-r-and-rstudio",
+    "href": "seminar-1.html#installing-r-and-rstudio",
+    "title": "Seminar 1",
+    "section": "Installing R and RStudio",
+    "text": "Installing R and RStudio\nFollow instructions outlined at https://posit.co/download/rstudio-desktop/.\nMore advanced users may wish to investigate Positron, a new IDE for R from the creators of RStudio."
+  },
+  {
+    "objectID": "seminar-1.html#r-basics",
+    "href": "seminar-1.html#r-basics",
+    "title": "Seminar 1",
+    "section": "R basics",
+    "text": "R basics\nR is a programming language designed by Statisticians for statistical computation and data visualization. This makes it is distinct from Stata, SPSS, or SAS which are statistical softwares. Base R has a range of built in functions and tools used in Econometrics and Data Science. However, the real strength of R is the wider ecosystem of user-written packages. In this section we will review a few features of base R. In the next section, we will look at the tidyverse package, focusing on two of its subsidiary packages ggplot and dplyr.\n\nSingle values\nWe begin by assign an object x a value using the operator &lt;-.\n\nx &lt;- 3 + sin(pi/2)\n\nIf you’re working in RStudio, x (=4) will appear as a stored value under the “Environment” tab. We can now use x in various computations; for example, solving for its square root.\n\nsqrt(x)\n\n[1] 2\n\n\nNote, doing so does not change the stored value of x. We could define a new value y as its square root or replace x with its square root.\ny &lt;- sqrt(x)\nx &lt;- sqrt(x)\nThe store value of x (and y) is now 2.\nValues need not be numerical. They can also stored characters (often referred to as strings in other languages/software). For example,\n\nz &lt;- \"United Kingdom\"\n\n\n\nSequences and Loops\nSequences are used extensively in programming. The most common place is in a loop that iterates through a sequence. We can define a sequence of numbers on in two ways. Consider the sequence \\(1,\\dots,10\\).\n\nu &lt;- seq(1,10)\nv &lt;- 1:10\n\nBoth give the same result, but the seq()-uence function is more flexible since it allows you adapt the interval. For example, we can we can make the intervals in the sequence \\(0.5\\).\n\nU &lt;- seq(1,10,0.5)\n\nAn immediate application of a sequence is in a loop. Consider a loop over the sequence \\(1(1)10\\) that simply prints the number of the loop.\n\nfor(i in 1:10){\n  print(i)\n}\n\n[1] 1\n[1] 2\n[1] 3\n[1] 4\n[1] 5\n[1] 6\n[1] 7\n[1] 8\n[1] 9\n[1] 10\n\n\n\n\nVectors and Matrices\nWhen stored as values, sequences are essentially vectors. A more flexible function for creating a vector is the c()-ombine function. We can combine a set of objects, numeric or character.\n\nw &lt;- c(12,1,2,3)\nW &lt;- c(\"12\",\"1\",\"2\",\"3\")\n\nVectors have two important features: length and type.\n\nlength(w)\n\n[1] 4\n\ntypeof(w)\n\n[1] \"double\"\n\ntypeof(W)\n\n[1] \"character\"\n\n\nYou can even include a sequence within the combination.\n\nw &lt;- c(12,1:3)\nw\n\n[1] 12  1  2  3\n\n\nWhen you print w (as above), it does so as a single row. However, if you use the t()-ranspose function, you will see that it displays as a row vector. Taking the transpose of the transpose shows you that the default is in fact to think about w as a column vector.\n\nt(w)\n\n     [,1] [,2] [,3] [,4]\n[1,]   12    1    2    3\n\nt(t(w))\n\n     [,1]\n[1,]   12\n[2,]    1\n[3,]    2\n[4,]    3\n\n\nHere are a few fuctions that may be useful:\n\n# minimum\nmin(w)\n\n[1] 1\n\n# maximum\nmax(w)\n\n[1] 12\n\n# sort\nsort(w)\n\n[1]  1  2  3 12\n\n\nNote, sort(w) outputs a sorted version of w, but does not change the stored order of values in w. Multiplication/division by a scalar, is element by element.\n\nw*2\n\n[1] 24  2  4  6\n\nw/2\n\n[1] 6.0 0.5 1.0 1.5\n\n\nWe can combine two columns to form a matrix.\n\nA &lt;- cbind(w,seq(1,4))\nA\n\n      w  \n[1,] 12 1\n[2,]  1 2\n[3,]  2 3\n[4,]  3 4\n\nB &lt;- rbind(w,seq(1,4))\nB\n\n  [,1] [,2] [,3] [,4]\nw   12    1    2    3\n     1    2    3    4\n\n\nInterestingly, this shows us that R does not fix the row-column dimension of a vector. Else, rbind() would give you a \\(8\\times 1\\) vector. We can achieve this result by first fixing w as a \\(4\\times 1\\) matrix.\n\nC &lt;- rbind(matrix(w),matrix(seq(1,4)))\nC\n\n     [,1]\n[1,]   12\n[2,]    1\n[3,]    2\n[4,]    3\n[5,]    1\n[6,]    2\n[7,]    3\n[8,]    4\n\n\nWhen working with vectors (and matrices) it is important to know how to index specific values. For example, if you want the third value of w you can say,\n\nw[3]\n\n[1] 2\n\n\nWe can now consider a loop that prints the elements of w and W'. Here, I use thelength()` function to know the stopping point of the loop.\n\nn &lt;- length(w)\nfor(i in 1:n){\n  print(w[i])\n  print(W[i])\n}\n\n[1] 12\n[1] \"12\"\n[1] 1\n[1] \"1\"\n[1] 2\n[1] \"2\"\n[1] 3\n[1] \"3\"\n\n\nSuppose, we wanted to change change the type of W from character to numeric and w as a character.\n\nfor(i in 1:n){\n  print(as.character(w[i]))\n  print(as.numeric(W[i]))\n}\n\n[1] \"12\"\n[1] 12\n[1] \"1\"\n[1] 1\n[1] \"2\"\n[1] 2\n[1] \"3\"\n[1] 3\n\n\nIn this instance, as.integer would work in place of as.numeric.\n\n\nLists\nLists can combine multiple types of data and/or values. The can become relatively complex collections, that employ a hierarchical structure to navigate. When you scrape data from a website it will usually be structured in a list.\n\nsite &lt;- list(\"22 January 2025\",\"United Kingdom\",1:10,A)\ntypeof(site)\n\n[1] \"list\"\n\nlength(site)\n\n[1] 4\n\n\nThe above list has length 4 as it includes for items. The third item is a sequence from \\(1(1)10\\). We can index a particular element of the list by indexing.\n\nsite[3]\n\n[[1]]\n [1]  1  2  3  4  5  6  7  8  9 10\n\ntypeof(site[[3]])\n\n[1] \"integer\"\n\nlength(site[[3]])\n\n[1] 10\n\n\nLists can be recursive\n\npage &lt;- list(list(\"22 January 2025\",\"United Kingdom\"),list(\"URL\",\"download-date\"))\n\nYou can then extract a sublist,\n\npage1 &lt;- page[[1]]\nelement11 &lt;- page1[[1]]"
+  },
+  {
+    "objectID": "seminar-1.html#tidy-data-with-tidyverse",
+    "href": "seminar-1.html#tidy-data-with-tidyverse",
+    "title": "Seminar 1",
+    "section": "‘Tidy’ data with tidyverse",
+    "text": "‘Tidy’ data with tidyverse\ntidyverse is a package designed for data scientists to create and analyse “tidy data” (see description from source). If you have analysed cross-sectional, longitudinal, or time-series data in Stata/R, then you are likely used to ‘tidy’ data. However, not all data is ‘tidy’. For example, when you scrape data from a website it has a complex structure with many levels (often using a list structure in R).\n‘Tidy’ data essentially has a matrix structure (sometimes referred to as “rectangular” data) where a row represents a unique observation, a column a unique variable, and a cell a unique value.\nTo use this package we need to first install it and then load its library.\n\n#install.package(\"tidyverse\")\nlibrary(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.1     ✔ tibble    3.2.1\n✔ lubridate 1.9.3     ✔ tidyr     1.3.1\n✔ purrr     1.0.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\n\nWe will two packages within tidyverse: ggplot2 and dplyr. By loading tidyverse library, these subsidiary libraries will also be loaded. ### Graphing with ggplot2\nggplot2 is a very flexible graphing function. You start off by defining the data frame being mapped. Here we will use a small dataset that is included in the ggplot2 package.\n\ncar_frame &lt;- mpg\n\nBrowsing this data in RStudio, you will see that it contains city and highway gas mileage (i.e. fuel economy) figures for various vehicles as well as the characteristics of these figures.\nWe begin by picking the data frame we wish to plot.\n\nggplot(data = car_frame)\n\n\n\n\n\n\n\n\nThis will plot a blank screen as we have not assigned any “geoms” to be graphed. We begin with a simple scatter plot of hwy (highway mileage) and displ (displacement). To do this, we must add a mapping which is paired to an aes()-thetic.\n\nggplot(data = car_frame) + \n  geom_point(mapping=aes(x=displ,y=hwy))\n\n\n\n\n\n\n\n\nWe can now modify the aesthetics of the graph. For example, by setting the colours of the points to vary with class of vehicle. You could also change the size and/or shape of the points by class: size=class or shape=class.\n\nggplot(data = car_frame) + \n  geom_point(mapping=aes(x=displ,y=hwy,color=class))\n\n\n\n\n\n\n\n\nThe color variable need not be categorical. For example, we could use a color gradient based on cty (city) mileage.\n\nggplot(data = car_frame) + \n  geom_point(mapping=aes(x=displ,y=hwy,color=cty))\n\n\n\n\n\n\n\n\nWe could make subplots by drive train class using facets.\n\nggplot(data = car_frame) + \n  geom_point(mapping=aes(x=displ,y=hwy,color=cty)) +\n  facet_wrap(~ drv,nrow=1)\n\n\n\n\n\n\n\n\nWe can also overlay a second geom. For example, a loess smoothing.\n\nggplot(data = car_frame) + \n  geom_point(mapping=aes(x=displ,y=hwy)) +\n  geom_smooth(mapping=aes(x=displ,y=hwy,color=\"red\"))\n\n`geom_smooth()` using method = 'loess' and formula = 'y ~ x'\n\n\n\n\n\n\n\n\n\nAs the aesthetic is shared across both geoms, we can make it common.\n\nggplot(data = car_frame,mapping=aes(x=displ,y=hwy)) + \n  geom_point() +\n  geom_smooth(color=\"red\")\n\nAlternatively, you can edit the data used for one geom.\n\nggplot(data = car_frame, mapping=aes(x=displ, y=hwy)) +\n  geom_smooth(\n    se = FALSE\n  ) +\n  geom_smooth(\n    data = filter(car_frame, class == \"subcompact\"),\n    color=\"red\",\n    se = FALSE\n  )\n\n`geom_smooth()` using method = 'loess' and formula = 'y ~ x'\n`geom_smooth()` using method = 'loess' and formula = 'y ~ x'\n\n\n\n\n\n\n\n\n\n\nCleaning data with dplyr\nThe dplyr has a number of useful functions used to create and modify ‘tidy’ data. These include: mutate,select,filter,summarize, and arrange.\nWe begin by making a new dataset that includes only SUV vehicles. We can do this using the filter function.\n\nsuv_frame &lt;- filter(car_frame,class==\"suv\")\n\nNote, the use of “==” to select a specific value. Next, we will select a subset of the variables.\n\nsuv_frame &lt;- select(suv_frame,hwy,cty,displ,drv)\n\nSuppose we wanted to create new variables based on the existing set, we can do this using mutate. See also, transmute to keep only new variables.\n\nsuv_frame &lt;- mutate(suv_frame,ratio = cty/hwy,hwy_d = hwy/displ,cty_d = cty/displ)\n\nsummarize allows you to compute statistics of the existing variables. For example, the average city mileage.\n\nsummarize(suv_frame, avg_cty=mean(cty, na.rm = TRUE))\n\n# A tibble: 1 × 1\n  avg_cty\n    &lt;dbl&gt;\n1    13.5\n\n\nBut, suppose you wanted statistics by drive-train type. We can do this by first grouping the data frame.\n\nsuv_frame &lt;- group_by(suv_frame, drv)\nsummarize(suv_frame, avg_cty=mean(cty_d, na.rm = TRUE))\n\n# A tibble: 2 × 2\n  drv   avg_cty\n  &lt;chr&gt;   &lt;dbl&gt;\n1 4        3.63\n2 r        2.24\n\n\nNotice, in each of these steps we transformed the same data frame. That is, the data argument remained the same in each step. We can code this more efficiently using a “pipe” operator.\n\ndrv_stats &lt;- car_frame %&gt;% \n  filter(class==\"suv\") %&gt;%\n  mutate(ratio = cty/hwy,hwy_d = hwy/displ,cty_d = cty/displ) %&gt;%\n  group_by(drv) %&gt;%\n  summarize( \n            count=n(),\n            cty_d=mean(cty_d, na.rm = TRUE),\n            hwy_d=mean(hwy_d, na.rm = TRUE)\n  )"
+  },
+  {
+    "objectID": "seminar-1.html#rmarkdown",
+    "href": "seminar-1.html#rmarkdown",
+    "title": "Seminar 1",
+    "section": "RMarkdown",
+    "text": "RMarkdown\nMarkdown is a markup language. It includes relatively simple formatting that can incorporate more “creative” features through embedded HTML and CSS elements.\nWhen programming in R using a .R-script file, by default, text is treated as code. If you want to leave a comment, you need to comment-out the line using #. Markdown files flip this around: by default, any text is treated as plain text. Executable code must be placed within a code block for it to be executed. These blocks are then executed as a sequence of “chunks”.\n\nx &lt;- c(4,5,7,9)\n\nMarkdown files have a number of useful features; including,\n\nintuitive combination of code and text;\nstraight forward embedding of graphs;\npublication in a number of formats (including, html, pdf, docx);\ninclusion of LaTeX."
+  },
+  {
+    "objectID": "seminar-1.html#quarto",
+    "href": "seminar-1.html#quarto",
+    "title": "Seminar 1",
+    "section": "Quarto",
+    "text": "Quarto\nI would recommend that you investigate the cool things you can do with Quarto."
+  },
+  {
+    "objectID": "seminar-1.html#git-and-github",
+    "href": "seminar-1.html#git-and-github",
+    "title": "Seminar 1",
+    "section": "Git and GitHub",
+    "text": "Git and GitHub\nHere’s a great youtube on Git and GitHub. Git is a tool used to manage code, designed to deal with version control. GitHub is an online repository.\nThe basic steps, I used:\n\nCreate a GitHub account.\nInstall Git on your computer. This will include an app called Git Bash. You can also check out Git Desktop. I have found it easier to follow the steps below, which can be executed from Git Bash or the terminal within RStudio.\nI typically follow the following steps laid out on this blog under the heading “Type 2: Work on your project locally then create the repository on GitHub and push it to remote.”\n\nWhen using GitHub for a solo project, these are the commands I typically execute in the RStudio terminal when I’ve completed working on a section:\n\ngit status\ngit add .\ngit commit -m \"what I did\"\ngit push origin master\n\nWhen working in a team, you want to ensure that you first “pull” any changes before editing files. This avoids clashes that can be a pain to disentangle. Before editing:\n\ngit fetch - this will fetch the data from the online repo\ngit status - this will show whether you have any local changes\n\nIf you have any changes:\n\ngit add .\ngit commit -m \"what I did\"\n\nIf you don’t have any changes:\n\ngit pull origin master\n\nAfter edits are complete, check again for changes. In my experience, using GitHub does NOT AT ALL negate the need to communicate between team members. If you want to avoid issues with merging, you need be clear about who is working on what when."
+  },
+  {
+    "objectID": "seminar-2.html",
+    "href": "seminar-2.html",
+    "title": "Seminar 2",
+    "section": "",
+    "text": "The goal of seminar 2 is to review the questions in Problem Set 1. Many of these questions do no require R and a selection will be discussed in person during class. Here, you will find an initial attempt at Q11.\nQuestion 11: Try repeating exercises with another dataset available here: https://www.statlearning.com/resources-second-edition.\nFor this exercise, I have chosen to use the file Credit.csv, which includes the debt levels of 400 individuals. The exercise will be predict the credit-balance of card holders using the other information in the file.\n\nExercise 1 Download one of the datasets and apply each of the models below. In addition, try to improve on my code by using functions in tidyverse package. For example, look at this example that uses dplyr package to create the training and testing data."
+  },
+  {
+    "objectID": "seminar-2.html#overview",
+    "href": "seminar-2.html#overview",
+    "title": "Seminar 2",
+    "section": "",
+    "text": "The goal of seminar 2 is to review the questions in Problem Set 1. Many of these questions do no require R and a selection will be discussed in person during class. Here, you will find an initial attempt at Q11.\nQuestion 11: Try repeating exercises with another dataset available here: https://www.statlearning.com/resources-second-edition.\nFor this exercise, I have chosen to use the file Credit.csv, which includes the debt levels of 400 individuals. The exercise will be predict the credit-balance of card holders using the other information in the file.\n\nExercise 1 Download one of the datasets and apply each of the models below. In addition, try to improve on my code by using functions in tidyverse package. For example, look at this example that uses dplyr package to create the training and testing data."
+  },
+  {
+    "objectID": "seminar-2.html#load-packages-and-data",
+    "href": "seminar-2.html#load-packages-and-data",
+    "title": "Seminar 2",
+    "section": "Load packages and data",
+    "text": "Load packages and data\n\nlibrary(tidyverse)\nlibrary(glmnet)\nlibrary(tree)\nlibrary(rpart)\nlibrary(rpart.plot)\nlibrary(randomForest)\n\n# read in csv\ncredit.base &lt;- read.csv(\"seminar-material/Credit.csv\",header=TRUE, stringsAsFactors=TRUE)"
+  },
+  {
+    "objectID": "seminar-2.html#create-training-and-testing-database",
+    "href": "seminar-2.html#create-training-and-testing-database",
+    "title": "Seminar 2",
+    "section": "Create training and testing database",
+    "text": "Create training and testing database\nThe outcome of interest is “Balance”, which appears as the last variable in the data.\n\nset.seed(1)\ntrain &lt;- sample(1:nrow(credit.base), 3*nrow(credit.base)/4)\n\n# Create training data\ncredit.train &lt;- credit.base[train,]\ncredit.trainX &lt;- credit.train[,-ncol(credit.train)]\ncredit.trainY &lt;- credit.train[,ncol(credit.train)]\n\n# Create testing data\ncredit.test &lt;- credit.base[-train,]\ncredit.testX &lt;- credit.test[,-ncol(credit.train)]\ncredit.testY &lt;- credit.test[,ncol(credit.train)]"
+  },
+  {
+    "objectID": "seminar-2.html#linear-regression",
+    "href": "seminar-2.html#linear-regression",
+    "title": "Seminar 2",
+    "section": "Linear regression",
+    "text": "Linear regression\n\nlm.credit &lt;- lm(Balance ~ ., data = credit.train)\nsummary(lm.credit)\n\n\nCall:\nlm(formula = Balance ~ ., data = credit.train)\n\nResiduals:\n    Min      1Q  Median      3Q     Max \n-142.12  -72.93  -15.53   49.04  328.78 \n\nCoefficients:\n             Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept) -484.8236    39.9566 -12.134  &lt; 2e-16 ***\nIncome        -7.7615     0.2725 -28.484  &lt; 2e-16 ***\nLimit          0.2426     0.0364   6.664 1.36e-10 ***\nRating         0.4109     0.5474   0.751   0.4534    \nCards         22.4444     4.8474   4.630 5.53e-06 ***\nAge           -0.7274     0.3317  -2.193   0.0291 *  \nEducation      0.0567     1.7870   0.032   0.9747    \nOwnYes       -19.3752    11.0876  -1.747   0.0816 .  \nStudentYes   417.2180    17.9747  23.211  &lt; 2e-16 ***\nMarriedYes    -4.2692    11.7505  -0.363   0.7166    \nRegionSouth   -0.8237    13.7553  -0.060   0.9523    \nRegionWest    15.5498    16.2218   0.959   0.3386    \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 95.65 on 288 degrees of freedom\nMultiple R-squared:  0.9589,    Adjusted R-squared:  0.9574 \nF-statistic: 611.2 on 11 and 288 DF,  p-value: &lt; 2.2e-16\n\n\nCompute the predicted values and MSE\n\nlm.pred &lt;- predict(lm.credit, newdata = credit.testX)\nplot(lm.pred , credit.testY)\n abline(0, 1)\n\n\n\n\n\n\n\nMSE.lm &lt;- mean((lm.pred - credit.testY)^2)\n\n\n\n\n\n\n\nNon-linear models\n\n\n\nFor discrete outcomes, see probit/logit models: https://www.geeksforgeeks.org/logistic-regression-in-r-programming/?ref=header_outind. And for categorical variables, see multinomial logit models: https://www.geeksforgeeks.org/multinomial-logistic-regression-in-r/. This resource uses the vglm function."
+  },
+  {
+    "objectID": "seminar-2.html#ridge-regression",
+    "href": "seminar-2.html#ridge-regression",
+    "title": "Seminar 2",
+    "section": "Ridge regression",
+    "text": "Ridge regression\nThe dataset contains factor variables: these have numerical values with labels attached (e.g. “Yes”,“No”). When using a function like lm() it will convert this two a set of dummy variables.\n\n\n\n\n\n\nMatrices with factor variables\n\n\n\nThe glmnet function wants you to input a Y and X matrix. I had trouble using the as.matrix() function with the factor variables. As a solution (courtesy of ChatGPT), I first convert the X’s into a matrix where the factor variable appear as dummy variables.\n\n\n\ncredit.trainX.mat &lt;- model.matrix(~ ., data = credit.trainX)[, -1]\ncredit.testX.mat &lt;- model.matrix(~ ., data = credit.testX)[, -1]\n\nThe as.matrix function works fine for the outcome variable. We can now estimate the model.\n\nridge.credit &lt;- glmnet(credit.trainX.mat, as.matrix(credit.trainY), alpha=0, lamnda=3, thresh = 1e-12)\n#coef(ridge.credit)\n\nAdding cross-validation\n\ncv.out &lt;- cv.glmnet(credit.trainX.mat,as.matrix(credit.trainY), alpha=0, nfold=3)\nplot(cv.out)\n\n\n\n\n\n\n\nlambda.ridge.cv &lt;- cv.out$lambda.min\n\nRe-estimate using cross-validated lambda\n\nridge.credit &lt;- glmnet(credit.trainX.mat, as.matrix(credit.trainY), alpha=0, lamnda=lambda.ridge.cv, thresh = 1e-12)\n\nFit the model in the test data\n\nridge.pred &lt;- predict(ridge.credit, s = lambda.ridge.cv, newx = credit.testX.mat)\nplot(ridge.pred , credit.testY)\n abline(0, 1)\n\n\n\n\n\n\n\nMSE.ridge &lt;- mean((ridge.pred - credit.testY)^2)"
+  },
+  {
+    "objectID": "seminar-2.html#lasso",
+    "href": "seminar-2.html#lasso",
+    "title": "Seminar 2",
+    "section": "LASSO",
+    "text": "LASSO\nRepeat the above steps with cross-validation, but setting alpha=1.\n\ncv.out &lt;- cv.glmnet(credit.trainX.mat,as.matrix(credit.trainY), alpha=1, nfold=3)\nplot(cv.out)\n\n\n\n\n\n\n\nlambda.LASSO.cv &lt;- cv.out$lambda.min\n\nRe-estimate using cross-validated lambda\n\nLASSO.credit &lt;- glmnet(credit.trainX.mat, as.matrix(credit.trainY), alpha=0, lamnda=lambda.LASSO.cv, thresh = 1e-12)\n\nFit the model in the test data\n\nLASSO.pred &lt;- predict(LASSO.credit, s = lambda.LASSO.cv, newx = credit.testX.mat)\nplot(LASSO.pred , credit.testY)\n abline(0, 1)\n\n\n\n\n\n\n\nMSE.LASSO &lt;- mean((LASSO.pred - credit.testY)^2)"
+  },
+  {
+    "objectID": "seminar-2.html#regression-trees",
+    "href": "seminar-2.html#regression-trees",
+    "title": "Seminar 2",
+    "section": "Regression Trees",
+    "text": "Regression Trees\nI first tried following the coded examples in James et al. (2023) Chapter 8. However, the pruning process was not clear. Next, I followed the advice of https://www.geeksforgeeks.org/how-to-prune-a-tree-in-r/ using the rpart package.\n\nVersion 1\nHere is the first version using the tree package.\n\ntree.credit &lt;- tree(Balance ~ ., data = credit.train)\nsummary(tree.credit)\n\n\nRegression tree:\ntree(formula = Balance ~ ., data = credit.train)\nVariables actually used in tree construction:\n[1] \"Rating\"  \"Income\"  \"Student\" \"Limit\"  \nNumber of terminal nodes:  9 \nResidual mean deviance:  29060 = 8457000 / 291 \nDistribution of residuals:\n   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. \n-672.40  -70.32  -18.64    0.00  107.60  484.60 \n\ntree.credit\n\nnode), split, n, deviance, yval\n      * denotes terminal node\n\n 1) root 300 64150000  528.70  \n   2) Rating &lt; 353.5 163  8879000  199.10  \n     4) Rating &lt; 278.5 99  1377000   70.32 *\n     5) Rating &gt; 278.5 64  3320000  398.30  \n      10) Income &lt; 45.049 51  1828000  473.70  \n        20) Student: No 45   902100  427.10 *\n        21) Student: Yes 6    93940  823.50 *\n      11) Income &gt; 45.049 13    63310  102.30 *\n   3) Rating &gt; 353.5 137 16500000  920.80  \n     6) Rating &lt; 717.5 126 10880000  863.90  \n      12) Limit &lt; 5353 39  1253000  618.90  \n        24) Income &lt; 48.3975 27   424300  708.00 *\n        25) Income &gt; 48.3975 12   132600  418.50 *\n      13) Limit &gt; 5353 87  6239000  973.80  \n        26) Student: No 74  4220000  922.40 *\n        27) Student: Yes 13   709200 1266.00 *\n     7) Rating &gt; 717.5 11   534000 1573.00 *\n\n\nPlot the tree\n\nplot(tree.credit)\n  text(tree.credit , pretty = 1)\n\n\n\n\n\n\n\n\nCompute the predicted values and MSE:\n\ntree.pred &lt;- predict(tree.credit, newdata = credit.test)\nplot(tree.pred , credit.testY)\n abline(0, 1)\n\n\n\n\n\n\n\nMSE.tree &lt;- mean((tree.pred - credit.testY)^2)\n\nPruned tree (following example on P.355):\n\nset.seed(789)\ncvtree.credit &lt;- cv.tree(tree.credit, FUN = prune.tree)\nnames(cvtree.credit)\n\n[1] \"size\"   \"dev\"    \"k\"      \"method\"\n\ncvtree.credit\n\n$size\n[1] 9 8 7 6 5 4 3 2 1\n\n$dev\n[1] 12853234 13736173 13923420 15697812 16415511 22200274 24575504 25292336\n[9] 64799501\n\n$k\n[1]       -Inf   696091.6   831927.0  1309232.5  1429088.0  3391459.1  4180845.0\n[8]  5079908.9 38774711.8\n\n$method\n[1] \"deviance\"\n\nattr(,\"class\")\n[1] \"prune\"         \"tree.sequence\"\n\npar(mfrow = c(1, 2))\nplot(cvtree.credit$size , cvtree.credit$dev, type = \"b\")\nplot(cvtree.credit$k, cvtree.credit$dev, type = \"b\")\n\n\n\n\n\n\n\n\nPrune the tree, predict and compute MSE, and plot new tree\n\nprune.credit &lt;- prune.tree(tree.credit , best = 8)\nplot(prune.credit)\n text(prune.credit , pretty = 1)\n\n\n\n\n\n\n\n\nCompute predicted values\n\nprune.pred &lt;- predict(prune.credit, newdata = credit.test)\nplot(prune.pred , credit.testY)\n abline(0, 1)\n\n\n\n\n\n\n\nMSE.prune &lt;- mean((prune.pred - credit.testY)^2)\n\n\n\nVersion 2\nNext, using the rpart package. I get the following:\n\ntree.credit2 &lt;- rpart(Balance ~ ., data = credit.train, method = \"anova\")\nsummary(tree.credit2)\n\nCall:\nrpart(formula = Balance ~ ., data = credit.train, method = \"anova\")\n  n= 300 \n\n          CP nsplit rel error    xerror       xstd\n1 0.60443234      0 1.0000000 1.0073204 0.07254634\n2 0.07918721      1 0.3955677 0.4664061 0.04213623\n3 0.06517232      2 0.3163805 0.3434325 0.03249794\n4 0.05286712      3 0.2512081 0.3167628 0.03079975\n5 0.02227707      4 0.1983410 0.2465855 0.02432872\n6 0.02040873      5 0.1760639 0.2455674 0.02409388\n7 0.01200212      6 0.1556552 0.2378676 0.02362119\n8 0.01085089      8 0.1316510 0.2156099 0.02410439\n9 0.01000000      9 0.1208001 0.2123373 0.02369780\n\nVariable importance\n   Rating     Limit    Income       Age Education     Cards   Student \n       39        37        18         3         1         1         1 \n\nNode number 1: 300 observations,    complexity param=0.6044323\n  mean=528.6867, MSE=213835.4 \n  left son=2 (163 obs) right son=3 (137 obs)\n  Primary splits:\n      Rating  &lt; 353.5    to the left,  improve=0.60443230, (0 missing)\n      Limit   &lt; 4421     to the left,  improve=0.60178010, (0 missing)\n      Income  &lt; 58.566   to the left,  improve=0.20501110, (0 missing)\n      Student splits as  LR,           improve=0.04117036, (0 missing)\n      Age     &lt; 58.5     to the right, improve=0.01333096, (0 missing)\n  Surrogate splits:\n      Limit     &lt; 4765.5   to the left,  agree=0.980, adj=0.956, (0 split)\n      Income    &lt; 45.5635  to the left,  agree=0.747, adj=0.445, (0 split)\n      Age       &lt; 79.5     to the left,  agree=0.583, adj=0.088, (0 split)\n      Cards     &lt; 1.5      to the right, agree=0.553, adj=0.022, (0 split)\n      Education &lt; 7.5      to the right, agree=0.553, adj=0.022, (0 split)\n\nNode number 2: 163 observations,    complexity param=0.06517232\n  mean=199.092, MSE=54470.16 \n  left son=4 (99 obs) right son=5 (64 obs)\n  Primary splits:\n      Rating  &lt; 278.5    to the left,  improve=0.47088820, (0 missing)\n      Limit   &lt; 3570.5   to the left,  improve=0.46202030, (0 missing)\n      Student splits as  LR,           improve=0.12815030, (0 missing)\n      Income  &lt; 15.0005  to the right, improve=0.05136852, (0 missing)\n      Age     &lt; 31.5     to the right, improve=0.03893959, (0 missing)\n  Surrogate splits:\n      Limit     &lt; 3429     to the left,  agree=0.945, adj=0.859, (0 split)\n      Income    &lt; 39.1305  to the left,  agree=0.687, adj=0.203, (0 split)\n      Age       &lt; 31.5     to the right, agree=0.626, adj=0.047, (0 split)\n      Cards     &lt; 5.5      to the left,  agree=0.620, adj=0.031, (0 split)\n      Education &lt; 9.5      to the right, agree=0.620, adj=0.031, (0 split)\n\nNode number 3: 137 observations,    complexity param=0.07918721\n  mean=920.8321, MSE=120418.1 \n  left son=6 (126 obs) right son=7 (11 obs)\n  Primary splits:\n      Rating    &lt; 717.5    to the left,  improve=0.30792410, (0 missing)\n      Limit     &lt; 8922.5   to the left,  improve=0.30596580, (0 missing)\n      Income    &lt; 134.6495 to the left,  improve=0.12713150, (0 missing)\n      Student   splits as  LR,           improve=0.09558537, (0 missing)\n      Education &lt; 13.5     to the left,  improve=0.03174229, (0 missing)\n  Surrogate splits:\n      Limit  &lt; 9956     to the left,  agree=0.993, adj=0.909, (0 split)\n      Income &lt; 150.807  to the left,  agree=0.956, adj=0.455, (0 split)\n      Cards  &lt; 6.5      to the left,  agree=0.927, adj=0.091, (0 split)\n      Age    &lt; 85.5     to the left,  agree=0.927, adj=0.091, (0 split)\n\nNode number 4: 99 observations\n  mean=70.32323, MSE=13913.81 \n\nNode number 5: 64 observations,    complexity param=0.02227707\n  mean=398.2812, MSE=51880.05 \n  left son=10 (13 obs) right son=11 (51 obs)\n  Primary splits:\n      Income &lt; 45.049   to the right, improve=0.43040630, (0 missing)\n      Limit  &lt; 4421     to the left,  improve=0.12565140, (0 missing)\n      Age    &lt; 72.5     to the right, improve=0.09399284, (0 missing)\n      Rating &lt; 327.5    to the left,  improve=0.05022884, (0 missing)\n      Cards  &lt; 3.5      to the left,  improve=0.04388043, (0 missing)\n  Surrogate splits:\n      Age &lt; 79.5     to the right, agree=0.859, adj=0.308, (0 split)\n\nNode number 6: 126 observations,    complexity param=0.05286712\n  mean=863.9365, MSE=86375.81 \n  left son=12 (39 obs) right son=13 (87 obs)\n  Primary splits:\n      Limit     &lt; 5353     to the left,  improve=0.31161900, (0 missing)\n      Rating    &lt; 406.5    to the left,  improve=0.25619670, (0 missing)\n      Student   splits as  LR,           improve=0.20599790, (0 missing)\n      Education &lt; 8.5      to the left,  improve=0.06908941, (0 missing)\n      Age       &lt; 70       to the right, improve=0.02733715, (0 missing)\n  Surrogate splits:\n      Rating    &lt; 403.5    to the left,  agree=0.944, adj=0.821, (0 split)\n      Education &lt; 18.5     to the right, agree=0.722, adj=0.103, (0 split)\n      Income    &lt; 20.1615  to the left,  agree=0.706, adj=0.051, (0 split)\n\nNode number 7: 11 observations\n  mean=1572.545, MSE=48546.98 \n\nNode number 10: 13 observations\n  mean=102.3077, MSE=4870.213 \n\nNode number 11: 51 observations\n  mean=473.7255, MSE=35841.61 \n\nNode number 12: 39 observations,    complexity param=0.01085089\n  mean=618.8974, MSE=32128.55 \n  left son=24 (12 obs) right son=25 (27 obs)\n  Primary splits:\n      Income    &lt; 48.3975  to the right, improve=0.55553400, (0 missing)\n      Education &lt; 10.5     to the left,  improve=0.18867870, (0 missing)\n      Age       &lt; 70       to the right, improve=0.10403420, (0 missing)\n      Limit     &lt; 4942     to the right, improve=0.08655423, (0 missing)\n      Region    splits as  RLL,          improve=0.07476262, (0 missing)\n  Surrogate splits:\n      Limit     &lt; 5291.5   to the right, agree=0.769, adj=0.250, (0 split)\n      Education &lt; 9.5      to the left,  agree=0.769, adj=0.250, (0 split)\n      Rating    &lt; 388      to the right, agree=0.744, adj=0.167, (0 split)\n      Age       &lt; 70       to the right, agree=0.718, adj=0.083, (0 split)\n\nNode number 13: 87 observations,    complexity param=0.02040873\n  mean=973.7816, MSE=71711.25 \n  left son=26 (74 obs) right son=27 (13 obs)\n  Primary splits:\n      Student   splits as  LR,           improve=0.20985060, (0 missing)\n      Income    &lt; 72.5045  to the right, improve=0.13136250, (0 missing)\n      Education &lt; 13.5     to the left,  improve=0.07140088, (0 missing)\n      Age       &lt; 70       to the right, improve=0.06687376, (0 missing)\n      Limit     &lt; 7854.5   to the left,  improve=0.06149053, (0 missing)\n  Surrogate splits:\n      Rating &lt; 385.5    to the right, agree=0.874, adj=0.154, (0 split)\n      Limit  &lt; 5386     to the right, agree=0.862, adj=0.077, (0 split)\n\nNode number 24: 12 observations\n  mean=418.5, MSE=11049.92 \n\nNode number 25: 27 observations\n  mean=707.963, MSE=15715.67 \n\nNode number 26: 74 observations,    complexity param=0.01200212\n  mean=922.3649, MSE=57033.69 \n  left son=52 (60 obs) right son=53 (14 obs)\n  Primary splits:\n      Limit     &lt; 7854.5   to the left,  improve=0.14294230, (0 missing)\n      Income    &lt; 83.9085  to the right, improve=0.14144100, (0 missing)\n      Education &lt; 13.5     to the left,  improve=0.11730300, (0 missing)\n      Rating    &lt; 563.5    to the left,  improve=0.11369130, (0 missing)\n      Age       &lt; 81.5     to the right, improve=0.08734887, (0 missing)\n  Surrogate splits:\n      Rating &lt; 563.5    to the left,  agree=0.986, adj=0.929, (0 split)\n      Income &lt; 128.3545 to the left,  agree=0.865, adj=0.286, (0 split)\n\nNode number 27: 13 observations\n  mean=1266.462, MSE=54550.25 \n\nNode number 52: 60 observations,    complexity param=0.01200212\n  mean=878.75, MSE=41006.69 \n  left son=104 (9 obs) right son=105 (51 obs)\n  Primary splits:\n      Income    &lt; 86.474   to the right, improve=0.38066960, (0 missing)\n      Rating    &lt; 457      to the left,  improve=0.03416397, (0 missing)\n      Education &lt; 13.5     to the left,  improve=0.03168693, (0 missing)\n      Limit     &lt; 6131     to the left,  improve=0.03136799, (0 missing)\n      Cards     &lt; 3.5      to the left,  improve=0.02967154, (0 missing)\n  Surrogate splits:\n      Limit  &lt; 7565.5   to the right, agree=0.917, adj=0.444, (0 split)\n      Rating &lt; 548      to the right, agree=0.883, adj=0.222, (0 split)\n\nNode number 53: 14 observations\n  mean=1109.286, MSE=82628.92 \n\nNode number 104: 9 observations\n  mean=581.3333, MSE=41310.44 \n\nNode number 105: 51 observations\n  mean=931.2353, MSE=22588.38 \n\ntree.credit2\n\nn= 300 \n\nnode), split, n, deviance, yval\n      * denotes terminal node\n\n  1) root 300 64150620.00  528.68670  \n    2) Rating&lt; 353.5 163  8878636.00  199.09200  \n      4) Rating&lt; 278.5 99  1377468.00   70.32323 *\n      5) Rating&gt;=278.5 64  3320323.00  398.28120  \n       10) Income&gt;=45.049 13    63312.77  102.30770 *\n       11) Income&lt; 45.049 51  1827922.00  473.72550 *\n    3) Rating&gt;=353.5 137 16497280.00  920.83210  \n      6) Rating&lt; 717.5 126 10883350.00  863.93650  \n       12) Limit&lt; 5353 39  1253014.00  618.89740  \n         24) Income&gt;=48.3975 12   132599.00  418.50000 *\n         25) Income&lt; 48.3975 27   424323.00  707.96300 *\n       13) Limit&gt;=5353 87  6238879.00  973.78160  \n         26) Student=No 74  4220493.00  922.36490  \n           52) Limit&lt; 7854.5 60  2460401.00  878.75000  \n            104) Income&gt;=86.474 9   371794.00  581.33330 *\n            105) Income&lt; 86.474 51  1152007.00  931.23530 *\n           53) Limit&gt;=7854.5 14  1156805.00 1109.28600 *\n         27) Student=Yes 13   709153.20 1266.46200 *\n      7) Rating&gt;=717.5 11   534016.70 1572.54500 *\n\n\nThis package makes nicer plots:\n\nrpart.plot(tree.credit2)\n\n\n\n\n\n\n\n\nCompute predicted values and MSE:\n\ntree.pred2 &lt;- predict(tree.credit2, newdata = credit.test)\nplot(tree.pred2 , credit.testY)\n abline(0, 1)\n\n\n\n\n\n\n\nMSE.tree2 &lt;- mean((tree.pred2 - credit.testY)^2)\n\nPlot the cost-complexity parameter of the tree\n\nplotcp(tree.credit2)\n\n\n\n\n\n\n\n\nUse cross-validation to pick the optimal cp parameter:\n\n# Get the optimal cp value\noptimal.cp &lt;- tree.credit2$cptable[which.min(tree.credit2$cptable[,\"xerror\"]), \"CP\"]\n\n# Prune the tree\nprune.credit2 &lt;- prune(tree.credit2, cp = optimal.cp)\n\n# Plot the pruned tree\nrpart.plot(prune.credit2)\n\n\n\n\n\n\n\n\nCompute predicted values and MSE for pruned tree:\n\nprune.pred2 &lt;- predict(prune.credit2, newdata = credit.test)\nplot(prune.pred2 , credit.testY)\n abline(0, 1)\n\n\n\n\n\n\n\nMSE.prune2 &lt;- mean((prune.pred2 - credit.testY)^2)"
+  },
+  {
+    "objectID": "seminar-2.html#bagging",
+    "href": "seminar-2.html#bagging",
+    "title": "Seminar 2",
+    "section": "Bagging",
+    "text": "Bagging\nYou can implement Bagging using the randomForest code (see p. 357). The function ipred is also suggested in the notes. All you need to do is ensure that you always predict on all regressors. In this example, there are 10 regressors.\n\nset.seed(8)\nbag.credit &lt;- randomForest(Balance ~ . , data= credit.train,mtry = 10, importance = TRUE)\nbag.credit\n\n\nCall:\n randomForest(formula = Balance ~ ., data = credit.train, mtry = 10,      importance = TRUE) \n               Type of random forest: regression\n                     Number of trees: 500\nNo. of variables tried at each split: 10\n\n          Mean of squared residuals: 14245.24\n                    % Var explained: 93.34\n\nbag.pred &lt;- predict(bag.credit , newdata = credit.test)\nplot(bag.pred , credit.testY)\n abline(0, 1)\n\n\n\n\n\n\n\nMSE.bag &lt;- mean((bag.pred - credit.testY)^2)"
+  },
+  {
+    "objectID": "seminar-2.html#random-forest",
+    "href": "seminar-2.html#random-forest",
+    "title": "Seminar 2",
+    "section": "Random Forest",
+    "text": "Random Forest\nYou can implement Random Forest using the same code. All you need to do is ensure that you reduce the number of regressors selected each time.\n\nset.seed(9)\nforest.credit &lt;- randomForest(Balance ~ . , data= credit.train,mtry = 5, importance = TRUE)\nforest.pred &lt;- predict(forest.credit, newdata = credit.test)\nplot(forest.pred , credit.testY)\n abline(0, 1)\n\n\n\n\n\n\n\nMSE.forest &lt;- mean((forest.pred - credit.testY)^2)\n\nWe can view the importance of each variable (see p.359):\n\nimportance(forest.credit)\n\n             %IncMSE IncNodePurity\nIncome    42.3912507     6330962.3\nLimit     34.6335482    27443953.1\nRating    30.0028867    24137311.4\nCards      1.5694270      416814.6\nAge        3.5262315     1269395.6\nEducation  2.5241391      713138.2\nOwn       -0.4445780      112842.9\nStudent   43.3139207     2529273.1\nMarried   -0.4083316      152515.5\nRegion     0.4913264      297770.1\n\nvarImpPlot(forest.credit)"
+  },
+  {
+    "objectID": "seminar-2.html#comparison",
+    "href": "seminar-2.html#comparison",
+    "title": "Seminar 2",
+    "section": "Comparison",
+    "text": "Comparison\n\nMSE &lt;- c(LM = MSE.lm, Ridge = MSE.ridge, LASSO = MSE.LASSO, Tree = MSE.tree, PrunedTree = MSE.prune, Tree2 = MSE.tree2, PrunedTree2 = MSE.prune2, Bag = MSE.bag, Forest = MSE.forest)\nt(t(MSE))\n\n                [,1]\nLM          12361.96\nRidge       15751.42\nLASSO       15751.42\nTree        39324.74\nPrunedTree  49255.46\nTree2       34343.51\nPrunedTree2 34343.51\nBag         12386.55\nForest      17411.44"
   }
 ]

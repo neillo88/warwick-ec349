@@ -28,7 +28,10 @@ website:
           text: Material
         - href: seminar-2-sol-1.qmd
           text: Solution 1
-
+      - text: Seminar 3
+        menu:
+        - href: seminar-3.qmd
+          text: Material
         
 format:
   html:

@@ -1,0 +1,170 @@
+---
+title: "Seminar 3"
+format: html
+---
+
+## Overview
+
+The goal of seminar 3 is to review the questions in Problem Set 2. Many of these questions do no require R and a selection will be discussed in person during class. Here, you will find an initial attempt at Q4.
+
+**Question 4:** Please try working through the coding example in the week 6's lecture note on the feedforward neural network.
+
+::: {#exr-q4}
+Try to run the following code on your own computer. You should be able to replicate the results in the slides for a 128-128-128 architecture. Next, modify the code to replicate other architectures.  
+:::
+
+## Load packages and data
+
+::: {.callout-warning title="Updating R and installing `tensorflow`"}
+I had issues with some of the packages and needed to update to the latest version of R (4.2.2.). In addition, you will need to have `tensorflow` installed with Python on your computer. To do so, open the Anaconda Prompt and type `pip install tensorflow`.   
+:::
+
+```{r}
+library(tensorflow)
+library(keras)
+library(ggplot2)
+```
+
+We will use a data that comes with R: "Boston". It 506 observations and 14 variables. The outcome we aim to predict is "medv": the median value of owner occupied homes (in '000s dollars). The number of predictors is $p=13$.
+
+```{r}
+# Load the Boston dataset
+library(MASS)
+data <- Boston 
+```
+
+```{r}
+#| echo: false
+library(reticulate)
+reticulate::use_python("C:/Users/neil_/anaconda3/python.exe")
+```
+
+## Create training and testing database
+
+As in Seminar 2, we need to split the data into a training and testing sample. Take note of the normalization step. We missed this step in Seminar 2. 
+
+```{r}
+set.seed(6)
+x <- as.matrix(data[, -ncol(data)])  # All columns except the last (predictors)
+y <- as.numeric(data[, ncol(data)])  # The last column
+x <- scale(x) # Normalize the predictors
+
+# Split the data
+test_proportion <- 0.2 # Define the proportion of the test set
+n <- nrow(data)
+test_indices <- sample(1:n, size = floor(test_proportion * n)) 
+train_indices <- setdiff(1:n, test_indices) # find all indices that are not in test_indices
+x_train <- as.matrix(x[train_indices, ])
+y_train <- as.numeric(y[train_indices])
+x_test <- as.matrix(x[test_indices, ])
+y_test <- as.numeric(y[test_indices])
+```
+
+## Execute Feedforward Neural Network
+
+To begin, we will execute a model with a 128-128-128 architecture: 
+
+- width $q=128$;
+- depth $r=3$;
+- activation function $g = ReLU$
+
+This means that the number of parameters (weights) will be,
+
+$$
+  \underbrace{(13+1)\cdot128}_\text{Layer 1} + \underbrace{(128+1)\cdot128}_\text{Layer 2} + \underbrace{(128+1)\cdot128}_\text{Layer 3}+\underbrace{128+1}_\text{Output Layer} = 34,945
+$$
+
+```{r}
+# Input layer
+input <- layer_input(shape = c(ncol(x_train)))  
+
+output <- input %>%
+  layer_dense(units = 128, activation = "relu") %>%
+  layer_dropout(rate = 0.5) %>%
+  layer_dense(units = 128, activation = "relu") %>%
+  layer_dropout(rate = 0.5) %>%
+  layer_dense(units = 128, activation = "relu") %>%
+  layer_dropout(rate = 0.5) %>%
+  layer_dense(units = 1)  # Single output layer
+
+model <- keras_model(inputs = input, outputs = output)
+
+# Configure the model
+tensorflow::tf$keras$Model$compile(
+  model,
+  loss = "mse",  # Mean Squared Error
+  optimizer = tensorflow::tf$keras$optimizers$Adam(),
+  metrics = list("mae")  # Mean Absolute Error
+) 
+```
+
+```{r}
+# Train the model
+history <- tensorflow::tf$keras$Model$fit(
+  model,
+  x = tensorflow::tf$convert_to_tensor(x_train),  # Convert x to TensorFlow Tensor
+  y = tensorflow::tf$convert_to_tensor(y_train),  # Convert y to TensorFlow Tensor
+  epochs = 50L,  # Number of epochs, L indicates integer; 
+  batch_size = 32L,  # Batch size
+  validation_split = 0.2  # Use 20% of the data for validation
+)
+
+# Predictions
+predictions <- tensorflow::tf$keras$Model$predict(model, tensorflow::tf$convert_to_tensor(x_test))
+
+
+# Print the result
+tensorflow::tf$keras$Model$summary(model)
+```
+
+Extract the final training and validation loss
+```{r}
+final_training_loss <- history$history$loss[length(history$history$loss)]
+final_validation_loss <- history$history$val_loss[length(history$history$val_loss)]
+
+cat("Final Training Loss:", final_training_loss, "\n")
+cat("Final Validation Loss:", final_validation_loss, "\n")
+```
+
+## Visualize the results
+Convert history to a data frame with epoch numbers
+```{r}
+history_df <- as.data.frame(history$history)
+history_df$epoch <- seq_len(nrow(history_df))
+```
+
+Plot training and validation loss
+```{r}
+ggplot(history_df, aes(x = epoch)) +
+  geom_line(aes(y = loss, color = "Training Loss"), linewidth = 1) +
+  geom_line(aes(y = val_loss, color = "Validation Loss"), linewidth = 1) +
+  labs(
+    title = "Training and Validation Loss",
+    x = "Epoch",
+    y = "Loss"
+  ) +
+  scale_color_manual(values = c("blue", "red")) +
+  theme_minimal() +
+  theme(
+    legend.title = element_blank(),
+    legend.position = "bottom"  # Options: "top", "bottom", "left", "right", or c(x, y) for custom
+  )
+```
+
+Plot training and validation mean absolute error (MAE)
+```{r}
+ggplot(history_df, aes(x = epoch)) +
+  geom_line(aes(y = mae, color = "Training MAE"), linewidth = 1) +
+  geom_line(aes(y = val_mae, color = "Validation MAE"), linewidth = 1) +
+  labs(
+    title = "Training and Validation Mean Absolute Error",
+    x = "Epoch",
+    y = "Mean Absolute Error"
+  ) +
+  scale_color_manual(values = c("blue", "red")) +
+  theme_minimal() +
+  theme(
+    legend.title = element_blank(),
+    legend.position = "bottom"  # Options: "top", "bottom", "left", "right", or c(x, y) for custom
+  )
+```
