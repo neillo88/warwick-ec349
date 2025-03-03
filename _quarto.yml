@@ -32,6 +32,10 @@ website:
         menu:
         - href: seminar-3.qmd
           text: Material
+      - text: Seminar 4
+        menu:
+        - href: seminar-4.qmd
+          text: Material    
         
 format:
   html:

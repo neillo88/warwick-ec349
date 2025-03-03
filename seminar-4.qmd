@@ -1,0 +1,150 @@
+---
+title: "Seminar 4"
+format: html
+---
+
+## Overview
+
+The goal of seminar 4 is to review the material on Principle Component Analysis (PCA). We will first work through Question 1 in Problem Set 3, before reviewing the coding examples below. 
+
+## Load packages and data
+
+```{r}
+#| output: false
+#| warning: false
+library(tidyverse)
+library(ggplot2)
+library(plotly) # for 3d scatter plot
+
+# read in csv
+treasury_data <- read.csv("seminar-material/treasury.csv", stringsAsFactors = FALSE)
+```
+
+## Data cleaning
+
+```{r}
+# Reshape the data into wide format and remove rows with NA
+treasury_wide <- treasury_data %>%
+  select(data_date, series_name, data_value) %>%
+  pivot_wider(names_from = series_name, values_from = data_value) %>%
+  drop_na()  # Remove rows with NA
+
+# View the reshaped data without NAs
+head(treasury_wide)
+
+
+# Remove the date column and standardize the data
+data_for_pca <- treasury_wide %>%
+  select(-data_date) %>%
+  scale()  # Standardize the data
+```
+## Plot data
+
+Simple 2D scatter
+```{r}
+ggplot(data_for_pca, aes(x =`10`, y = `3M`)) +
+  geom_point(color="blue", size=0.5) 
+```
+
+More advanced 3D scatter
+```{r}
+data_for_pca <- data.frame(data_for_pca)
+
+plot_ly(
+  data = treasury_wide,
+  x = ~`10`,       # Use backticks for column names with special characters
+  y = ~`1Y`,        # Ensure column names exist in your data
+  z = ~`3M`,        # Use backticks if needed
+  type = "scatter3d",
+  mode = "markers",
+  marker = list(size = 5, color = ~`10`, colorscale = "Viridis") # Color mapped to a variable
+) %>%
+  layout(
+    title = "3D Scatter Plot",
+    scene = list(
+      xaxis = list(title = "10Y Treasury"),
+      yaxis = list(title = "1Y Treasury"),
+      zaxis = list(title = "3M Treasury")
+    )
+  )
+```
+
+## Perform PCA
+
+```{r}
+# Perform PCA
+pca_result <- prcomp(data_for_pca, center = TRUE, scale. = TRUE)
+
+# Summary of PCA
+summary(pca_result)
+```
+
+Plot the elbow-curve
+```{r}
+# Scree Plot: Variance explained by each principal component
+explained_variance <- pca_result$sdev^2 / sum(pca_result$sdev^2)
+scree_data <- data.frame(
+  PC = seq_along(explained_variance),
+  Variance = explained_variance
+)
+
+ggplot(scree_data, aes(x = PC, y = Variance)) +
+  geom_bar(stat = "identity", fill = "blue") +
+  geom_line(group = 1, color = "red") +
+  labs(title = "Scree Plot", x = "Principal Components", y = "Variance Explained") +
+  theme_minimal()
+```
+
+Visualize the factor loadings
+```{r}
+# Multiply the first principal component scores by -1
+pca_result$x[, 1] <- -pca_result$x[, 1]
+pca_result$rotation[, 1] <- -pca_result$rotation[, 1]
+
+# View factor loadings
+factor_loadings <- pca_result$rotation
+print(factor_loadings)
+```
+Extract principle components
+```{r}
+# Define the number of components to retain
+n_components <- 6
+
+# Extract the principal components
+principal_components <- as.data.frame(pca_result$x[, 1:n_components])
+principal_components$data_date <- treasury_wide$data_date
+```
+
+Reshape the data to plot.
+```{r}
+# Reorder columns so the date is the first column
+principal_components <- principal_components %>%
+  relocate(data_date)
+# Convert principal components to a long format for ggplot
+principal_components_long <- principal_components %>%
+  select(data_date, PC1, PC2, PC3) %>%  # Keep only PC1, PC2, and PC3
+  pivot_longer(
+    cols = starts_with("PC"),  # Select all columns starting with "PC"
+    names_to = "Principal_Component",
+    values_to = "Value"
+  )
+
+# Plot the data
+
+ggplot(principal_components_long, aes(x = as.Date(data_date), y = Value, group=Principal_Component, color = Principal_Component)) +
+  geom_line(linewidth = 0.4) +  # Adjust line thickness
+  labs(
+    title = "Principal Components Over Time",
+    x = "Year",
+    y = "Value",
+    color = "Principal Component"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5), 
+    legend.position = "right" 
+  ) +
+  scale_x_date(date_breaks = "10 year", date_labels = "%Y")
+```
+
+
